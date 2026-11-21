@@ -275,7 +275,8 @@ const actx=new(window.AudioContext||window.webkitAudioContext)();
 function beep(f,d,t='sine',v=0.06){try{if(actx.state==='suspended')actx.resume();const o=actx.createOscillator(),g=actx.createGain();o.type=t;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d);}catch(e){}}
 
 let db=JSON.parse(localStorage.getItem('wcb_v3')||'null')||{user:null,logged:false};
-const reservedCodes=['WARRIOR13','ADMIN','ADMIN01'];
+const reservedCodes=['ADMIN','ADMIN01'];
+
 
 function toggleEye(id,btn){
   const el=document.getElementById(id);
