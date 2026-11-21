@@ -9,654 +9,438 @@
     if (window.Pi) { Pi.init({ version: "2.0", sandbox: false }); }
   </script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-    body {
-      background: radial-gradient(circle at top, #1b113a 0%, #090614 100%);
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-x: hidden;
-    }
-    .container { width: 100%; max-width: 440px; padding: 14px; }
-    .card {
-      background: rgba(25, 18, 54, 0.92);
-      border: 1px solid rgba(138, 92, 246, 0.45);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    }
-    .title-glow {
-      text-align: center;
-      font-size: 22px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #38bdf8, #c084fc, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle { text-align: center; font-size: 12px; color: #94a3b8; margin-top: 4px; }
-    .input-group { margin-top: 10px; }
-    .input-group label { display: block; font-size: 11px; color: #cbd5e1; margin-bottom: 4px; }
-    input, select {
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 10px;
-      border: 1px solid #475569;
-      background: #0f172a;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-    }
-    input:focus, select:focus { border-color: #38bdf8; }
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 9px;
-      transition: transform 0.1s;
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary { background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; }
-    .btn-pi { background: linear-gradient(90deg, #7c3aed, #f59e0b); color: #fff; }
-    .btn-google { background: #ffffff; color: #0f172a; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-guest { background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; }
-    .btn-bonus { background: linear-gradient(90deg, #f59e0b, #ef4444); color: #fff; }
-    canvas {
-      width: 100%;
-      background: linear-gradient(180deg, #070a14 0%, #171236 100%);
-      border-radius: 12px;
-      border: 1px solid #4f46e5;
-      display: block;
-      touch-action: none;
-    }
-    .modal {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      z-index: 999; align-items: center; justify-content: center; padding: 16px;
-    }
-    .modal-box { background: #1e1b4b; border: 1px solid #818cf8; border-radius: 16px; padding: 18px; width: 100%; max-width: 380px; }
-    .footer-links { text-align: center; font-size: 11px; color: #94a3b8; margin: 14px 0; }
-    .footer-links a { color: #38bdf8; text-decoration: none; margin: 0 6px; cursor: pointer; }
-    #toast {
-      display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      background: #10b981; color: #fff; padding: 10px 18px; border-radius: 20px;
-      font-size: 13px; font-weight: 600; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-  </style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;user-select:none}
+body{background:#060913;color:#e2e8f0;min-height:100vh;display:flex;justify-content:center}
+.app{width:100%;max-width:480px;background:linear-gradient(180deg,#0d1526,#050811);min-height:100vh;padding:14px;border-x:1px solid #1e293b}
+.banner{background:rgba(245,158,11,.12);border:1px solid #d97706;color:#fcd34d;font-size:11px;padding:8px;border-radius:8px;margin-bottom:12px;text-align:center}
+.hdr{text-align:center;padding:14px 8px;background:linear-gradient(145deg,#131d33,#090e1a);border:1px solid #334155;border-radius:12px;box-shadow:0 0 22px rgba(56,189,248,.15);margin-bottom:12px}
+.hdr h1{font-size:21px;letter-spacing:1.5px;background:linear-gradient(90deg,#f8fafc,#fbbf24,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
+.hdr p{font-size:10px;color:#94a3b8;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:12px;margin-bottom:12px}
+.card h3{font-size:12px;color:#38bdf8;letter-spacing:.8px;margin-bottom:8px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+input,select{width:100%;padding:10px;margin-bottom:8px;background:#060a12;border:1px solid #334155;border-radius:8px;color:#fff;font-size:13px}
+.btn{width:100%;padding:11px;border:none;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;letter-spacing:.5px;text-transform:uppercase}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(90deg,#d97706,#fbbf24);color:#090d16}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #334155;margin-top:6px}
+.row{display:flex;gap:8px}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat{background:#090e1a;border:1px solid #1e293b;border-radius:8px;padding:8px;text-align:center}
+.stat b{display:block;font-size:15px;color:#fbbf24}
+.stat span{font-size:9px;color:#94a3b8}
+.game-card{background:linear-gradient(145deg,#111a2e,#0a101d);border:1px solid #334155;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.game-info h4{font-size:14px;color:#f8fafc;margin-bottom:3px}
+.game-info p{font-size:11px;color:#94a3b8;line-height:1.35}
+.tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:4px;background:#1e293b;color:#38bdf8;font-weight:700;margin-bottom:4px}
+.play-btn{padding:10px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap}
+.season2{border:1px dashed #475569;background:rgba(15,23,42,.5);text-align:center;padding:14px;border-radius:10px;margin-bottom:12px}
+.season2 b{color:#fbbf24;font-size:12px;letter-spacing:1px}
+.season2 p{font-size:11px;color:#64748b;margin-top:4px}
+.lb-row{display:flex;justify-content:space-between;padding:6px 8px;border-bottom:1px solid #1e293b;font-size:12px}
+.lb-row:last-child{border:none}
+.hidden{display:none!important}
+#arena{position:fixed;inset:0;background:#050810;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hud{width:100%;max-width:480px;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#0b1120;border-bottom:1px solid #1e293b;font-size:12px;font-weight:700}
+canvas{background:#070b14;max-width:480px;width:100%;flex:1;touch-action:none}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:16px;width:100%;max-width:400px}
+.foot{text-align:center;font-size:10px;color:#64748b;padding:10px 0}
+.foot a{color:#38bdf8;text-decoration:none;margin:0 5px}
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- MESSENGER BROWSER WARNING -->
-    <div id="messengerWarn" class="card" style="display:none; border-color:#f59e0b; background:#451a03;">
-      <p style="font-size:12px; color:#fde68a; text-align:center;">
-        ⚠️ <b>Open in Chrome or Pi Browser:</b> Tap the 3 dots (⋮) at the top right and select <b>"Open in Chrome"</b> so your progress and rewards save properly!
-      </p>
-    </div>
+<div class="app">
+  <div class="banner">⚠ Open in <b>Chrome</b> or <b>Pi Browser</b> (tap ⋮ → Open in Chrome) so progress & rewards save properly.</div>
+  <div class="hdr">
+    <h1>WORLD COUNTRY BATTLE</h1>
+    <p>3-in-1 Sci-Fi & Retro Arcade Arena • Season 1</p>
+  </div>
 
-    <!-- LOGIN / REGISTER SCREEN -->
-    <div id="authSection" class="card">
-      <div style="text-align:center; font-size:36px; margin-bottom:4px;">⚔️🛡️🚀</div>
-      <h1 class="title-glow">WORLD COUNTRY BATTLE</h1>
-      <p class="subtitle">3-in-1 Anime Cyber Arena • Verified Fair Play</p>
-
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" id="authEmail" placeholder="Enter your Gmail / Email" />
-      </div>
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="authPass" placeholder="Enter password" />
-      </div>
-      <div class="input-group" id="userFieldGroup" style="display:none;">
-        <label>Warrior Name (@Username)</label>
-        <input type="text" id="authUser" placeholder="e.g. WarriorPH13" />
-      </div>
-      <div class="input-group">
-        <label>Select Country</label>
-        <select id="authCountry">
-          <option value="Philippines">🇵🇭 Philippines</option>
-          <option value="USA">🇺🇸 United States</option>
-          <option value="Japan">🇯🇵 Japan</option>
-          <option value="South Korea">🇰🇷 South Korea</option>
-          <option value="Indonesia">🇮🇩 Indonesia</option>
-          <option value="Global">🌍 Global Alliance</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label>Invite / Referral Code</label>
-        <input type="text" id="authInvite" value="WARRIOR13" />
-      </div>
-
-      <button id="mainAuthBtn" class="btn btn-primary" onclick="loginOrRegister()">LOGIN</button>
-      <button class="btn btn-pi" onclick="loginWithPiNetwork()">π Sign in with Pi Network</button>
-      <button class="btn btn-google" onclick="continueWithGmail()"><b style="color:#ea4335; font-size:16px;">G</b> Continue with Gmail</button>
-      <button class="btn btn-guest" onclick="continueAsGuest()">CONTINUE AS GUEST</button>
-
-      <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:12px;">
-        <a onclick="forgotPassword()" style="color:#94a3b8; cursor:pointer;">Forgot password?</a>
-        <a id="toggleAuthLink" onclick="toggleAuthMode()" style="color:#38bdf8; font-weight:700; cursor:pointer;">Create account</a>
-      </div>
-    </div>
-    <!-- MAIN LOBBY & LEADERBOARD SECTION -->
-    <div id="lobbySection" style="display:none;">
-      <div class="card" style="padding:12px;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div id="playerBadge" style="font-weight:700; font-size:14px; color:#38bdf8;">@Warrior</div>
-            <div id="seasonDisplay" style="font-size:11px; color:#c084fc; margin-top:2px;">Season 1 • Global Warriors: 0 / 1,000</div>
-          </div>
-          <button onclick="openModal('kycModal')" style="background:#10b981; color:#fff; border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700;">🛡️ Account & KYC</button>
-        </div>
-
-        <div style="display:flex; gap:8px; margin-top:10px; text-align:center;">
-          <div style="flex:1; background:#0f172a; padding:8px; border-radius:10px; border:1px solid #334155;">
-            <div style="font-size:10px; color:#94a3b8;">WARRIORS</div>
-            <div id="warriorCount" style="font-size:16px; font-weight:800; color:#facc15;">0</div>
-          </div>
-          <div style="flex:1; background:#0f172a; padding:8px; border-radius:10px; border:1px solid #334155;">
-            <div style="font-size:10px; color:#94a3b8;">GEMS</div>
-            <div id="gemCount" style="font-size:16px; font-weight:800; color:#38bdf8;">0</div>
-          </div>
-          <div style="flex:1; background:#0f172a; padding:8px; border-radius:10px; border:1px solid #334155;">
-            <div style="font-size:10px; color:#94a3b8;">ACTIVE DAYS</div>
-            <div id="daysCount" style="font-size:16px; font-weight:800; color:#4ade80;">1/30</div>
-          </div>
-        </div>
-      </div>
-      <!-- VERTICAL GAME SELECTION (TAAS PAUBOS) -->
-      <div class="card" style="padding:12px;">
-        <h3 style="font-size:14px; color:#e2e8f0; margin-bottom:8px;">🎮 SELECT ARENA GAME</h3>
-
-        <div onclick="launchGame('countryWar')" style="background:linear-gradient(90deg,#1e3a8a,#312e81); border:1px solid #3b82f6; border-radius:12px; padding:12px; margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="font-weight:800; font-size:14px; color:#60a5fa;">⚔️ COUNTRY WAR (STAGE 1–100)</div>
-            <div style="font-size:11px; color:#cbd5e1;">Defeat enemy waves & bosses from Stage 1 to 100!</div>
-          </div>
-          <span style="background:#3b82f6; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700;">PLAY ▶</span>
-        </div>
-
-        <div onclick="launchGame('twinBee')" style="background:linear-gradient(90deg,#701a75,#4c1d95); border:1px solid #e879f9; border-radius:12px; padding:12px; margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="font-weight:800; font-size:14px; color:#f472b6;">🚀 TWINBEE CLASSIC</div>
-            <div style="font-size:11px; color:#cbd5e1;">Shoot cloud bells for power-ups & climb levels!</div>
-          </div>
-          <span style="background:#db2777; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700;">PLAY ▶</span>
-        </div>
-
-        <div onclick="launchGame('mining')" style="background:linear-gradient(90deg,#78350f,#451a03); border:1px solid #f59e0b; border-radius:12px; padding:12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="font-weight:800; font-size:14px; color:#fbbf24;">⛏️ MINING GEMS & DIAMONDS</div>
-            <div style="font-size:11px; color:#cbd5e1;">Smash blocks with your hammer to uncover gems!</div>
-          </div>
-          <span style="background:#d97706; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700;">PLAY ▶</span>
-        </div>
-      </div>
-      <!-- INVITE, MONETAG BONUS & LIVE LEADERBOARD -->
-      <div class="card" style="padding:12px;">
-        <button class="btn btn-bonus" style="margin-top:0;" onclick="claimAdBonus()">🎁 CLAIM +25 BONUS GEMS (SPONSORED)</button>
-        <div style="margin-top:8px; background:#0f172a; padding:8px; border-radius:10px; border:1px dashed #38bdf8; text-align:center;">
-          <div id="myInviteCode" style="font-size:12px; font-weight:800; color:#facc15;">YOUR INVITE CODE: WARRIOR13</div>
-          <div id="qualifiedStats" style="font-size:11px; color:#4ade80; margin-top:2px;">30-Day Qualified Invites: 0</div>
-          <button class="btn btn-guest" style="margin-top:5px; padding:6px; font-size:12px;" onclick="copyInviteLink()">📋 COPY INVITE LINK</button>
-        </div>
-
-        <h3 style="font-size:13px; color:#facc15; margin-top:12px; margin-bottom:6px;">🏆 TOP WARRIORS LEADERBOARD (ALL 3 GAMES)</h3>
-        <div id="leaderboardList" style="font-size:12px; color:#cbd5e1; line-height:1.7;">
-          Loading verified rankings...
-        </div>
+  <div id="authScreen">
+    <div class="card">
+      <h3>Pilot Access & Registration</h3>
+      <input id="uName" placeholder="Callsign / @Username (e.g. @ValkyriePH)">
+      <select id="uCountry">
+        <option value="🇵🇭 PH">🇵🇭 Philippines</option>
+        <option value="🇺🇸 US">🇺🇸 United States</option>
+        <option value="🇯🇵 JP">🇯🇵 Japan</option>
+        <option value="🇰🇷 KR">🇰🇷 South Korea</option>
+        <option value="🇮🇩 ID">🇮🇩 Indonesia</option>
+        <option value="🌍 GL">🌍 Global Alliance</option>
+      </select>
+      <input id="uRef" value="WARRIOR13" placeholder="Invite / Referral Code">
+      <button class="btn btn-gold" onclick="enterLobby('Pilot')">DEPLOY TO ARENA</button>
+      <div class="row">
+        <button class="btn btn-dark" onclick="piLogin()">π Sign in with Pi</button>
+        <button class="btn btn-dark" onclick="enterLobby('Guest')">Guest Mode</button>
       </div>
     </div>
 
-    <!-- ACTIVE GAME PLAY SCREEN -->
-    <div id="gamePlaySection" class="card" style="display:none; padding:12px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <button onclick="backToLobby()" style="background:#334155; color:#fff; border:none; padding:6px 10px; border-radius:8px; font-size:11px; font-weight:700;">⬅ Lobby</button>
-        <div id="activeGameTitle" style="font-weight:800; font-size:13px; color:#38bdf8;">COUNTRY WAR • STAGE 1</div>
-        <div id="gameHudRight" style="font-size:11px; color:#facc15; font-weight:700;">HP: 100%</div>
-      </div>
-      <canvas id="gameCanvas" width="360" height="390"></canvas>
-      <p id="gameInstruction" style="text-align:center; font-size:11px; color:#94a3b8; margin-top:6px;">
-        👆 Drag to move & shoot enemies!
-      </p>
+    <div class="card">
+      <h3>🏆 Live Global Leaderboard <span style="font-size:10px;color:#10b981">● LIVE</span></h3>
+      <div id="publicLB"></div>
     </div>
-    <!-- FOOTER (REQUIRED FOR MONETAG APPROVAL) -->
-    <div class="footer-links">
-      <a onclick="openModal('privacyModal')">Privacy Policy</a> •
-      <a onclick="openModal('termsModal')">Terms of Service</a> •
-      <a onclick="openModal('kycModal')">Account & KYC</a>
-      <p style="margin-top:6px;">© 2026 World Country Battle Arena. All Rights Reserved.</p>
+  </div>
+  <div id="lobbyScreen" class="hidden">
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <b id="dispUser" style="color:#38bdf8;font-size:14px">@Warrior</b>
+        <div style="font-size:11px;color:#94a3b8" id="dispCountry">🇵🇭 PH • Verified Fair Play</div>
+      </div>
+      <div>
+        <button onclick="openModal('kycModal')" style="background:#0284c7;color:#fff;border:none;padding:6px 8px;border-radius:6px;font-size:10px;margin-right:4px">🛡 KYC</button>
+        <button onclick="logout()" style="background:#1e293b;color:#cbd5e1;border:none;padding:6px 8px;border-radius:6px;font-size:10px">Exit</button>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><b id="stScore">0</b><span>TOTAL PTS</span></div>
+      <div class="stat"><b id="stGems">0</b><span>GEMS</span></div>
+      <div class="stat"><b id="stDays">1/30</b><span>ACTIVE DAYS</span></div>
+    </div>
+
+    <div class="card">
+      <h3>Select Combat Module</h3>
+      <div class="game-card">
+        <div class="game-info">
+          <span class="tag">LEVEL 1 – 500</span>
+          <h4>⚔ Country War</h4>
+          <p>Alien warships, boss battles & catchable multi-cannon upgrades up to Lv 500.</p>
+        </div>
+        <button class="play-btn" onclick="startGame('war')">PLAY ▶</button>
+      </div>
+
+      <div class="game-card">
+        <div class="game-info">
+          <span class="tag">1990s FAMICOM ENDLESS</span>
+          <h4>🚀 TwinBee Classic</h4>
+          <p>Shoot cloud bells to bounce & drop Power-Up Orbs (1x → 5x Ultra + Wingmen).</p>
+        </div>
+        <button class="play-btn" onclick="startGame('twin')">PLAY ▶</button>
+      </div>
+
+      <div class="game-card">
+        <div class="game-info">
+          <span class="tag">LEVEL 1 – 500 EXCAVATION</span>
+          <h4>⛏ Mining Gems & Diamonds</h4>
+          <p>Smash Topsoil, Stone, Obsidian & Crystal layers with your heavy pickaxe.</p>
+        </div>
+        <button class="play-btn" onclick="startGame('mine')">PLAY ▶</button>
+      </div>
+
+      <div class="season2">
+        <b>🔒 MORE GAMES COMING SOON (SEASON 2)</b>
+        <p>Cyber Mech Arena • Galactic Raid • Clan Wars unlocking in Season 2</p>
+      </div>
+
+      <button class="btn btn-gold" onclick="claimBonus()">🎁 Claim +25 Daily Bonus Gems</button>
+      <button class="btn btn-dark" onclick="copyRef()">📋 Copy Invite Link (Code: WARRIOR13)</button>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Top Warriors Ranking</h3>
+      <div id="lobbyLB"></div>
     </div>
   </div>
 
-  <!-- ANTI-FRAUD ACCOUNT & KYC MODAL -->
-  <div id="kycModal" class="modal">
-    <div class="modal-box">
-      <h3 style="color:#38bdf8; margin-bottom:6px;">🛡️ Anti-Fraud Account & KYC</h3>
-      <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">
-        One account per device. Fraudulent accounts, bots, and self-clicks are automatically blocked.
-      </p>
-      <div id="deviceStatus" style="font-size:11px; color:#4ade80; margin-bottom:8px; background:#0f172a; padding:6px; border-radius:8px;">
-        ✅ Device Integrity: Verified Unique
-      </div>
-      <div class="input-group">
-        <label>Full Legal Name</label>
-        <input type="text" id="kycName" placeholder="Enter your full name" />
-      </div>
-      <div class="input-group">
-        <label>Valid ID / Wallet Handle (Pi Wallet / GCash / PayPal)</label>
-        <input type="text" id="kycIdNum" placeholder="e.g. Pi @username or GCash 09XX..." />
-      </div>
-      <button class="btn btn-primary" onclick="submitKYC()">SUBMIT & VERIFY ACCOUNT</button>
-      <button class="btn btn-guest" onclick="closeModal('kycModal')">CLOSE</button>
-    </div>
+  <div class="foot">
+    <a href="#" onclick="openModal('kycModal')">Anti-Fraud & KYC</a> •
+    <a href="#" onclick="alert('Privacy: We store callsign, Pi username, and gameplay progress to maintain fair leaderboards.')">Privacy</a> •
+    <a href="#" onclick="alert('Terms: 1 account per device. 30 unique active days required for season rewards.')">Terms</a>
+    <div style="margin-top:4px">© 2026 World Country Battle Arena</div>
   </div>
+</div>
 
-  <!-- PRIVACY & TERMS MODALS -->
-  <div id="privacyModal" class="modal">
-    <div class="modal-box">
-      <h3 style="color:#38bdf8; margin-bottom:8px;">Privacy Policy</h3>
-      <p style="font-size:12px; color:#cbd5e1; line-height:1.5;">
-        World Country Battle respects user privacy. We collect chosen usernames, Pi Network public usernames, optional emails, and gameplay records to maintain fair leaderboards and anti-fraud security. Third-party ad partners (Monetag) may use cookies to serve ads.
-      </p>
-      <button class="btn btn-guest" onclick="closeModal('privacyModal')">CLOSE</button>
-    </div>
+<div id="arena" class="hidden">
+  <div class="hud">
+    <button onclick="stopGame()" style="background:#1e293b;color:#fff;border:none;padding:5px 10px;border-radius:6px">⬅ Lobby</button>
+    <span id="hudTitle" style="color:#38bdf8">COUNTRY WAR • LV 1</span>
+    <span id="hudStat" style="color:#fbbf24">PWR 1x | HP 100</span>
   </div>
+  <canvas id="cv" width="360" height="560"></canvas>
+</div>
 
-  <div id="termsModal" class="modal">
-    <div class="modal-box">
-      <h3 style="color:#38bdf8; margin-bottom:8px;">Terms of Service</h3>
-      <p style="font-size:12px; color:#cbd5e1; line-height:1.5;">
-        Fair play is strictly enforced. Multiple accounts on one device, bots, or invalid ad interactions will lead to permanent disqualification. Referral rewards require 30 unique active login and gameplay days.
-      </p>
-      <button class="btn btn-guest" onclick="closeModal('termsModal')">CLOSE</button>
-    </div>
+<div id="kycModal" class="modal hidden">
+  <div class="modal-box">
+    <h3 style="color:#38bdf8;margin-bottom:8px">🛡 Anti-Fraud Account & KYC</h3>
+    <p style="font-size:11px;color:#94a3b8;margin-bottom:10px">One account per device. Bots and self-clicks are automatically blocked.</p>
+    <input id="kycName" placeholder="Full Legal Name">
+    <input id="kycWallet" placeholder="Valid Wallet Handle (Pi Wallet / GCash / PayPal)">
+    <button class="btn btn-gold" onclick="saveKYC()">SUBMIT & VERIFY</button>
+    <button class="btn btn-dark" onclick="closeModal('kycModal')">CLOSE</button>
   </div>
+</div>
+<script>
+const actx = new (window.AudioContext||window.webkitAudioContext)();
+function beep(freq,dur,type='square',vol=0.06){
+  try{if(actx.state==='suspended')actx.resume();
+  const o=actx.createOscillator(),g=actx.createGain();
+  o.type=type;o.frequency.value=freq;g.gain.value=vol;
+  o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+dur);}catch(e){}
+}
 
-  <div id="toast"></div>
-  <!-- FIREBASE SDK -->
-  <script src="https://gstatic.com"></script>
-  <script src="https://gstatic.com"></script>
+let state = JSON.parse(localStorage.getItem('wcb_v2')||'null') || {
+  user:'',country:'🇵🇭 PH',score:0,gems:25,warLv:1,mineLv:1,logged:false,kyc:false
+};
+const baseLB = [
+  {n:'@KazeRyu_JP',c:'🇯🇵',s:48920},{n:'@AresPH_01',c:'🇵🇭',s:41500},
+  {n:'@VanguardUS',c:'🇺🇸',s:36400},{n:'@SeoulStrike',c:'🇰🇷',s:29850},{n:'@GarudaX',c:'🇮🇩',s:24100}
+];
+function renderLB(){
+  let list=[...baseLB];
+  if(state.user) list.push({n:state.user,c:state.country.split(' '),s:state.score});
+  list.sort((a,b)=>b.s-a.s);
+  const html=list.slice(0,6).map((r,i)=>`<div class="lb-row"><span><b>#${i+1}</b> ${r.c} ${r.n}</span><span style="color:#fbbf24">${r.s.toLocaleString()} pts</span></div>`).join('');
+  document.getElementById('publicLB').innerHTML=html;
+  document.getElementById('lobbyLB').innerHTML=html;
+}
+function save(){localStorage.setItem('wcb_v2',JSON.stringify(state));updateUI();}
+function updateUI(){
+  renderLB();
+  if(state.logged){
+    document.getElementById('authScreen').classList.add('hidden');
+    document.getElementById('lobbyScreen').classList.remove('hidden');
+    document.getElementById('dispUser').textContent=state.user+(state.kyc?' ✅':'');
+    document.getElementById('dispCountry').textContent=state.country+' • Verified Pilot';
+    document.getElementById('stScore').textContent=state.score.toLocaleString();
+    document.getElementById('stGems').textContent=state.gems;
+  }
+}
+function enterLobby(mode){
+  let name=document.getElementById('uName').value.trim();
+  if(!name) name='@Warrior_'+Math.floor(100+Math.random()*899);
+  if(!name.startsWith('@')) name='@'+name;
+  state.user=name;state.country=document.getElementById('uCountry').value;state.logged=true;
+  save();beep(520,.1,'sine');
+}
+function piLogin(){
+  if(window.Pi){
+    Pi.authenticate(['username'],auth=>{
+      state.user='@'+auth.user.username;state.country=document.getElementById('uCountry').value;state.logged=true;save();
+    },()=>enterLobby('Pi'));
+  } else {
+    let n=document.getElementById('uName').value.trim()||'@PiPioneer_'+Math.floor(100+Math.random()*899);
+    state.user=n.startsWith('@')?n:'@'+n;state.logged=true;save();
+  }
+}
+function logout(){state.logged=false;save();location.reload();}
+function claimBonus(){state.gems+=25;save();beep(660,.15,'triangle');alert('+25 Bonus Gems added!');}
+function copyRef(){navigator.clipboard?.writeText(location.href+'?ref=WARRIOR13');alert('Invite link copied! Code: WARRIOR13');}
+function openModal(id){document.getElementById(id).classList.remove('hidden');}
+function closeModal(id){document.getElementById(id).classList.add('hidden');}
+function saveKYC(){
+  if(!document.getElementById('kycName').value.trim())return alert('Enter full name');
+  state.kyc=true;save();closeModal('kycModal');alert('KYC Submitted & Verified!');
+}
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let mode='',raf=null,frame=0,px=180,py=490,hp=100,pwr=1,score=0,lv=1;
+let bullets=[],enemies=[],orbs=[],particles=[],blocks=[];
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_://firebaseapp.com",
-      databaseURL: "https://YOUR_://firebaseio.com",
-      projectId: "YOUR_PROJECT",
-      storageBucket: "YOUR_://appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+function startGame(m){
+  mode=m;document.getElementById('arena').classList.remove('hidden');
+  frame=0;px=180;py=490;hp=100;pwr=1;score=0;
+  bullets=[];enemies=[];orbs=[];particles=[];blocks=[];
+  lv = m==='war'?state.warLv : m==='mine'?state.mineLv : 1;
+  if(m==='mine') initMine(lv);
+  loop();
+}
+function stopGame(){
+  cancelAnimationFrame(raf);
+  state.score+=score;
+  if(mode==='war') state.warLv=Math.min(500,lv);
+  if(mode==='mine') state.mineLv=Math.min(500,lv);
+  save();
+  document.getElementById('arena').classList.add('hidden');
+}
 
-    let db = null;
-    try {
-      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-      db = firebase.database();
-    } catch (e) { console.log("Local mode active"); }
+cv.addEventListener('pointermove',e=>{
+  const r=cv.getBoundingClientRect();
+  px=Math.max(22,Math.min(338,(e.clientX-r.left)*(360/r.width)));
+});
+cv.addEventListener('pointerdown',e=>{
+  const r=cv.getBoundingClientRect();
+  px=Math.max(22,Math.min(338,(e.clientX-r.left)*(360/r.width)));
+  if(mode==='mine') swingPickaxe();
+});
 
-    if (/FBAN|FBAV|Messenger/i.test(navigator.userAgent)) {
-      document.getElementById("messengerWarn").style.display = "block";
+function spawnParticles(x,y,col,n=8){
+  for(let i=0;i<n;i++) particles.push({x,y,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*5,c:col,l:22});
+}
+
+const layers=[
+  {name:'TOPSOIL',col:'#78350f',hp:1},{name:'STONE',col:'#475569',hp:2},
+  {name:'OBSIDIAN',col:'#312e81',hp:4},{name:'CRYSTAL',col:'#0284c7',hp:6}
+];
+function initMine(l){
+  blocks=[];
+  for(let r=0;r<6;r++){
+    for(let c=0;c<5;c++){
+      let tier=Math.min(3,Math.floor((l-1)/40)+(r>3?1:0));
+      let L=layers[tier];
+      blocks.push({x:20+c*65,y:120+r*52,w:60,h:46,hp:L.hp+Math.floor(l/25),col:L.col,gem:Math.random()<0.35});
+    }
+  }
+}
+let swingAnim=0;
+function swingPickaxe(){
+  swingAnim=10;beep(160,.07,'sawtooth');
+  for(let i=blocks.length-1;i>=0;i--){
+    let b=blocks[i];
+    if(Math.abs((b.x+b.w/2)-px)<55){
+      b.hp-=(1+Math.floor(lv/15));
+      spawnParticles(b.x+30,b.y+23,b.col,6);
+      if(b.hp<=0){
+        score+=20*lv;
+        if(b.gem){state.gems+=1;beep(880,.1,'sine');}
+        blocks.splice(i,1);
+      }
+      break;
+    }
+  }
+  if(blocks.length===0){lv=Math.min(500,lv+1);beep(600,.2,'triangle');initMine(lv);}
+}
+function loop(){
+  frame++;
+  ctx.clearRect(0,0,360,560);
+
+  if(mode==='mine'){
+    document.getElementById('hudTitle').textContent=`MINING • LV ${lv}/500`;
+    document.getElementById('hudStat').textContent=`GEMS ${state.gems} | PTS ${score}`;
+    ctx.fillStyle='#0c1322';ctx.fillRect(0,0,360,560);
+    blocks.forEach(b=>{
+      ctx.fillStyle=b.col;ctx.fillRect(b.x,b.y,b.w,b.h);
+      ctx.strokeStyle='#94a3b8';ctx.strokeRect(b.x,b.y,b.w,b.h);
+      if(b.gem){ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.arc(b.x+30,b.y+23,7,0,Math.PI*2);ctx.fill();}
+    });
+    ctx.fillStyle='#fbbf24';ctx.fillRect(px-14,470,28,36);
+    ctx.save();ctx.translate(px,475);ctx.rotate(swingAnim>0?-0.8:0.3);
+    ctx.fillStyle='#94a3b8';ctx.fillRect(0,-4,34,6);ctx.fillStyle='#38bdf8';ctx.fillRect(28,-14,6,26);
+    ctx.restore();if(swingAnim>0)swingAnim--;
+    ctx.fillStyle='#94a3b8';ctx.font='12px sans-serif';ctx.fillText('Tap column to smash layers & uncover gems!',55,540);
+  } else {
+    let isTwin = mode==='twin';
+    ctx.fillStyle = isTwin ? '#0c4a6e' : '#060913';
+    ctx.fillRect(0,0,360,560);
+    ctx.fillStyle = isTwin ? 'rgba(255,255,255,0.25)' : 'rgba(56,189,248,0.3)';
+    for(let i=0;i<15;i++){
+      let sy=(frame*(isTwin?1.5:2)+i*40)%560;
+      ctx.beginPath();ctx.arc((i*73)%360,sy,isTwin?18:1.5,0,Math.PI*2);ctx.fill();
     }
 
-    // Anti-Fraud Device ID Generator
-    const deviceId = localStorage.getItem("wcb_dev") || "DEV_" + btoa(navigator.userAgent.slice(0, 20) + screen.width).replace(/[^a-zA-Z0-9]/g, "").slice(0, 12);
-    localStorage.setItem("wcb_dev", deviceId);
-
-    // Auto-detect ?ref=CODE or default to WARRIOR13
-    (function() {
-      const refParam = new URLSearchParams(window.location.search).get("ref");
-      const invInput = document.getElementById("authInvite");
-      if (invInput) invInput.value = refParam ? refParam.toUpperCase() : "WARRIOR13";
-    })();
-
-    let state = {
-      userId: localStorage.getItem("wcb_uid") || "user_" + deviceId,
-      username: localStorage.getItem("wcb_user") || "",
-      country: localStorage.getItem("wcb_country") || "Philippines",
-      warriors: parseInt(localStorage.getItem("wcb_warriors")) || 0,
-      gems: parseInt(localStorage.getItem("wcb_gems")) || 0,
-      stage: parseInt(localStorage.getItem("wcb_stage")) || 1,
-      season: 1,
-      target: 1000,
-      mode: null
-    };
-    let isRegisterMode = false;
-
-    function showToast(msg) {
-      const t = document.getElementById("toast");
-      t.innerText = msg;
-      t.style.display = "block";
-      setTimeout(() => t.style.display = "none", 3000);
-    }
-
-    function openModal(id) { document.getElementById(id).style.display = "flex"; }
-    function closeModal(id) { document.getElementById(id).style.display = "none"; }
-
-    function toggleAuthMode() {
-      isRegisterMode = !isRegisterMode;
-      document.getElementById("userFieldGroup").style.display = isRegisterMode ? "block" : "none";
-      document.getElementById("mainAuthBtn").innerText = isRegisterMode ? "REGISTER & ENTER ARENA" : "LOGIN";
-      document.getElementById("toggleAuthLink").innerText = isRegisterMode ? "Already have an account? Login" : "Create account";
-    }
-
-    function forgotPassword() {
-      const email = document.getElementById("authEmail").value.trim();
-      if (!email) { showToast("Enter your Email first!"); return; }
-      showToast(`Password reset sent to ${email}!`);
-    }
-
-    function loginOrRegister() {
-      const email = document.getElementById("authEmail").value.trim();
-      if (!email) { showToast("Please enter your Gmail / Email!"); return; }
-      const rawUser = document.getElementById("authUser").value.trim() || email.split("@");
-      const country = document.getElementById("authCountry").value;
-      enterLobby(rawUser, country, email);
-    }
-
-    function continueWithGmail() {
-      const chosen = prompt("Confirm your Gmail account:", document.getElementById("authEmail").value || "warrior@gmail.com");
-      if (chosen && chosen.includes("@")) {
-        const autoUser = chosen.split("@").replace(/[^a-zA-Z0-9]/g, "");
-        enterLobby(autoUser, document.getElementById("authCountry").value, chosen.trim());
+    let rate = isTwin ? 12 : 14;
+    if(frame%rate===0){
+      beep(isTwin?520:340,.04,'square',0.03);
+      if(pwr===1) bullets.push({x:px,y:py-18,vx:0,vy:-9});
+      if(pwr===2){bullets.push({x:px-10,y:py-16,vx:0,vy:-9},{x:px+10,y:py-16,vx:0,vy:-9});}
+      if(pwr===3){bullets.push({x:px,y:py-18,vx:0,vy:-9},{x:px-12,y:py-14,vx:-1.5,vy:-8.5},{x:px+12,y:py-14,vx:1.5,vy:-8.5});}
+      if(pwr>=4){
+        bullets.push({x:px,y:py-20,vx:0,vy:-10},{x:px-12,y:py-16,vx:-1.2,vy:-9},{x:px+12,y:py-16,vx:1.2,vy:-9},{x:px-22,y:py-10,vx:-2.5,vy:-8},{x:px+22,y:py-10,vx:2.5,vy:-8});
       }
     }
-
-    async function loginWithPiNetwork() {
-      if (!window.Pi) { showToast("Open inside Pi Browser to use Pi Network Login!"); return; }
-      try {
-        showToast("Connecting to Pi Network...");
-        const auth = await Pi.authenticate(["username"], () => {});
-        enterLobby(auth.user.username, document.getElementById("authCountry").value, `${auth.user.username}@pi.network`);
-      } catch (e) { showToast("Open in Pi Browser to sign in with Pi."); }
-    }
-
-    function continueAsGuest() {
-      enterLobby("Guest_" + deviceId.slice(-5), "Global", "guest");
-    }
-    function enterLobby(username, country, email) {
-      state.username = username;
-      state.country = country;
-      const invCode = (document.getElementById("authInvite").value.trim() || "WARRIOR13").toUpperCase();
-      localStorage.setItem("wcb_uid", state.userId);
-      localStorage.setItem("wcb_user", username);
-      localStorage.setItem("wcb_country", country);
-      localStorage.setItem("wcb_invited_by", invCode);
-
-      document.getElementById("authSection").style.display = "none";
-      document.getElementById("lobbySection").style.display = "block";
-      document.getElementById("playerBadge").innerText = `@${username} (${country})`;
-      document.getElementById("myInviteCode").innerText = `YOUR INVITE CODE: ${username.toUpperCase()}`;
-      updateStatsUI();
-      loadLeaderboard();
-    }
-
-    function updateStatsUI() {
-      document.getElementById("warriorCount").innerText = state.warriors;
-      document.getElementById("gemCount").innerText = state.gems;
-      localStorage.setItem("wcb_warriors", state.warriors);
-      localStorage.setItem("wcb_gems", state.gems);
-      localStorage.setItem("wcb_stage", state.stage);
-    }
-
-    function claimAdBonus() {
-      window.open("https://uplcm.com", "_blank");
-      addScore(0, 25);
-      showToast("+25 Sponsored Bonus Gems Added!");
-    }
-
-    function copyInviteLink() {
-      const myCode = state.username.toUpperCase();
-      navigator.clipboard?.writeText(`https://github.io{myCode}`);
-      showToast(`Invite Link Copied! Code: ${myCode}`);
-    }
-
-    function loadLeaderboard() {
-      const lb = document.getElementById("leaderboardList");
-      if (!db) {
-        lb.innerHTML = `<div>🥇 <b>@${state.username}</b> (${state.country}) — ${state.warriors} Warriors • ${state.gems} Gems</div>`;
-        return;
-      }
-      db.ref("users").orderByChild("warriors").limitToLast(5).on("value", (snap) => {
-        let rows = [];
-        snap.forEach((child) => { rows.unshift(child.val()); });
-        lb.innerHTML = rows.map((u, i) => `<div>#${i + 1} <b>@${u.username || "Warrior"}</b> (${u.country || "Global"}) — ${u.warriors || 0}W • ${u.gems || 0}G</div>`).join("") || "No rankings yet.";
-      });
-    }
-
-    if (db) {
-      db.ref("globalStats/totalWarriors").on("value", (snap) => {
-        const total = snap.val() || 0;
-        state.season = total >= 2500 ? 3 : total >= 1000 ? 2 : 1;
-        state.target = total >= 2500 ? 5000 : total >= 1000 ? 2500 : 1000;
-        document.getElementById("seasonDisplay").innerText = `Season ${state.season} • Global Warriors: ${total} / ${state.target}`;
-      });
-    }
-
-    function submitKYC() {
-      const name = document.getElementById("kycName").value.trim();
-      const idNum = document.getElementById("kycIdNum").value.trim();
-      if (!name || !idNum) { showToast("Fill in all KYC details!"); return; }
-      if (db) db.ref(`users/${state.userId}/kyc`).set({ name, idNum, deviceId, status: "verified_pending", time: Date.now() });
-      closeModal("kycModal");
-      showToast("Account & Anti-Fraud KYC Saved!");
-    }
-    // 30-DAY QUALIFIED REFERRAL & SCORE SYNC
-    let todayTracked = false;
-    function addScore(w, g) {
-      state.warriors += w;
-      state.gems += g;
-      updateStatsUI();
-
-      if (db && state.userId) {
-        const today = new Date().toISOString().split("T")[0];
-        const uRef = db.ref(`users/${state.userId}`);
-        uRef.update({ username: state.username, country: state.country, warriors: state.warriors, gems: state.gems, deviceId });
-        if (w > 0) db.ref("globalStats/totalWarriors").transaction((c) => (c || 0) + w);
-
-        if (!todayTracked && (state.warriors + state.gems) >= 5) {
-          todayTracked = true;
-          uRef.child(`activeDates/${today}`).set(true);
-          uRef.child("activeDates").once("value", (s) => {
-            const days = s.numChildren();
-            document.getElementById("daysCount").innerText = `${days}/30`;
-            if (days >= 30) {
-              const inv = localStorage.getItem("wcb_invited_by") || "WARRIOR13";
-              db.ref(`referrals/${inv}/qualifiedCount`).transaction((c) => (c || 0) + 1);
-            }
-          });
-        }
-      }
-    }
-
-    // 3 DISTINCT GAMES ENGINE
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
-    let player = { x: 160, y: 330, w: 34, h: 34, hp: 100, power: 1 };
-    let entities = [], bullets = [], enemyBullets = [], blocks = [], frame = 0, loopId = null, stageKills = 0, twinLevel = 1;
-
-    function launchGame(mode) {
-      state.mode = mode;
-      document.getElementById("lobbySection").style.display = "none";
-      document.getElementById("gamePlaySection").style.display = "block";
-      entities = []; bullets = []; enemyBullets = []; blocks = []; stageKills = 0; player.hp = 100; player.power = 1;
-
-      if (mode === "mining") {
-        document.getElementById("activeGameTitle").innerText = "⛏️ MINING GEMS & DIAMONDS";
-        document.getElementById("gameHudRight").innerText = "TAP BLOCKS!";
-        document.getElementById("gameInstruction").innerText = "🔨 Tap any rock block to swing your hammer and find gems!";
-        initMiningGrid();
-      } else if (mode === "twinBee") {
-        document.getElementById("activeGameTitle").innerText = `🚀 TWINBEE • LEVEL ${twinLevel}`;
-        document.getElementById("gameHudRight").innerText = "POWER: 1x";
-        document.getElementById("gameInstruction").innerText = "🔔 Shoot cloud bells for Twin Shot power-ups!";
+    let spawnRate = isTwin ? 55 : Math.max(28, 65 - Math.floor(lv/10));
+    if(frame%spawnRate===0){
+      if(isTwin && Math.random()<0.35){
+        enemies.push({type:'bell',x:40+Math.random()*280,y:-20,vx:0,vy:1.6,hp:3,hits:0});
       } else {
-        document.getElementById("activeGameTitle").innerText = `⚔️ COUNTRY WAR • STAGE ${state.stage}/100`;
-        document.getElementById("gameHudRight").innerText = "HP: 100%";
-        document.getElementById("gameInstruction").innerText = "👆 Drag to dodge enemy fire & clear Stage 1–100!";
-      }
-      if (loopId) cancelAnimationFrame(loopId);
-      gameLoop();
-    }
-
-    function backToLobby() {
-      if (loopId) cancelAnimationFrame(loopId);
-      document.getElementById("gamePlaySection").style.display = "none";
-      document.getElementById("lobbySection").style.display = "block";
-      loadLeaderboard();
-    }
-
-    function initMiningGrid() {
-      blocks = [];
-      for (let r = 0; r < 5; r++) {
-        for (let c = 0; c < 5; c++) {
-          blocks.push({
-            x: 20 + c * 66, y: 30 + r * 66, w: 60, h: 60,
-            hp: 2 + Math.floor(Math.random() * 2),
-            reward: Math.random() < 0.35 ? "💎" : Math.random() < 0.7 ? "💠" : "🪨"
-          });
-        }
+        let isBoss = !isTwin && lv%5===0 && enemies.length===0;
+        enemies.push({
+          type:isBoss?'boss':'ship',
+          x:isBoss?180:30+Math.random()*300,
+          y:-30,vx:isBoss?1.4:(Math.random()-.5)*1.2,
+          vy:isBoss?0.35:(1.3+Math.min(2.2,lv*0.01)),
+          hp:isBoss?(25+lv*2):(1+Math.floor(lv/15))
+        });
       }
     }
 
-    canvas.addEventListener("pointerdown", (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const px = (e.clientX - rect.left) * (canvas.width / rect.width);
-      const py = (e.clientY - rect.top) * (canvas.height / rect.height);
-      if (state.mode === "mining") {
-        blocks.forEach((b, idx) => {
-          if (px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h) {
-            b.hp--;
-            if (b.hp <= 0) {
-              if (b.reward !== "🪨") { addScore(0, b.reward === "💎" ? 3 : 1); showToast(`Found ${b.reward}!`); }
-              blocks.splice(idx, 1);
-              if (blocks.length === 0) initMiningGrid();
+    for(let i=bullets.length-1;i>=0;i--){
+      let b=bullets[i];b.x+=b.vx;b.y+=b.vy;
+      ctx.fillStyle=isTwin?'#fde047':'#38bdf8';
+      ctx.fillRect(b.x-2,b.y-8,4,12);
+      if(b.y<-20) bullets.splice(i,1);
+    }
+
+    for(let i=enemies.length-1;i>=0;i--){
+      let e=enemies[i];e.x+=e.vx;e.y+=e.vy;
+      if(e.x<25||e.x>335) e.vx*=-1;
+      if(e.type==='bell'){
+        ctx.fillStyle='#fbbf24';ctx.beginPath();ctx.arc(e.x,e.y,15,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle='#fff';ctx.stroke();
+      } else {
+        ctx.fillStyle=e.type==='boss'?'#ef4444':'#94a3b8';
+        let w=e.type==='boss'?70:28,h=e.type==='boss'?40:24;
+        ctx.fillRect(e.x-w/2,e.y-h/2,w,h);
+        ctx.fillStyle='#f43f5e';ctx.fillRect(e.x-w/4,e.y,w/2,6);
+      }
+
+      for(let j=bullets.length-1;j>=0;j--){
+        let b=bullets[j];
+        let rad=e.type==='boss'?36:18;
+        if(Math.hypot(b.x-e.x,b.y-e.y)<rad){
+          bullets.splice(j,1);
+          if(e.type==='bell'){
+            e.vy=-3.2;e.vx=(Math.random()-.5)*3;e.hits++;
+            beep(780,.08,'triangle');
+            spawnParticles(e.x,e.y,'#fef08a',6);
+            if(e.hits>=2){
+              orbs.push({x:e.x,y:e.y,vy:1.8,col:pwr<3?'#38bdf8':'#f43f5e'});
+              enemies.splice(i,1);
+            }
+          } else {
+            e.hp--;spawnParticles(b.x,b.y,'#38bdf8',4);
+            if(e.hp<=0){
+              score+=(e.type==='boss'?500:50);
+              beep(140,.12,'sawtooth');
+              spawnParticles(e.x,e.y,'#fbbf24',12);
+              if(Math.random()<0.22 || e.type==='boss') orbs.push({x:e.x,y:e.y,vy:1.8,col:'#10b981'});
+              if(!isTwin && score >= lv*250 && lv<500) lv++;
+              enemies.splice(i,1);
             }
           }
-        });
-      }
-    });
-
-    canvas.addEventListener("touchmove", (e) => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const tx = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
-      player.x = Math.max(0, Math.min(canvas.width - player.w, tx - player.w / 2));
-    }, { passive: false });
-
-    canvas.addEventListener("mousemove", (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-      player.x = Math.max(0, Math.min(canvas.width - player.w, mx - player.w / 2));
-    });
-
-    function gameLoop() {
-      frame++;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (state.mode === "mining") {
-        blocks.forEach((b) => {
-          ctx.fillStyle = b.hp > 1 ? "#78350f" : "#b45309";
-          ctx.fillRect(b.x, b.y, b.w, b.h);
-          ctx.strokeStyle = "#f59e0b";
-          ctx.strokeRect(b.x, b.y, b.w, b.h);
-          ctx.font = "22px Arial";
-          ctx.fillText(b.hp > 1 ? "🪨" : "🔨", b.x + 17, b.y + 38);
-        });
-        loopId = requestAnimationFrame(gameLoop);
-        return;
-      }
-
-      // Draw Hero Ship
-      ctx.fillStyle = state.mode === "twinBee" ? "#f472b6" : "#38bdf8";
-      ctx.beginPath();
-      ctx.moveTo(player.x + 17, player.y);
-      ctx.lineTo(player.x + 34, player.y + 34);
-      ctx.lineTo(player.x, player.y + 34);
-      ctx.fill();
-
-      // Auto-fire
-      if (frame % 12 === 0) {
-        bullets.push({ x: player.x + 15, y: player.y, w: 4, h: 12 });
-        if (state.mode === "twinBee" && player.power > 1) {
-          bullets.push({ x: player.x + 3, y: player.y + 6, w: 4, h: 12 });
-          bullets.push({ x: player.x + 27, y: player.y + 6, w: 4, h: 12 });
+          break;
         }
       }
-
-      // Spawn Enemies / Cloud Bells
-      if (frame % 32 === 0) {
-        const isBell = state.mode === "twinBee" && Math.random() < 0.25;
-        entities.push({ x: Math.random() * 320, y: -25, w: 28, h: 28, type: isBell ? "bell" : "enemy" });
+      if(e && e.y>580) enemies.splice(i,1);
+      else if(e && e.type!=='bell' && Math.hypot(px-e.x,py-e.y)<24){
+        hp-=20;enemies.splice(i,1);beep(100,.2,'sawtooth');
+        if(hp<=0){alert(`MISSION OVER! Score: ${score}`);stopGame();return;}
       }
+    }
 
-      bullets.forEach((b, bi) => {
-        b.y -= 8;
-        ctx.fillStyle = "#facc15";
-        ctx.fillRect(b.x, b.y, b.w, b.h);
-        if (b.y < 0) bullets.splice(bi, 1);
-      });
+    for(let i=orbs.length-1;i>=0;i--){
+      let o=orbs[i];o.y+=o.vy;
+      let pulse=10+Math.sin(frame*0.25)*3;
+      ctx.strokeStyle=o.col;ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(o.x,o.y,pulse+4,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle=o.col;ctx.beginPath();ctx.arc(o.x,o.y,9,0,Math.PI*2);ctx.fill();
+      if(Math.hypot(px-o.x,py-o.y)<28){
+        pwr=Math.min(5,pwr+1);score+=100;
+        beep(880,.15,'sine');spawnParticles(px,py,'#38bdf8',14);
+        orbs.splice(i,1);
+      } else if(o.y>570) orbs.splice(i,1);
+    }
 
-      entities.forEach((en, ei) => {
-        en.y += state.mode === "countryWar" ? 2 + Math.min(4, state.stage * 0.1) : 2.5;
-        ctx.font = "22px Arial";
-        ctx.fillText(en.type === "bell" ? "🔔" : state.mode === "twinBee" ? "👾" : "🛸", en.x, en.y + 22);
+    ctx.fillStyle=isTwin?'#38bdf8':'#e2e8f0';
+    ctx.beginPath();ctx.moveTo(px,py-22);ctx.lineTo(px-16,py+14);ctx.lineTo(px+16,py+14);ctx.closePath();ctx.fill();
+    if(pwr>=5){
+      ctx.fillStyle='#fbbf24';
+      ctx.fillRect(px-28,py,6,12);ctx.fillRect(px+22,py,6,12);
+    }
 
-        if (state.mode === "countryWar" && frame % 70 === 0 && Math.random() < 0.3) {
-          enemyBullets.push({ x: en.x + 12, y: en.y + 24, w: 5, h: 10 });
-        }
+    let pwrLabel = pwr===1?'1x':pwr===2?'2x TWIN':pwr===3?'3x SPREAD':pwr===4?'4x HEAVY':'5x ULTRA+WING';
+    document.getElementById('hudTitle').textContent = isTwin ? `TWINBEE • PTS ${score}` : `COUNTRY WAR • LV ${lv}/500`;
+    document.getElementById('hudStat').textContent = `${pwrLabel} | HP ${hp}%`;
+  }
 
-        bullets.forEach((b, bi) => {
-          if (b.x < en.x + en.w && b.x + b.w > en.x && b.y < en.y + en.h && b.y + b.h > en.y) {
-            bullets.splice(bi, 1);
-            if (en.type === "bell") {
-              player.power = 2;
-              document.getElementById("gameHudRight").innerText = "POWER: 2x!";
-              showToast("🔔 TwinBee Power-Up!");
-            } else {
-              entities.splice(ei, 1);
-              stageKills++;
-              addScore(1, 0);
-              if (state.mode === "countryWar" && stageKills >= 10 && state.stage < 100) {
-                state.stage++; stageKills = 0;
-                document.getElementById("activeGameTitle").innerText = `⚔️ COUNTRY WAR • STAGE ${state.stage}/100`;
-                showToast(`Stage ${state.stage} Unlocked!`);
-              } else if (state.mode === "twinBee" && stageKills >= 12) {
-                twinLevel++; stageKills = 0;
-                document.getElementById("activeGameTitle").innerText = `🚀 TWINBEE • LEVEL ${twinLevel}`;
-              }
-            }
-          }
-        });
-        if (en.y > canvas.height) entities.splice(ei, 1);
-      });
+  for(let i=particles.length-1;i>=0;i--){
+    let p=particles[i];p.x+=p.vx;p.y+=p.vy;p.l--;
+    ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,3,3);
+    if(p.l<=0) particles.splice(i,1);
+  }
+  raf=requestAnimationFrame(loop);
+}
 
-      enemyBullets.forEach((eb, ebi) => {
-        eb.y += 4.5;
-        ctx.fillStyle = "#ef4444";
-        ctx.fillRect(eb.x, eb.y, eb.w, eb.h);
-        if (eb.x < player.x + player.w && eb.x + eb.w > player.x && eb.y < player.y + player.h && eb.y + eb.h > player.y) {
-          enemyBullets.splice(ebi, 1);
-          player.hp = Math.max(20, player.hp - 15);
-          document.getElementById("gameHudRight").innerText = `HP: ${player.hp}%`;
-        }
-        if (eb.y > canvas.height) enemyBullets.splice(ebi, 1);
-      });
-
-      loopId = requestAnimationFrame(gameLoop);
-    }    // POP-UP AD ON FIRST VISIT INTERACTION
-    let visitAdShown = false;
-    document.addEventListener("click", () => {
-      if (!visitAdShown) {
-        visitAdShown = true;
-        window.open("https://uplcm.com/4/12291052", "_blank");
-      }
-    }, { once: true });
-
-  </script>
+updateUI();
+</script>
 </body>
 </html>
