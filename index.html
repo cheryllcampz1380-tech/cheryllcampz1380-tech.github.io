@@ -671,7 +671,7 @@ function drawOrb(x,y,r,c){
 }
 function runBubble(){
   ctx.fillStyle='#091124';ctx.fillRect(0,0,360,560);
- .forEach(p=>{ctx.fillStyle='#1e293b';ctx.fillRect(p-26,532,52,22);ctx.fillStyle='#fbbf24';ctx.font='bold 9px sans-serif';ctx.fillText('+100 POT',p-21,546);});
+ [75,180,285].forEach(p=>{ctx.fillStyle='#1e293b';ctx.fillRect(p-26,532,52,22);ctx.fillStyle='#fbbf24';ctx.font='bold 9px sans-serif';ctx.fillText('+100 POT',p-21,546);});
   if(!shotBub&&curBub){
     ctx.strokeStyle='rgba(56,189,248,0.65)';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();
     ctx.moveTo(180,495);ctx.lineTo(180+Math.cos(aimAng)*220,495+Math.sin(aimAng)*220);ctx.stroke();ctx.setLineDash([]);
