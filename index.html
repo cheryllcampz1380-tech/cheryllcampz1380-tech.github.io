@@ -327,6 +327,8 @@ async function piLogin(){
     db.logged=true;saveDB();beep(700,.15);
   }catch(e){alert('Pi Browser authentication cancelled or unavailable.');}
 }
+    function gmailLogin(){const em=prompt('Enter your Gmail address to continue:');if(!em||!em.includes('@gmail.com'))return alert('Please enter a valid @gmail.com address.');const u=em.split('@');if(!db.user)db.user={name:'@'+u,email:em.toLowerCase(),pass:'GMAIL_AUTH',country:'🇵🇭 Philippines',myCode:u.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,10)||'GMAIL13',sponsor:'WARRIOR13',score:0,gems:25,days:1,warLv:1,brawlLv:1,bubLv:1,v4Reset:true,kyc:false,left:0,right:0};db.logged=true;saveDB();beep(700,.15);}
+
 function logoutUser(){db.logged=false;localStorage.setItem('wcb_v4',JSON.stringify(db));location.reload();}
 function saveDB(){localStorage.setItem('wcb_v4',JSON.stringify(db));renderUI();}
 function switchTab(id,el){
