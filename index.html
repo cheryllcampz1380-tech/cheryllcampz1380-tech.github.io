@@ -277,7 +277,8 @@ function beep(f,d,t='sine',v=0.06){try{if(actx.state==='suspended')actx.resume()
 let db=JSON.parse(localStorage.getItem('wcb_v4')||localStorage.getItem('wcb_v3')||'null')||{user:null,logged:false};
 if(db.user){
   if(db.logged===undefined)db.logged=true;
-  if(!db.user.v4Reset){db.user.warLv=1;db.user.brawlLv=1;db.user.bubLv=1;db.user.v4Reset=true;}
+  if(!db.user.v4Reset){db.user.warLv=4;db.user.brawlLv=4;db.user.bubLv=4;db.user.v4Reset=true;localStorage.setItem('wcb_v4',JSON.stringify(db));}
+
 }
 const reservedCodes=['ADMIN','ADMIN01'];
 
@@ -423,8 +424,9 @@ window.addEventListener('keydown',e=>keys[e.key]=true);
 window.addEventListener('keyup',e=>keys[e.key]=false);
 
 function startGame(m){
-  gMode=m;
-  const maxU=m==='war'?db.user.warLv:m==='brawl'?(db.user.brawlLv||1):db.user.bubLv;
+  const maxU=Math.max(4,m==='war'?(db.user.warLv||4):m==='brawl'?(db.user.brawlLv||4):(db.user.bubLv||4));
+
+  
   document.getElementById('lvModalTitle').textContent=(m==='war'?'COUNTRY WAR':m==='brawl'?'ARENA BRAWL':'BUBBLE EPIC')+' • STAGES 1–1000';
   const showMax=Math.max(20,Math.min(1000,maxU+11));
   let html='';
