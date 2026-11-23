@@ -1,788 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="https://quge5.com/88/tag.min.js" data-zone="313343" async data-cfasync="false"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>World Country Battle — 3-in-1 Anime Cyber Arena</title>
-  <script src="https://minepi.com"></script>
-  <script>
-    if (window.Pi) { Pi.init({ version: "2.0", sandbox: false }); }
-  </script>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>World Country Battle — Play & Earn</title>
+<script src="https://minepi.com"></script>
+<script src="https://quge5.com" data-zone="313343" async data-cfasync="false"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;user-select:none}
-body{background:#050811;color:#e2e8f0;min-height:100vh;display:flex;justify-content:center}
-.app{width:100%;max-width:480px;background:linear-gradient(180deg,#0c1426,#04070e);min-height:100vh;padding:12px 12px 74px;border-x:1px solid #1e293b;position:relative}
-.banner{background:rgba(245,158,11,.12);border:1px solid #d97706;color:#fcd34d;font-size:11px;padding:7px 9px;border-radius:8px;margin-bottom:10px;text-align:center}
-.hdr{text-align:center;padding:12px 8px;background:linear-gradient(145deg,#131d33,#080d19);border:1px solid #334155;border-radius:12px;box-shadow:0 0 20px rgba(56,189,248,.14);margin-bottom:10px}
-.hdr h1{font-size:20px;letter-spacing:1.4px;background:linear-gradient(90deg,#f8fafc,#fbbf24,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
-.hdr p{font-size:10px;color:#94a3b8;margin-top:3px;letter-spacing:.9px;text-transform:uppercase}
-.card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:12px;margin-bottom:10px}
-.card h3{font-size:12px;color:#38bdf8;letter-spacing:.7px;margin-bottom:8px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
-.inp-wrap{position:relative;margin-bottom:8px}
-input,select{width:100%;padding:10px;background:#060a12;border:1px solid #334155;border-radius:8px;color:#fff;font-size:13px;outline:none}
-.inp-wrap input{margin-bottom:0;padding-right:38px}
-.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#94a3b8;font-size:15px;cursor:pointer}
-.btn{width:100%;padding:11px;border:none;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;margin-top:6px}
-.btn:active{transform:scale(.98)}
-.btn-gold{background:linear-gradient(90deg,#d97706,#fbbf24);color:#090d16}
-.btn-cyan{background:linear-gradient(90deg,#0284c7,#38bdf8);color:#060a12}
-.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #334155}
-.row{display:flex;gap:8px}
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
-.stat{background:#090e1a;border:1px solid #1e293b;border-radius:8px;padding:8px;text-align:center}
-.stat b{display:block;font-size:14px;color:#fbbf24}
-.stat span{font-size:9px;color:#94a3b8}
-.game-card{background:linear-gradient(145deg,#111a2e,#0a101d);border:1px solid #334155;border-radius:10px;padding:10px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.g-logo{width:54px;height:54px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid #475569;background:#070c17}
-.game-info{flex:1}
-.game-info h4{font-size:13px;color:#f8fafc;margin-bottom:2px}
-.game-info p{font-size:10px;color:#94a3b8;line-height:1.3}
-.tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:4px;background:#1e293b;color:#38bdf8;font-weight:700;margin-bottom:3px}
-.play-btn{padding:9px 12px;border-radius:8px;border:none;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;font-weight:800;font-size:11px;cursor:pointer}
-.season2{border:1px dashed #475569;background:rgba(15,23,42,.5);text-align:center;padding:12px;border-radius:10px}
-.lb-row{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #1e293b;font-size:12px}
-.tree-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.leg{background:#080d18;border:1px solid #334155;border-radius:8px;padding:8px;text-align:center;font-size:11px}
-.nav{position:fixed;bottom:0;width:100%;max-width:480px;background:#0a101f;border-top:1px solid #1e293b;display:grid;grid-template-columns:repeat(4,1fr);z-index:40}
-.nav button{background:none;border:none;color:#64748b;padding:9px 4px;font-size:10px;font-weight:700;cursor:pointer}
-.nav button.active{color:#fbbf24;border-top:2px solid #fbbf24}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;user-select:none}
+body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:74px;overflow-x:hidden}
 .hidden{display:none!important}
-#arena{position:fixed;inset:0;background:#050810;z-index:50;display:flex;flex-direction:column;align-items:center}
-.hud{width:100%;max-width:480px;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#0b1120;border-bottom:1px solid #1e293b;font-size:11px;font-weight:700}
-canvas{background:#060a14;max-width:480px;width:100%;flex:1;touch-action:none}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:60;display:flex;align-items:center;justify-content:center;padding:14px}
-.modal-box{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:14px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto}
+.hdr{background:linear-gradient(135deg,#0f172a,#1e1b4b);padding:12px 14px;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
+.logo{font-weight:900;font-size:15px;background:linear-gradient(90deg,#38bdf8,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pill{background:#1e293b;border:1px solid #334155;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#fbbf24}
+.card{background:#111827;border:1px solid #1f2937;border-radius:14px;padding:14px;margin:12px}
+.inp{width:100%;background:#0f172a;border:1px solid #334155;color:#fff;padding:11px;border-radius:10px;margin-bottom:9px;font-size:13px}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:8px}
+.btn-gold{background:linear-gradient(90deg,#f59e0b,#eab308);color:#000}
+.btn-blue{background:#0284c7;color:#fff}
+.btn-pi{background:#7c3aed;color:#fff}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #334155}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#0f172a;border-top:1px solid #1e293b;display:flex;z-index:30}
+.nav button{flex:1;padding:10px 4px;background:none;border:none;color:#64748b;font-size:11px;font-weight:800;cursor:pointer}
+.nav button.active{color:#fbbf24;border-top:2px solid #fbbf24;background:rgba(251,191,36,0.06)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:50;padding:14px}
+.modal-box{background:#0f172a;border:1px solid #334155;border-radius:16px;padding:14px;width:100%;max-width:410px;max-height:88vh;overflow-y:auto}
+#arena{position:fixed;inset:0;background:#060a14;z-index:60;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="banner">⚠ Open in <b>Chrome</b>, <b>Safari</b>, or <b>Pi Browser</b> so your progress & rewards save properly.</div>
+<!-- AUTH FACE -->
+<div id="authScreen">
+  <div class="hdr"><div class="logo">⚔️ WORLD COUNTRY BATTLE</div><div class="pill">PI SDK + WEB3</div></div>
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#1e1b4b,#0f172a)">
+    <div style="font-size:32px;margin-bottom:4px">🐉⚔️🌍</div>
+    <h2 id="authTitle" style="font-size:18px;color:#fbbf24">WELCOME BACK!</h2>
+    <p id="authSub" style="font-size:12px;color:#38bdf8;margin-top:4px;cursor:pointer" onclick="switchAuth('reg')">Not a User? <b>Click Register</b></p>
+  </div>
+  <div class="card">
+    <div id="logBox">
+      <input id="lUser" class="inp" placeholder="Username or Gmail">
+      <div style="position:relative">
+        <input id="lPass" type="password" class="inp" placeholder="Password" style="padding-right:42px">
+        <span onclick="toggleEye('lPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
+      </div>
+      <div style="text-align:right;margin:-4px 0 10px"><span onclick="forgotPass()" style="font-size:11px;color:#38bdf8;cursor:pointer">Forgot Password?</span></div>
+      <button class="btn btn-blue" onclick="loginUser()">🔓 LOG IN</button>
+    </div>
+    <div id="regBox" class="hidden">
+      <input id="rName" class="inp" placeholder="Username (e.g. @Warrior13)">
+      <input id="rEmail" class="inp" placeholder="Gmail Address">
+      <div style="position:relative">
+        <input id="rPass" type="password" class="inp" placeholder="Write Password" style="padding-right:42px">
+        <span onclick="toggleEye('rPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
+      </div>
+      <div style="position:relative">
+        <input id="rPass2" type="password" class="inp" placeholder="Rewrite Password" style="padding-right:42px">
+        <span onclick="toggleEye('rPass2',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
+      </div>
+      <input id="rRef" class="inp" placeholder="Referral Code (Default: WARRIOR13)">
+      <p style="font-size:11px;color:#fbbf24;margin:-4px 0 9px">💡 Use <b>WARRIOR13</b> Referral code kung walay lain nag-invite!</p>
+      <button class="btn btn-gold" onclick="registerUser()">🚀 CONTINUE TO REGISTER</button>
+      <p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:4px;cursor:pointer" onclick="switchAuth('log')">Already have an account? <b style="color:#38bdf8">Log In</b></p>
+    </div>
+    <div style="border-top:1px solid #1e293b;margin:10px 0;padding-top:10px">
+      <button class="btn btn-dark" onclick="gmailLogin()">📧 CONTINUE WITH GMAIL</button>
+      <button class="btn btn-pi" onclick="piLogin()">🥧 CONTINUE WITH PI NETWORK (PI BROWSER)</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="appScreen" class="hidden">
   <div class="hdr">
-    <h1>WORLD COUNTRY BATTLE</h1>
-    <p>3-in-1 Sci-Fi & Retro Arcade Arena • Season 1</p>
+    <div><div class="logo">⚔️ WORLD COUNTRY BATTLE</div><div style="font-size:11px;color:#94a3b8" id="uTag">@User</div></div>
+    <div style="text-align:right"><div class="pill" id="ptsPill">0 PTS</div><div style="font-size:10px;color:#38bdf8;margin-top:2px" id="coinPill">🪙 500 COINS</div></div>
+  </div>
+  <!-- TAB 1: GAMES + FEATURED ADS -->
+  <div id="tabGames">
+    <div class="card" style="background:linear-gradient(90deg,#1e1b4b,#312e81);border-color:#fbbf24;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:10px;color:#fbbf24;font-weight:900">📢 FEATURED SPONSORED AD</div><div style="font-size:12px;font-weight:800">Watch Sponsor Ad for +150 PTS & 🪙 200</div></div>
+      <button class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px" onclick="watchFeaturedAd()">▶ WATCH AD</button>
+    </div>
+
+    <div class="card" style="border-color:#38bdf8;background:linear-gradient(135deg,#0f172a,#1e293b)">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><span class="pill" style="color:#38bdf8">1ST GAME • LIVE</span><h3 style="font-size:16px;margin-top:6px;color:#fbbf24">🐉 DRAGON WINGS: SKY BATTLE</h3><p style="font-size:11px;color:#94a3b8;margin-top:2px">1,000 Stages • 6 Waves + Dragonling Boss • Valkyrie Upgrade</p></div>
+        <div style="font-size:38px">🐉</div>
+      </div>
+      <button class="btn btn-gold" style="margin-top:10px;margin-bottom:0" onclick="openDragonMap()">▶ PLAY DRAGON WINGS</button>
+    </div>
+
+    <div class="card" style="opacity:0.75">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><span class="pill" style="color:#94a3b8">2ND GAME • NEXT UP</span><h3 style="font-size:15px;margin-top:6px">⚔️ ARENA BRAWL LEGENDS</h3><p style="font-size:11px;color:#94a3b8">Solo Showdown • Upgrading Next</p></div>
+        <div style="font-size:32px">😎</div>
+      </div>
+    </div>
+
+    <div class="card" style="opacity:0.75">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><span class="pill" style="color:#94a3b8">3RD GAME • COMING SOON</span><h3 style="font-size:15px;margin-top:6px">🔮 BUBBLE EPIC SHOOTER</h3><p style="font-size:11px;color:#94a3b8">+ More Games Opening Soon!</p></div>
+        <div style="font-size:32px">🔮</div>
+      </div>
+    </div>
   </div>
 
-  <!-- WELCOME BACK! AUTH SCREEN -->
-  <div id="authScreen">
+  <!-- TAB 2: REWARDS & BINARY TREE -->
+  <div id="tabRewards" class="hidden">
     <div class="card">
-      <h3>Welcome Back! <span style="font-size:10px;color:#fbbf24">1 Person = 1 Account</span></h3>
-      <div class="row" style="margin-bottom:8px">
-        <button id="tabReg" class="btn btn-gold" style="margin-top:0" onclick="switchAuth('reg')">Register</button>
-        <button id="tabLog" class="btn btn-dark" style="margin-top:0" onclick="switchAuth('log')">Already User? Log In</button>
+      <h3 style="color:#fbbf24;font-size:15px">🌳 BINARY TEAM & REFERRAL</h3>
+      <p style="font-size:12px;color:#94a3b8;margin:6px 0">Your Invite Code: <b id="myRefCode" style="color:#38bdf8;font-size:14px">WARRIOR13</b></p>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <div style="flex:1;background:#0f172a;padding:10px;border-radius:10px;text-align:center"><div style="font-size:10px;color:#94a3b8">LEFT TEAM</div><b id="leftCnt" style="color:#38bdf8;font-size:16px">12</b></div>
+        <div style="flex:1;background:#0f172a;padding:10px;border-radius:10px;text-align:center"><div style="font-size:10px;color:#94a3b8">RIGHT TEAM</div><b id="rightCnt" style="color:#10b981;font-size:16px">10</b></div>
       </div>
-
-      <div id="regBox">
-        <div class="inp-wrap"><input id="rName" placeholder="Full Name / @Callsign"></div>
-        <div class="inp-wrap"><input id="rEmail" type="email" placeholder="Valid Email Address"></div>
-        <div class="inp-wrap">
-          <input id="rPass" type="password" placeholder="Create Password (min. 6 chars)">
-          <button type="button" class="eye-btn" onclick="toggleEye('rPass',this)">🙈</button>
-        </div>
-        <div class="inp-wrap">
-          <input id="rPass2" type="password" placeholder="Rewrite Password">
-          <button type="button" class="eye-btn" onclick="toggleEye('rPass2',this)">🙈</button>
-        </div>
-        <div class="inp-wrap">
-          <select id="rCountry">
-            <option value="🇵🇭 PH">🇵🇭 Philippines</option>
-            <option value="🇺🇸 US">🇺🇸 United States</option>
-            <option value="🇯🇵 JP">🇯🇵 Japan</option>
-            <option value="🇰🇷 KR">🇰🇷 South Korea</option>
-            <option value="🇴🇲 OM">🇴🇲 Oman</option>
-            <option value="🌍 GL">🌍 Global Alliance</option>
-          </select>
-        </div>
-        <div class="inp-wrap"><input id="rMyCode" placeholder="Choose Your Unique Invite Code (e.g. ACE99)"></div>
-        <div class="inp-wrap"><input id="rSponsor" placeholder="Sponsor Invite Code (Optional, e.g. WARRIOR13)"></div>
-        <button class="btn btn-gold" onclick="registerUser()">Create Account & Enter</button>
-      </div>
-
-      <div id="logBox" class="hidden">
-        <div class="inp-wrap"><input id="lEmail" placeholder="Registered Email or @Callsign"></div>
-        <div class="inp-wrap">
-          <input id="lPass" type="password" placeholder="Enter Password">
-          <button type="button" class="eye-btn" onclick="toggleEye('lPass',this)">🙈</button>
-        </div>
-        <div style="text-align:right;margin-bottom:6px">
-          <a href="#" onclick="forgotPass()" style="font-size:11px;color:#38bdf8;text-decoration:none">Forgot Password?</a>
-        </div>
-        <button class="btn btn-gold" onclick="loginUser()">Log In to Arena</button>
-      </div>
-
-      <div class="row">
-        <button class="btn btn-dark" onclick="gmailLogin()">G Continue with Gmail</button>
-        <button class="btn btn-dark" onclick="piLogin()">π Pi Network Pioneers</button>
-      </div>
-      <div style="text-align:center;margin-top:8px;font-size:10px;color:#94a3b8">
-        By continuing, you agree to our <a href="#" onclick="openModal('termsModal')" style="color:#fbbf24">Rules, Prize Pool & Terms</a>.
-      </div>
+      <button class="btn btn-blue" style="margin-top:10px;margin-bottom:0" onclick="copyInvite()">📋 COPY INVITE LINK</button>
+    </div>
+    <div class="card">
+      <h3 style="color:#fbbf24;font-size:15px">💰 PI REWARD POOL & KYC</h3>
+      <p style="font-size:11px;color:#94a3b8;margin:6px 0">Top 100 Verified Players share the monthly Pi Network Prize Pool.</p>
+      <input id="kycHandle" class="inp" placeholder="Enter Pi Network @username for KYC">
+      <button class="btn btn-gold" style="margin-bottom:0" onclick="saveKyc()">✅ SUBMIT PI KYC</button>
     </div>
   </div>
-  <!-- MAIN LOBBY -->
-  <div id="lobbyScreen" class="hidden">
-    <div class="stat-grid">
-      <div class="stat"><b id="stScore">0</b><span>TOTAL PTS</span></div>
-      <div class="stat"><b id="stGems">0</b><span>GEMS</span></div>
-      <div class="stat"><b id="stDays">1/30</b><span>ACTIVE DAYS</span></div>
+
+  <!-- TAB 3: RANKINGS -->
+  <div id="tabLB" class="hidden">
+    <div class="card"><h3 style="color:#fbbf24;font-size:15px;margin-bottom:8px">🏆 GLOBAL LEADERBOARD</h3><div id="lbList"></div></div>
+  </div>
+
+  <!-- TAB 4: ACCOUNT -->
+  <div id="tabAcc" class="hidden">
+    <div class="card">
+      <h3 style="color:#fbbf24;font-size:15px">👤 CEO / PLAYER PROFILE</h3>
+      <div id="accInfo" style="font-size:12px;line-height:1.8;margin:8px 0;color:#e2e8f0"></div>
+      <button class="btn btn-dark" style="border-color:#ef4444;color:#ef4444;margin-bottom:0" onclick="logoutUser()">🚪 LOG OUT</button>
     </div>
+  </div>
 
-    <!-- TAB 1: GAMES -->
-    <div id="tabGames" class="card">
-      <h3>Select Combat Arena <span style="font-size:10px;color:#10b981">Season 1</span></h3>
-
-      <!-- GAME 1: COUNTRY WAR -->
-      <div class="game-card">
-        <div class="g-logo">
-          <svg width="38" height="38" viewBox="0 0 40 40"><polygon points="20,3 34,33 20,26 6,33" fill="#38bdf8"/><polygon points="20,8 27,28 20,23 13,28" fill="#fbbf24"/><circle cx="20" cy="18" r="3" fill="#ef4444"/></svg>
-        </div>
-        <div class="game-info">
-          <span class="tag" id="warLvTag">LEVEL 1 / 500</span>
-          <h4>Country War: Galaxy</h4>
-          <p>Multi-wing starfighters, nebula waves, [S]/[P] lasers & alien bosses.</p>
-        </div>
-        <button class="play-btn" onclick="startGame('war')">PLAY</button>
-      </div>
-
-      <!-- GAME 2: ARENA BRAWL MOBA -->
-      <div class="game-card">
-        <div class="g-logo">
-          <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#f43f5e" stroke-width="3"/><path d="M12,28 L28,12 M28,28 L12,12" stroke="#fbbf24" stroke-width="3"/><circle cx="20" cy="20" r="4" fill="#38bdf8"/></svg>
-        </div>
-        <div class="game-info">
-          <span class="tag">MOBA SURVIVAL</span>
-          <h4>Arena Brawl Legends</h4>
-          <p>3 Hero Classes, cyber-arena combat, special skills & survival kills.</p>
-        </div>
-        <button class="play-btn" onclick="startGame('brawl')">PLAY</button>
-      </div>
-
-      <!-- GAME 3: BUBBLE EPIC -->
-      <div class="game-card">
-        <div class="g-logo">
-          <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="14" cy="15" r="7" fill="#ef4444"/><circle cx="26" cy="15" r="7" fill="#38bdf8"/><circle cx="20" cy="26" r="7" fill="#fbbf24"/><circle cx="12" cy="13" r="2" fill="#fff"/></svg>
-        </div>
-        <div class="game-info">
-          <span class="tag" id="bubLvTag">LEVEL 1 / 500</span>
-          <h4>Bubble Epic Shooter</h4>
-          <p>Match 3 orbs, Fireball boosts, bonus pots & 3-Star level victories.</p>
-        </div>
-        <button class="play-btn" onclick="startGame('bubble')">PLAY</button>
-      </div>
-
-      <div class="season2">
-        <b style="color:#fbbf24;font-size:12px">🔒 MORE GAMES COMING SOON (SEASON 2)</b>
-        <p style="font-size:10px;color:#64748b;margin-top:3px">Unlocking at 5,000 Verified Pioneers • Bigger Prize Pool!</p>
-      </div>
+  <!-- BOTTOM NAVIGATION -->
+  <div class="nav">
+    <button id="navGames" class="active" onclick="switchTab('Games')">🎮 Games</button>
+    <button id="navRewards" onclick="switchTab('Rewards')">🎁 Rewards</button>
+    <button id="navLB" onclick="switchTab('LB')">🏆 Rankings</button>
+    <button id="navAcc" onclick="switchTab('Acc')">👤 Account</button>
+  </div>
+</div>
+<!-- DRAGON WINGS WINDING MAP & PRE-BATTLE -->
+<div id="dragonMapModal" class="modal hidden">
+  <div class="modal-box" style="background:linear-gradient(180deg,#1e1b4b,#0f172a)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div><h3 style="color:#fbbf24;font-size:15px">🐉 DRAGON WINGS MAP</h3><span style="font-size:11px;color:#38bdf8" id="chapLabel">Chapter 1 (Stages 1-1 to 1-5)</span></div>
+      <button class="btn btn-dark" style="width:auto;padding:5px 10px;margin:0;font-size:11px" onclick="closeDragonMap()">🏠 LOBBY</button>
     </div>
-    <!-- TAB 2: REWARDS & INVITES -->
-    <div id="tabRewards" class="card hidden">
-      <h3>🎁 Daily Login & Season Milestones</h3>
-      <div style="background:#080d18;border:1px solid #334155;border-radius:8px;padding:10px;margin-bottom:8px">
-        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
-          <span>Season 1 Milestone (1,000 Users)</span>
-          <b style="color:#fbbf24">₱1,000 Pool (Top 10)</b>
-        </div>
-        <div style="background:#1e293b;height:8px;border-radius:4px;overflow:hidden">
-          <div style="background:linear-gradient(90deg,#f59e0b,#10b981);width:34%;height:100%"></div>
-        </div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:4px">Next Goal: 5,000 Users → <b>₱5,000 Prize Pool</b> (GCash / PayPal)</div>
-      </div>
-
-      <button class="btn btn-gold" onclick="claimDaily()">📅 Claim Daily Login (+25 Gems)</button>
-
-      <h3 style="margin-top:12px">🌳 Binary Invite Tree (Left & Right)</h3>
-      <p style="font-size:10px;color:#94a3b8;margin-bottom:6px">Invite rewards unlock <b>ONLY after both you and your invitee are KYC Verified</b>.</p>
-      <div class="tree-box">
-        <div class="leg">
-          <span style="color:#38bdf8;font-weight:700">LEFT TEAM</span>
-          <div style="font-size:16px;font-weight:900;margin:3px 0" id="leftCnt">0</div>
-          <span style="font-size:9px;color:#10b981" id="leftStatus">KYC Verified: 0</span>
-        </div>
-        <div class="leg">
-          <span style="color:#fbbf24;font-weight:700">RIGHT TEAM</span>
-          <div style="font-size:16px;font-weight:900;margin:3px 0" id="rightCnt">0</div>
-          <span style="font-size:9px;color:#10b981" id="rightStatus">KYC Verified: 0</span>
-        </div>
-      </div>
-      <button class="btn btn-cyan" onclick="copyInvite()">📋 Copy My Unique Invite Link</button>
+    <div style="background:#111827;border:1px solid #334155;border-radius:10px;padding:8px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:11px;color:#fbbf24" id="valkStat">🧚 VALKYRIE LV. 1/10 (ATK 12)</div><div style="font-size:10px;color:#94a3b8">Upgrade firepower for Boss Waves!</div></div>
+      <button class="btn btn-blue" style="width:auto;padding:6px 10px;margin:0;font-size:11px" id="upgBtn" onclick="upgradeValkyrie()">UPGRADE (🪙 200)</button>
     </div>
-    <!-- TAB 3: 3 GAME LEADERBOARDS (24H REFRESH) -->
-    <div id="tabLB" class="card hidden">
-      <h3>🏆 24H Live Leaderboards <span id="lbTimer" style="font-size:10px;color:#fbbf24">23:59:59</span></h3>
-      <div style="font-size:11px;color:#38bdf8;font-weight:700;margin:6px 0">⚔️ Country War: Galaxy (Lv. 1–500)</div>
-      <div id="lbWar"></div>
-      <div style="font-size:11px;color:#f43f5e;font-weight:700;margin:10px 0 6px">🔥 Arena Brawl Legends (Survival)</div>
-      <div id="lbBrawl"></div>
-      <div style="font-size:11px;color:#fbbf24;font-weight:700;margin:10px 0 6px">🔮 Bubble Epic Shooter (Lv. 1–500)</div>
-      <div id="lbBubble"></div>
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <button class="btn btn-dark" style="margin:0;padding:6px;font-size:11px" onclick="changeChap(-1)">◀ PREV CHAPTER</button>
+      <button class="btn btn-dark" style="margin:0;padding:6px;font-size:11px" onclick="changeChap(1)">NEXT CHAPTER ▶</button>
     </div>
-
-    <!-- TAB 4: ACCOUNT & KYC -->
-    <div id="tabAcc" class="card hidden">
-      <h3>👤 Pilot Profile & KYC</h3>
-      <div style="background:#080d18;padding:10px;border-radius:8px;font-size:12px;line-height:1.7;margin-bottom:8px">
-        <div>Name: <b id="accName" style="color:#38bdf8">-</b></div>
-        <div>Email: <b id="accEmail">-</b></div>
-        <div>Unique Invite Code: <b id="accCode" style="color:#fbbf24">-</b></div>
-        <div>KYC Status: <b id="accKyc" style="color:#ef4444">Unverified</b></div>
-      </div>
-      <input id="kycFull" placeholder="Full Legal Name (1 Person = 1 Account)" style="margin-bottom:8px">
-      <select id="kycMethod" style="margin-bottom:8px">
-        <option value="GCash">GCash (Philippines)</option>
-        <option value="PayPal">PayPal (International USD)</option>
-      </select>
-      <input id="kycHandle" placeholder="GCash Number or PayPal Email" style="margin-bottom:8px">
-      <button class="btn btn-gold" onclick="submitKYC()">🛡 Submit KYC Verification</button>
-      <button class="btn btn-dark" onclick="openModal('termsModal')">📜 View Rules, Top 10 Prizes & Terms</button>
-      <button class="btn btn-dark" onclick="logout()">🚪 Log Out</button>
-    </div>
-
-    <!-- BOTTOM NAVIGATION BAR -->
-    <div class="nav">
-      <button id="navGames" class="active" onclick="showTab('Games')">🎮<br>Games</button>
-      <button id="navRewards" onclick="showTab('Rewards')">🎁<br>Rewards</button>
-      <button id="navLB" onclick="showTab('LB')">🏆<br>Rankings</button>
-      <button id="navAcc" onclick="showTab('Acc')">👤<br>Account</button>
-    </div>
+    <div id="windingPath" style="display:flex;flex-direction:column;gap:8px;padding:6px 0"></div>
   </div>
 </div>
 
-<!-- GAME ARENA OVERLAY -->
+<!-- PRE-BATTLE PREVIEW & BOOSTERS -->
+<div id="preBattleModal" class="modal hidden">
+  <div class="modal-box" style="text-align:center">
+    <h3 id="pbTitle" style="color:#fbbf24;font-size:17px">STAGE 1-1</h3>
+    <p style="font-size:11px;color:#94a3b8;margin:4px 0 10px">6 Waves • Wave 6/6: ⚠️ DRAGONLING BOSS</p>
+    <div style="background:#111827;padding:10px;border-radius:10px;margin-bottom:10px;text-align:left;font-size:11px">
+      <div style="color:#fbbf24;margin-bottom:4px">⭐ 3-STAR CHALLENGES:</div>
+      <div>• Clear all 6 Waves & Boss</div>
+      <div>• Finish within 300 seconds</div>
+      <div>• Defeat Enemy Squadron</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button id="bstShield" class="btn btn-dark" style="margin:0;font-size:11px" onclick="toggleBoost('shield')">🛡️ SHIELD: OFF</button>
+      <button id="bstExp" class="btn btn-dark" style="margin:0;font-size:11px" onclick="toggleBoost('exp')">⚡ 2X PTS: OFF</button>
+    </div>
+    <button class="btn btn-gold" onclick="launchDragonBattle()">🚀 START BATTLE</button>
+    <button class="btn btn-dark" style="margin-bottom:0" onclick="document.getElementById('preBattleModal').classList.add('hidden')">⬅ BACK TO MAP</button>
+  </div>
+</div>
+
+<!-- DRAGON WINGS BATTLE ARENA -->
 <div id="arena" class="hidden">
-  <div class="hud">
-    <button onclick="stopGame()" style="background:#1e293b;color:#fff;border:none;padding:5px 9px;border-radius:6px">⬅ Exit</button>
-    <span id="hudTitle" style="color:#38bdf8">COUNTRY WAR • LV 1</span>
-    <span id="hudStat" style="color:#fbbf24">PTS 0</span>
+  <div style="background:#0f172a;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e293b;font-size:11px;font-weight:800">
+    <button onclick="exitArena()" style="background:#ef4444;color:#fff;border:none;border-radius:6px;padding:4px 8px">⬅ EXIT</button>
+    <span id="hudStage" style="color:#fbbf24">STAGE 1-1</span>
+    <span id="hudWave" style="color:#38bdf8">Wave: 1/6</span>
+    <span id="hudHp" style="color:#10b981">❤️ 100%</span>
   </div>
-  <canvas id="cv" width="360" height="560"></canvas>
+  <div id="bossBarWrap" class="hidden" style="background:#450a0a;padding:4px 10px;text-align:center;font-size:11px;color:#fca5a5">
+    ⚠️ BOSS INCOMING: DRAGONLING
+    <div style="background:#1f2937;height:8px;border-radius:6px;margin-top:3px;overflow:hidden"><div id="bossHpFill" style="background:#ef4444;height:100%;width:100%"></div></div>
+  </div>
+  <canvas id="gameCanvas" style="flex:1;width:100%;display:block;touch-action:none"></canvas>
+</div>
+<!-- 3-STAR VICTORY MODAL -->
+<div id="winModal" class="modal hidden">
+  <div class="modal-box" style="text-align:center;border-color:#fbbf24">
+    <div style="font-size:34px">⭐⭐⭐</div>
+    <h3 id="winTitle" style="color:#fbbf24;font-size:18px;margin:4px 0">STAGE 1-1 CLEAR!</h3>
+    <p id="winSub" style="font-size:12px;color:#38bdf8;margin-bottom:12px">+150 PTS & +200 COINS</p>
+    <button id="adTripleBtn" class="btn btn-gold" onclick="claimTripleAd()">▶ WATCH AD FOR 3X REWARD</button>
+    <button class="btn btn-blue" style="margin-bottom:0" onclick="finishStageReturn()">NEXT (BACK TO MAP) ▶</button>
+  </div>
 </div>
 
-<!-- TERMS & PRIZE POOL MODAL -->
-<div id="termsModal" class="modal hidden">
-  <div class="modal-box">
-    <h3 style="color:#fbbf24;margin-bottom:8px">📜 Rules, Milestones & Top 10 Prizes</h3>
-    <div style="font-size:11px;color:#cbd5e1;line-height:1.5">
-      <p style="margin-bottom:6px"><b>1. Anti-Dummy & 1 Account Rule:</b> Strictly 1 person = 1 account = 1 device. Multiple or dummy accounts are permanently banned.</p>
-      <p style="margin-bottom:6px"><b>2. KYC-Locked Invite Rewards:</b> Referral bonuses unlock ONLY when both inviter and invitee complete KYC verification.</p>
-      <p style="margin-bottom:6px"><b>3. Milestone Prize Pools (GCash / PayPal):</b><br>• <b>Season 1 (1,000 Verified Users): ₱1,000 Pool</b> (1st ₱300, 2nd ₱200, 3rd ₱120, 4th ₱80, 5th ₱60, 6th–8th ₱50, 9th–10th ₱45)<br>• <b>Season 2 (5,000 Verified Users): ₱5,000 Pool</b> (1st ₱1,500, 2nd ₱1,000, 3rd ₱600, 4th ₱400, 5th ₱300, 6th–8th ₱250, 9th–10th ₱225) — scales higher as users grow!</p>
-      <p><b>4. Eligibility:</b> Top 10 winners must be KYC Verified with 30 unique active days.</p>
-    </div>
-    <button class="btn btn-gold" onclick="closeModal('termsModal')">I UNDERSTAND</button>
-  </div>
-</div>
-  <script>
-const actx=new(window.AudioContext||window.webkitAudioContext)();
-function beep(f,d,t='sine',v=0.06){try{if(actx.state==='suspended')actx.resume();const o=actx.createOscillator(),g=actx.createGain();o.type=t;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d);}catch(e){}}
+<script>
+const CEO_EMAIL='cheryllcamporedondo121380@gmail.com';
+const defaultDB={user:null,users:{},lb:[{name:'Sagittarius13 (CEO)',pts:7285},{name:'AlphaPi',pts:5420},{name:'DragonSlayer',pts:4190},{name:'MindanaoAce',pts:3350}]};
+let db=JSON.parse(localStorage.getItem('wcb_v5')||'null')||defaultDB;
+function saveDB(){localStorage.setItem('wcb_v5',JSON.stringify(db));}
+try{if(window.Pi)Pi.init({version:"2.0",sandbox:false});}catch(e){}
 
-let db=JSON.parse(localStorage.getItem('wcb_v4')||localStorage.getItem('wcb_v3')||'null')||{user:null,logged:false};
-if(db.user){
-  if(db.logged===undefined)db.logged=true;
-  if(!db.user.v4Reset){db.user.warLv=4;db.user.brawlLv=4;db.user.bubLv=4;db.user.v4Reset=true;localStorage.setItem('wcb_v4',JSON.stringify(db));}
-
-}
-const reservedCodes=['ADMIN','ADMIN01'];
-
-function toggleEye(id,btn){const el=document.getElementById(id);el.type=el.type==='password'?'text':'password';btn.textContent=el.type==='password'?'🙈':'👁';}
+function toggleEye(id,el){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';el.textContent=i.type==='password'?'👁️':'🙈';}
 function switchAuth(m){
-  document.getElementById('regBox').classList.toggle('hidden',m!=='reg');
   document.getElementById('logBox').classList.toggle('hidden',m!=='log');
-  document.getElementById('tabReg').className=m==='reg'?'btn btn-gold':'btn btn-dark';
-  document.getElementById('tabLog').className=m==='log'?'btn btn-gold':'btn btn-dark';
+  document.getElementById('regBox').classList.toggle('hidden',m!=='reg');
+  document.getElementById('authTitle').textContent=m==='log'?'WELCOME BACK!':'CREATE WARRIOR ACCOUNT';
+  document.getElementById('authSub').innerHTML=m==='log'?'Not a User? <b>Click Register</b>':'Use <b>WARRIOR13</b> Referral Code';
+}
+function enterAsCeo(){
+  const ceo={name:'Sagittarius13',email:CEO_EMAIL,pass:'ceo13',ref:'WARRIOR13',pts:7285,coins:2500,maxStage:4,valkLv:1,left:12,right:10,kyc:'@Sagittarius13 (VERIFIED)'};
+  db.users[CEO_EMAIL]=db.users[CEO_EMAIL]||ceo;
+  db.user=db.users[CEO_EMAIL];saveDB();openApp();
 }
 function registerUser(){
-  if(db.user)return alert('Security Alert: 1 Person = 1 Account = 1 Device only! Please Log In to your existing account.');
-  const name=document.getElementById('rName').value.trim(),email=document.getElementById('rEmail').value.trim().toLowerCase();
-  const p1=document.getElementById('rPass').value,p2=document.getElementById('rPass2').value,country=document.getElementById('rCountry').value;
-  const myCode=document.getElementById('rMyCode').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
-  const sponsor=document.getElementById('rSponsor').value.trim().toUpperCase()||'WARRIOR13';
-  if(!name||!email||!email.includes('@'))return alert('Please enter a valid Name and Email Address.');
-  if(p1.length<6)return alert('Password must be at least 6 characters.');
-  if(p1!==p2)return alert('Passwords do not match! Please rewrite carefully.');
-  if(myCode.length<4||reservedCodes.includes(myCode))return alert('Choose a unique invite code (at least 4 letters/numbers).');
-  db.user={name:name.startsWith('@')?name:'@'+name,email,pass:p1,country,myCode,sponsor,score:0,gems:25,days:1,warLv:1,brawlLv:1,bubLv:1,v4Reset:true,kyc:false,left:0,right:0};
-  db.logged=true;saveDB();beep(600,.15);
+  const n=document.getElementById('rName').value.trim(),em=document.getElementById('rEmail').value.trim().toLowerCase(),p1=document.getElementById('rPass').value,p2=document.getElementById('rPass2').value,rf=(document.getElementById('rRef').value.trim()||'WARRIOR13').toUpperCase();
+  if(!n||!em||!p1)return alert('Please fill Username, Gmail, and Password!');
+  if(p1!==p2)return alert('Passwords do not match! Check Write & Rewrite Password.');
+  if(em===CEO_EMAIL)return enterAsCeo();
+  db.users[em]={name:n,email:em,pass:p1,ref:rf,pts:300,coins:500,maxStage:4,valkLv:1,left:1,right:0,kyc:'Pending'};
+  db.user=db.users[em];saveDB();openApp();
 }
 function loginUser(){
-  const id=document.getElementById('lEmail').value.trim().toLowerCase(),pw=document.getElementById('lPass').value;
-  if(!db.user)return alert('No account found on this device. Please Register first.');
-  if((id===db.user.email||id===db.user.name.toLowerCase())&&pw===db.user.pass){db.logged=true;saveDB();beep(600,.15);}
-  else alert('Invalid Email/Username or Password.');
+  const u=document.getElementById('lUser').value.trim().toLowerCase(),p=document.getElementById('lPass').value;
+  if(u===CEO_EMAIL||u==='sagittarius13')return enterAsCeo();
+  const found=Object.values(db.users).find(x=>x.email===u||x.name.toLowerCase()===u);
+  if(!found||found.pass!==p)return alert('Invalid login! Click Register or use CEO Gmail.');
+  db.user=found;saveDB();openApp();
 }
-function forgotPass(){
-  if(!db.user)return alert('No registered account on this device.');
-  const em=prompt('Enter your registered Email or GCash/PayPal handle to reset password:');
-  if(!em)return;const clean=em.trim().toLowerCase();
-  if(clean===db.user.email||(db.user.kycHandle&&clean===db.user.kycHandle.toLowerCase())){
-    const np=prompt('Verified! Enter new password (min. 6 characters):');
-    if(np&&np.length>=6){db.user.pass=np;db.logged=true;saveDB();alert('Password updated & logged in!');}
-  }else alert('Email or Handle did not match our records.');
+function forgotPass(){const em=prompt('Enter your registered Gmail:');if(em&&db.users[em.toLowerCase()])alert('Password recovery: Your password is '+db.users[em.toLowerCase()].pass);else alert('Account not found. Please Click Register.');}
+function gmailLogin(){const em=prompt('Enter Gmail to Continue:',CEO_EMAIL);if(!em)return;if(em.trim().toLowerCase()===CEO_EMAIL)return enterAsCeo();document.getElementById('rEmail').value=em.trim();switchAuth('reg');}
+function piLogin(){
+  if(window.Pi){Pi.authenticate(['username','payments'],function(auth){const un=auth.user.username;db.user={name:un,email:un+'@pi.network',ref:'WARRIOR13',pts:500,coins:800,maxStage:4,valkLv:1,left:2,right:1,kyc:'@'+un+' (Pi SDK)'};saveDB();openApp();},function(){alert('Open inside Pi Browser for Pi SDK, or log in with Gmail!');});}
+  else alert('Please open inside Pi Browser to connect Pi Developer SDK!');
 }
-async function piLogin(){
-  try{
-    if(typeof Pi==='undefined')return alert('Open inside Pi Browser to sign in with Pi Network.');
-    const auth=await Pi.authenticate(['username'],()=>{});
-    const uname='@'+auth.user.username;
-    if(!db.user){
-      db.user={name:uname,email:auth.user.username+'@pi.network',pass:'PI_AUTH',country:'🌐 Pi Pioneer',myCode:auth.user.username.toUpperCase().slice(0,10),sponsor:'WARRIOR13',score:0,gems:25,days:1,warLv:1,brawlLv:1,bubLv:1,v4Reset:true,kyc:false,left:0,right:0};
-    }
-    db.logged=true;saveDB();beep(700,.15);
-  }catch(e){alert('Pi Browser authentication cancelled or unavailable.');}
-}
-    function gmailLogin(){const em=prompt('Enter your Gmail address to continue:');if(!em||!em.includes('@gmail.com'))return alert('Please enter a valid @gmail.com address.');const u=em.split('@');if(!db.user)db.user={name:'@'+u,email:em.toLowerCase(),pass:'GMAIL_AUTH',country:'🇵🇭 Philippines',myCode:u.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,10)||'GMAIL13',sponsor:'WARRIOR13',score:0,gems:25,days:1,warLv:1,brawlLv:1,bubLv:1,v4Reset:true,kyc:false,left:0,right:0};db.logged=true;saveDB();beep(700,.15);}
-
-function logoutUser(){db.logged=false;localStorage.setItem('wcb_v4',JSON.stringify(db));location.reload();}
-function saveDB(){localStorage.setItem('wcb_v4',JSON.stringify(db));renderUI();}
-function switchTab(id,el){
-  ['tabGames','tabRewards','tabRank','tabAcc'].forEach(t=>document.getElementById(t).classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');
-}
-function openModal(id){document.getElementById(id).classList.remove('hidden');}
-function closeModal(id){document.getElementById(id).classList.add('hidden');}
-function claimDaily(){
-  const today=new Date().toDateString();
-  if(db.user.lastClaim===today)return alert('Already claimed today! Come back tomorrow.');
-  db.user.lastClaim=today;db.user.gems+=25;db.user.days=Math.min(30,db.user.days+1);
-  triggerAdRefresh();saveDB();beep(800,.15);alert('+25 Gems & +1 Active Day claimed!');
-}
-function claimFeatured(){
-  if(!db.user)return;db.user.score+=50;db.user.gems+=15;
-  triggerAdRefresh();saveDB();beep(880,.15);alert('+50 Featured Sponsor Pts & +15 Gems added!');
-}
-function copyInvite(){
-  const link=`${location.origin}${location.pathname}?ref=${db.user.myCode}`;
-  navigator.clipboard?.writeText(link);
-  alert(`Invite Link Copied!\n${link}\n\nReminder: Rewards unlock ONLY when both you and your invitee are KYC Verified.`);
-}
-function submitKYC(){
-  const fn=document.getElementById('kycFullName').value.trim(),m=document.getElementById('kycMethod').value,h=document.getElementById('kycHandle').value.trim();
-  if(!fn||!h)return alert('Enter your Full Legal Name and GCash/PayPal details.');
-  db.user.kyc=true;db.user.kycName=fn;db.user.kycMethod=m;db.user.kycHandle=h;
-  saveDB();beep(900,.2);alert('KYC Submitted & Verified! Your Binary Invite Tree is now eligible to unlock rewards.');
-}
-const seedWar=[{n:'@KazeRyu_JP',c:'🇯🇵',v:'Lv.42'},{n:'@SeoulStrike',c:'🇰🇷',v:'Lv.38'},{n:'@ManilaAce',c:'🇵🇭',v:'Lv.35'}];
-const seedBrawl=[{n:'@TokyoViper',c:'🇯🇵',v:'1,420 K'},{n:'@BusanTitan',c:'🇰🇷',v:'1,190 K'},{n:'@CebuBlade',c:'🇵🇭',v:'980 K'}];
-const seedBub=[{n:'@SakuraPop',c:'🇯🇵',v:'Lv.55'},{n:'@HanRiver_KR',c:'🇰🇷',v:'Lv.49'},{n:'@DavaoQueen',c:'🇵🇭',v:'Lv.44'}];
-
-function renderLBList(elId,arr,me){
-  const list=[...arr,me];
-  document.getElementById(elId).innerHTML=list.map((x,i)=>`<div class="lb-row"><div><span class="rank">#${i+1}</span> <b>${x.n}</b> <span style="font-size:10px;color:#94a3b8">${x.c}</span></div><b style="color:#38bdf8">${x.v}</b></div>`).join('');
-}
-
-document.body.insertAdjacentHTML('beforeend',`
-<div id="lvModal" class="modal hidden">
-  <div class="modal-box" style="text-align:center">
-    <h3 id="lvModalTitle" style="color:#fbbf24;justify-content:center">STAGES 1–1000</h3>
-    <p style="font-size:10px;color:#94a3b8;margin-bottom:8px">Level 1 Open • Clear each stage to unlock the next locked level!</p>
-    <div id="lvGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-height:260px;overflow-y:auto;margin-bottom:10px"></div>
-    <button class="btn btn-dark" onclick="closeModal('lvModal')">CLOSE</button>
-  </div>
-</div>`);
-document.getElementById('tabRewards')?.insertAdjacentHTML('beforeend',`<button class="btn btn-dark" style="margin-top:6px;border-color:#fbbf24;color:#fbbf24" onclick="claimFeatured()">⭐ Featured Sponsor Bonus (+50 Pts & +15 Gems)</button>`);
-
-function renderUI(){
-  if(!db.logged||!db.user)return;
-  const u=db.user;if(!u.brawlLv)u.brawlLv=1;
+function openApp(){
   document.getElementById('authScreen').classList.add('hidden');
-  document.getElementById('lobbyScreen').classList.remove('hidden');
-  document.getElementById('stScore').textContent=u.score.toLocaleString();
-  document.getElementById('stGems').textContent=u.gems;
-  document.getElementById('stDays').textContent=u.days+'/30';
-  document.getElementById('warLvTag').textContent=`UNLOCKED: LV ${u.warLv} / 1000`;
-  document.getElementById('bubLvTag').textContent=`UNLOCKED: LV ${u.bubLv} / 1000`;
-  document.getElementById('accName').textContent=`${u.name} (${u.country})`;
-  document.getElementById('accEmail').textContent=u.email;
-  document.getElementById('accCode').textContent=u.myCode;
-  document.getElementById('accKyc').textContent=u.kyc?`✅ Verified (${u.kycMethod})`:'❌ Unverified';
-  document.getElementById('accKyc').style.color=u.kyc?'#10b981':'#ef4444';
-  document.getElementById('leftCnt').textContent=u.left;
-  document.getElementById('rightCnt').textContent=u.right;
-  document.getElementById('leftStatus').textContent=`KYC Verified: ${u.kyc?u.left:0}`;
-  document.getElementById('rightStatus').textContent=`KYC Verified: ${u.kyc?u.right:0}`;
-  renderLBList('lbWar',seedWar,{n:u.name,c:u.country.split(' '),v:`Lv.${u.warLv}`});
-  renderLBList('lbBrawl',seedBrawl,{n:u.name,c:u.country.split(' '),v:`Lv.${u.brawlLv}`});
-  renderLBList('lbBubble',seedBub,{n:u.name,c:u.country.split(' '),v:`Lv.${u.bubLv}`});
+  document.getElementById('appScreen').classList.remove('hidden');
+  renderUI();
 }
-setInterval(()=>{
-  const now=new Date(),rem=86400-(now.getHours()*3600+now.getMinutes()*60+now.getSeconds());
-  const h=String(Math.floor(rem/3600)).padStart(2,'0'),m=String(Math.floor((rem%3600)/60)).padStart(2,'0'),s=String(rem%60).padStart(2,'0');
-  const el=document.getElementById('lbTimer');if(el)el.textContent=`${h}:${m}:${s}`;
-},1000);
-
-function triggerAdRefresh(){
-  try{
-    const s=document.createElement('script');s.src='https://quge5.com';
-    s.setAttribute('data-zone','313343');s.async=true;document.body.appendChild(s);
-  }catch(e){}
+function renderUI(){
+  const u=db.user;if(!u)return;
+  document.getElementById('uTag').textContent=(u.email===CEO_EMAIL?'👑 CEO ':'@')+u.name+' • Ref: '+u.ref;
+  document.getElementById('ptsPill').textContent=u.pts.toLocaleString()+' PTS';
+  document.getElementById('coinPill').textContent='🪙 '+u.coins.toLocaleString()+' COINS';
+  document.getElementById('myRefCode').textContent=u.ref;
+  document.getElementById('leftCnt').textContent=u.left||0;
+  document.getElementById('rightCnt').textContent=u.right||0;
+  document.getElementById('accInfo').innerHTML=`<b>Code Name:</b> ${u.name}<br><b>Gmail:</b> ${u.email}<br><b>Referral Code:</b> ${u.ref}<br><b>Pi KYC:</b> ${u.kyc}<br><b>Dragon Stage Unlocked:</b> ${u.maxStage}/1000`;
+  const list=[{name:u.name+(u.email===CEO_EMAIL?' (CEO)':' (YOU)'),pts:u.pts},...db.lb.filter(x=>!x.name.includes(u.name))].sort((a,b)=>b.pts-a.pts);
+  document.getElementById('lbList').innerHTML=list.map((p,i)=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;font-size:12px"><span>#${i+1} ${p.name}</span><b style="color:#fbbf24">${p.pts.toLocaleString()} PTS</b></div>`).join('');
 }
-setInterval(triggerAdRefresh,300000);
-
-const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-let gMode='',raf=null,frame=0,px=180,py=480,hp=100,pwr=1,score=0,lv=1,kills=0,stageState='play',stageMsg='';
-let bullets=[],enemies=[],drops=[],parts=[],keys={};
-window.addEventListener('keydown',e=>keys[e.key]=true);
-window.addEventListener('keyup',e=>keys[e.key]=false);
-
-function startGame(m){
-  const maxU=Math.max(4,m==='war'?(db.user.warLv||4):m==='brawl'?(db.user.brawlLv||4):(db.user.bubLv||4));
-
-  
-  document.getElementById('lvModalTitle').textContent=(m==='war'?'COUNTRY WAR':m==='brawl'?'ARENA BRAWL':'BUBBLE EPIC')+' • STAGES 1–1000';
-  const showMax=Math.max(20,Math.min(1000,maxU+11));
-  let html='';
-  for(let i=1;i<=showMax;i++){
-    const open=i<=maxU;
-    html+=`<button onclick="${open?`launchStage(${i})`:`alert('🔒 Stage ${i} is LOCKED! Clear Stage ${maxU} first.')`}" style="padding:8px 2px;border-radius:7px;border:1px solid ${open?'#38bdf8':'#1e293b'};background:${open?'#0f2942':'#070b14'};color:${open?'#fff':'#475569'};font-size:10px;font-weight:800;cursor:pointer">${open?`LV ${i}`:`🔒 ${i}`}</button>`;
+function switchTab(t){
+  ['Games','Rewards','LB','Acc'].forEach(k=>{
+    document.getElementById('tab'+k).classList.toggle('hidden',k!==t);
+    document.getElementById('nav'+k).classList.toggle('active',k===t);
+  });renderUI();
+}
+function logoutUser(){db.user=null;saveDB();location.reload();}
+function copyInvite(){navigator.clipboard?.writeText('https://github.io);alert('Copied Invite Link with Code: '+db.user.ref);}
+function saveKyc(){const v=document.getElementById('kycHandle').value.trim();if(!v)return alert('Enter Pi @username');db.user.kyc=v+' (Submitted)';saveDB();renderUI();alert('Pi KYC Saved!');}
+function watchFeaturedAd(){db.user.pts+=150;db.user.coins+=200;saveDB();renderUI();alert('🎉 Sponsored Ad Watched! +150 PTS & +200 COINS added!');}
+let curChap=1,selStage=1,boostShield=false,boostExp=false,dLoop=null,dRun=false;
+let px=180,py=420,pHp=100,wave=1,waveTimer=0,enemies=[],bullets=[],drops=[],boss=null,lastPts=0,lastCoins=0,adClaimed=false;
+function stageLabel(s){const ch=Math.ceil(s/5),st=((s-1)%5)+1;return ch+'-'+st;}
+function openDragonMap(){
+  const maxU=db.user.maxStage||4;
+  curChap=Math.ceil(maxU/5);
+  renderDragonMap();
+  document.getElementById('dragonMapModal').classList.remove('hidden');
+}
+function closeDragonMap(){document.getElementById('dragonMapModal').classList.add('hidden');}
+function changeChap(d){curChap=Math.max(1,Math.min(200,curChap+d));renderDragonMap();}
+function upgradeValkyrie(){
+  const lv=db.user.valkLv||1,cost=lv*200;
+  if(lv>=10)return alert('Valkyrie is already MAX Level 10!');
+  if(db.user.coins<cost)return alert('Need '+cost+' Coins to upgrade!');
+  db.user.coins-=cost;db.user.valkLv=lv+1;saveDB();renderUI();renderDragonMap();
+}
+function renderDragonMap(){
+  const maxU=db.user.maxStage||4,lv=db.user.valkLv||1,cost=lv*200;
+  const startS=(curChap-1)*5+1,endS=curChap*5;
+  document.getElementById('chapLabel').textContent=`Chapter ${curChap} (Stages ${stageLabel(startS)} to ${stageLabel(endS)})`;
+  document.getElementById('valkStat').textContent=`🧚 VALKYRIE LV. ${lv}/10 (ATK ${10+lv*4})`;
+  document.getElementById('upgBtn').textContent=lv>=10?'MAX LV':`UPGRADE (🪙 ${cost})`;
+  let h='';
+  for(let s=startS;s<=endS;s++){
+    const open=s<=maxU,isBoss=(s%5===0),align=(s%2===0)?'flex-end':'flex-start';
+    h+=`<div style="display:flex;justify-content:${align}"><button onclick="${open?`selectStage(${s})`:`alert('🔒 Stage ${stageLabel(s)} is LOCKED! Clear Stage ${stageLabel(maxU)} first.')`}" style="width:72%;padding:12px;border-radius:12px;border:2px solid ${open?'#fbbf24':'#334155'};background:${open?(isBoss?'#7f1d1d':'#1e3a8a'):'#0f172a'};color:${open?'#fff':'#64748b'};font-weight:800;font-size:12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center"><span>${isBoss?'🐲 BOSS ':'⚔️ '}STAGE ${stageLabel(s)}</span><span>${open?(s<maxU?'✅ CLEAR':'▶ PLAY'):'🔒 LOCKED'}</span></button></div>`;
   }
-  document.getElementById('lvGrid').innerHTML=html;
-  openModal('lvModal');
+  document.getElementById('windingPath').innerHTML=h;
 }
-function launchStage(sel){
-  closeModal('lvModal');lv=sel;
+function selectStage(s){
+  selStage=s;boostShield=false;boostExp=false;
+  document.getElementById('pbTitle').textContent='STAGE '+stageLabel(s);
+  document.getElementById('bstShield').textContent='🛡️ SHIELD: OFF';
+  document.getElementById('bstExp').textContent='⚡ 2X PTS: OFF';
+  document.getElementById('preBattleModal').classList.remove('hidden');
+}
+function toggleBoost(t){
+  if(t==='shield'){boostShield=!boostShield;document.getElementById('bstShield').textContent='🛡️ SHIELD: '+(boostShield?'ON':'OFF');}
+  else{boostExp=!boostExp;document.getElementById('bstExp').textContent='⚡ 2X PTS: '+(boostExp?'ON':'OFF');}
+}
+function launchDragonBattle(){
+  document.getElementById('preBattleModal').classList.add('hidden');
+  document.getElementById('dragonMapModal').classList.add('hidden');
   document.getElementById('arena').classList.remove('hidden');
-  loadLevel();cancelAnimationFrame(raf);loop();
+  document.getElementById('bossBarWrap').classList.add('hidden');
+  const c=document.getElementById('gameCanvas'),ctx=c.getContext('2d');
+  c.width=c.offsetWidth||360;c.height=c.offsetHeight||540;
+  px=c.width/2;py=c.height-90;pHp=boostShield?160:100;wave=1;waveTimer=0;enemies=[];bullets=[];drops=[];boss=null;dRun=true;
+  document.getElementById('hudStage').textContent='STAGE '+stageLabel(selStage);
+  spawnWave();
+  c.ontouchmove=e=>{e.preventDefault();const r=c.getBoundingClientRect();px=Math.max(25,Math.min(c.width-25,e.touches.item(0).clientX-r.left));py=Math.max(60,Math.min(c.height-35,e.touches.item(0).clientY-r.top));};
+  if(dLoop)clearInterval(dLoop);
+  dLoop=setInterval(()=>runDragon(ctx,c.width,c.height),30);
 }
-function endStage(win,msg){
-  if(stageState!=='play')return;
-  stageState=win?'win':'lose';stageMsg=msg;triggerAdRefresh();
-  if(win){
-    beep(880,.2);
-    if(db.user){
-      db.user.score+=score;
-      if(gMode==='war'&&lv>=db.user.warLv)db.user.warLv=Math.min(1000,lv+1);
-      if(gMode==='brawl'&&lv>=(db.user.brawlLv||1))db.user.brawlLv=Math.min(1000,lv+1);
-      if(gMode==='bubble'&&lv>=db.user.bubLv)db.user.bubLv=Math.min(1000,lv+1);
-      saveDB();
-    }
-    if(lv<1000)lv++;
-  }else beep(110,.25,'sawtooth');
+function exitArena(){dRun=false;clearInterval(dLoop);document.getElementById('arena').classList.add('hidden');openDragonMap();}
+function spawnWave(){
+  document.getElementById('hudWave').textContent='Wave: '+wave+'/6';
+  if(wave<6){for(let i=0;i<3+Math.min(5,Math.floor(selStage/3));i++)enemies.push({x:40+Math.random()*260,y:-30-i*45,hp:18+selStage*4,max:18+selStage*4,vx:(Math.random()-0.5)*2,vy:1.4+Math.min(2,selStage*0.04)});}
+  else{document.getElementById('bossBarWrap').classList.remove('hidden');const bhp=180+selStage*35;boss={x:180,y:95,hp:bhp,max:bhp,vx:2.2};}
 }
-function loadLevel(){
-  frame=0;px=180;py=480;hp=100;pwr=1;score=0;kills=0;stageState='play';
-  bullets=[];enemies=[];drops=[];parts=[];
-  if(gMode==='war')initWar(lv);if(gMode==='brawl')initBrawl(lv);if(gMode==='bubble')initBubble(lv);
-}
-function stopGame(){cancelAnimationFrame(raf);saveDB();document.getElementById('arena').classList.add('hidden');}
-function boom(x,y,c,n=8){for(let i=0;i<n;i++)parts.push({x,y,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,c,l:22});}
-
-let warWave=0,warMaxWave=4,warShield=0;
-function initWar(l){warWave=0;warMaxWave=3+Math.min(5,Math.floor(l/10));warShield=0;spawnWarWave(1);}
-function spawnWarWave(w){
-  const boss=(w===warMaxWave);
+function runDragon(ctx,W,H){
+  if(!dRun)return;waveTimer++;
+  ctx.fillStyle='#060a14';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(56,189,248,0.18)';for(let i=0;i<18;i++)ctx.fillRect((i*53)%W,(waveTimer*4+i*71)%H,2,12);
+  const lv=db.user.valkLv||1,dmg=10+lv*4;
+  if(waveTimer%7===0){bullets.push({x:px-10,y:py-22,d:dmg});bullets.push({x:px+10,y:py-22,d:dmg});if(lv>=3)bullets.push({x:px,y:py-28,d:dmg});}
+  ctx.font='34px Arial';ctx.textAlign='center';ctx.fillText('🐉',px,py+10);ctx.font='18px Arial';ctx.fillText('🧚',px-26,py+14);ctx.fillText('🧚',px+26,py+14);
+  ctx.fillStyle='#38bdf8';bullets.forEach((b,i)=>{b.y-=12;ctx.fillRect(b.x-2,b.y,4,14);if(b.y<-10)bullets.splice(i,1);});
+  enemies.forEach((en,ei)=>{
+    en.x+=en.vx;en.y+=en.vy;if(en.x<25||en.x>W-25)en.vx*=-1;if(en.y>H+20)en.y=-20;
+    ctx.font='28px Arial';ctx.fillText('👾',en.x,en.y+8);
+    bullets.forEach((b,bi)=>{if(Math.hypot(b.x-en.x,b.y-en.y)<24){en.hp-=b.d;bullets.splice(bi,1);if(en.hp<=0){enemies.splice(ei,1);if(Math.random()<0.3)drops.push({x:en.x,y:en.y});}}});
+    if(Math.hypot(px-en.x,py-en.y)<28){pHp-=1;if(pHp<=0){dRun=false;clearInterval(dLoop);alert('DEFEATED! Upgrade Valkyrie or try again.');exitArena();}}
+  });
+  drops.forEach((dr,di)=>{dr.y+=2.5;ctx.font='20px Arial';ctx.fillText('🧪',dr.x,dr.y);if(Math.hypot(px-dr.x,py-dr.y)<28){pHp=Math.min(160,pHp+20);drops.splice(di,1);}});
   if(boss){
-    const mhp=40+lv*8;
-    enemies.push({boss:true,x:180,y:85,vx:1.6,vy:0,hp:mhp,maxHp:mhp,fireCd:50});
-  }else{
-    const rows=2+Math.min(2,Math.floor(lv/15));
-    for(let r=0;r<rows;r++){
-      for(let c=0;c<6;c++){
-        const mhp=2+Math.floor(lv/5);
-        enemies.push({boss:false,x:48+c*52,y:-30-r*38,ty:70+r*38,vx:0.9,vy:1.6,hp:mhp,maxHp:mhp,fireCd:80+c*15});
-      }
-    }
-  }
+    boss.x+=boss.vx;if(boss.x<55||boss.x>W-55)boss.vx*=-1;
+    ctx.font='58px Arial';ctx.fillText('🐲',boss.x,boss.y+18);
+    if(waveTimer%45===0)enemies.push({x:boss.x,y:boss.y+25,hp:15+selStage*2,max:15,vx:(Math.random()-0.5)*3,vy:2.6});
+    bullets.forEach((b,bi)=>{if(Math.hypot(b.x-boss.x,b.y-boss.y)<42){boss.hp-=b.d;bullets.splice(bi,1);document.getElementById('bossHpFill').style.width=Math.max(0,boss.hp/boss.max*100)+'%';if(boss.hp<=0){boss=null;winDragonStage();}}});
+  }else if(enemies.length===0&&wave<6){wave++;spawnWave();}
+  document.getElementById('hudHp').textContent='❤️ '+Math.max(0,Math.round(pHp))+'%';
 }
-function runWar(){
-  if(keys['ArrowLeft']||keys['a'])px=Math.max(28,px-5);
-  if(keys['ArrowRight']||keys['d'])px=Math.min(332,px+5);
-  if(warShield>0)warShield--;
-  const grd=ctx.createLinearGradient(0,0,0,560);
-  grd.addColorStop(0,'#090418');grd.addColorStop(0.5,'#160b30');grd.addColorStop(1,'#041322');
-  ctx.fillStyle=grd;ctx.fillRect(0,0,360,560);
-  ctx.fillStyle='rgba(168,85,247,0.14)';ctx.beginPath();ctx.arc(210,230,95,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='rgba(56,189,248,0.5)';for(let i=0;i<26;i++)ctx.fillRect((i*67)%360,(frame*3+i*31)%560,2,2);
-
-  if(frame%10===0){
-    beep(440,.03,'square',0.02);
-    bullets.push({x:px,y:py-28,vx:0,vy:-11,c:'#fbbf24',w:4,dmg:1});
-    if(pwr>=2){bullets.push({x:px-16,y:py-14,vx:0,vy:-11,c:'#38bdf8',w:4,dmg:1},{x:px+16,y:py-14,vx:0,vy:-11,c:'#38bdf8',w:4,dmg:1});}
-    if(pwr>=3){bullets.push({x:px-24,y:py-8,vx:-2.2,vy:-10,c:'#f43f5e',w:5,dmg:1.5},{x:px+24,y:py-8,vx:2.2,vy:-10,c:'#f43f5e',w:5,dmg:1.5});}
-    if(pwr>=4){bullets.push({x:px,y:py-32,vx:0,vy:-14,c:'#a855f7',w:12,dmg:2.5});}
-  }
-  for(let i=bullets.length-1;i>=0;i--){
-    const b=bullets[i];b.x+=b.vx;b.y+=b.vy;
-    ctx.shadowBlur=8;ctx.shadowColor=b.c;ctx.fillStyle=b.c;ctx.fillRect(b.x-(b.w||4)/2,b.y-12,b.w||4,18);ctx.shadowBlur=0;
-    if(b.y<-20||b.y>580)bullets.splice(i,1);
-    else if(b.enemy&&Math.hypot(b.x-px,b.y-py)<22){
-      bullets.splice(i,1);if(warShield<=0){hp-=15;beep(95,.15,'sawtooth');if(hp<=0){endStage(false,'Starfighter Destroyed! Retry Stage.');return;}}
-    }
-  }
-  for(let i=enemies.length-1;i>=0;i--){
-    const e=enemies[i];
-    if(!e.boss&&e.y<e.ty)e.y+=e.vy;else{e.x+=e.vx;if(e.x<34||e.x>326)e.vx*=-1;}
-    e.fireCd--;
-    if(e.fireCd<=0){
-      e.fireCd=e.boss?38:140;
-      if(e.boss){bullets.push({enemy:true,x:e.x-28,y:e.y+24,vx:-1.4,vy:4.2,c:'#ef4444',w:8},{enemy:true,x:e.x,y:e.y+28,vx:0,vy:4.8,c:'#f97316',w:10},{enemy:true,x:e.x+28,y:e.y+24,vx:1.4,vy:4.2,c:'#ef4444',w:8});}
-      else if(Math.random()<0.35)bullets.push({enemy:true,x:e.x,y:e.y+14,vx:0,vy:3.8,c:'#f43f5e',w:6});
-    }
-    const s=e.boss?2.1:0.85;
-    ctx.save();ctx.translate(e.x,e.y);ctx.scale(s,s);
-    ctx.fillStyle=e.boss?'#991b1b':'#0e7490';
-    ctx.beginPath();ctx.moveTo(0,22);ctx.lineTo(-26,4);ctx.lineTo(-18,-18);ctx.lineTo(18,-18);ctx.lineTo(26,4);ctx.closePath();ctx.fill();
-    ctx.fillStyle=e.boss?'#ef4444':'#38bdf8';
-    ctx.beginPath();ctx.moveTo(0,16);ctx.lineTo(-12,-12);ctx.lineTo(12,-12);ctx.closePath();ctx.fill();
-    ctx.fillStyle='#fbbf24';ctx.fillRect(-14,-4,6,8);ctx.fillRect(8,-4,6,8);
-    ctx.restore();
-    if(e.boss){ctx.fillStyle='#1e293b';ctx.fillRect(50,12,260,9);ctx.fillStyle='#ef4444';ctx.fillRect(50,12,(e.hp/e.maxHp)*260,9);}
-
-    for(let j=bullets.length-1;j>=0;j--){
-      const b=bullets[j];if(b.enemy)continue;
-      if(Math.hypot(b.x-e.x,b.y-e.y)<(e.boss?44:20)){
-        bullets.splice(j,1);e.hp-=(b.dmg||1);boom(b.x,b.y,'#38bdf8',4);
-        if(e.hp<=0){
-          score+=(e.boss?1200:90);beep(150,.1,'sawtooth');boom(e.x,e.y,'#fbbf24',16);
-          if(Math.random()<0.22||e.boss)drops.push({x:e.x,y:e.y,t:Math.random()<0.5?'S':'P'});
-          enemies.splice(i,1);
-        }
-        break;
-      }
-    }
-  }
-  if(enemies.length===0&&stageState==='play'){
-    if(warWave+1<warMaxWave){warWave++;spawnWarWave(warWave+1);}
-    else{endStage(true,`Galaxy Sector ${lv} Cleared! +${score} Pts`);return;}
-  }
-  for(let i=drops.length-1;i>=0;i--){
-    const d=drops[i];d.y+=2.2;
-    ctx.fillStyle=d.t==='S'?'#10b981':'#f59e0b';ctx.beginPath();ctx.arc(d.x,d.y,12,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#fff';ctx.font='bold 11px sans-serif';ctx.fillText(d.t,d.x-4,d.y+4);
-    if(Math.hypot(px-d.x,py-d.y)<28){if(d.t==='S')warShield=240;else pwr=Math.min(4,pwr+1);score+=100;beep(880,.14);drops.splice(i,1);}
-    else if(d.y>570)drops.splice(i,1);
-  }
-  ctx.fillStyle='#7c3aed';ctx.beginPath();ctx.moveTo(px,py-16);ctx.lineTo(px-30,py+16);ctx.lineTo(px+30,py+16);ctx.closePath();ctx.fill();
-  ctx.fillStyle='#f8fafc';ctx.beginPath();ctx.moveTo(px,py-30);ctx.lineTo(px-14,py+14);ctx.lineTo(px,py+8);ctx.lineTo(px+14,py+14);ctx.closePath();ctx.fill();
-  ctx.fillStyle='#fbbf24';ctx.fillRect(px-22,py+2,4,12);ctx.fillRect(px+18,py+2,4,12);
-  ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.ellipse(px,py-8,4,9,0,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle=frame%4<2?'#38bdf8':'#fff';ctx.fillRect(px-9,py+15,5,8+Math.random()*6);ctx.fillRect(px+4,py+15,5,8+Math.random()*6);
-  if(warShield>0){ctx.strokeStyle='#10b981';ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,py,34,0,Math.PI*2);ctx.stroke();}
-  document.getElementById('hudTitle').textContent=`WAR • STAGE ${lv}/1000`;
-  document.getElementById('hudStat').textContent=`PWR ${pwr}x | HP ${hp}%`;
+function winDragonStage(){
+  dRun=false;clearInterval(dLoop);document.getElementById('arena').classList.add('hidden');
+  lastPts=(120+selStage*20)*(boostExp?2:1);lastCoins=150+selStage*25;adClaimed=false;
+  db.user.pts+=lastPts;db.user.coins+=lastCoins;
+  if(selStage>=(db.user.maxStage||4))db.user.maxStage=Math.min(1000,selStage+1);
+  saveDB();renderUI();
+  document.getElementById('winTitle').textContent='STAGE '+stageLabel(selStage)+' CLEAR!';
+  document.getElementById('winSub').textContent=`+${lastPts} PTS & +${lastCoins} COINS (Stage ${stageLabel(db.user.maxStage)} Unlocked!)`;
+  document.getElementById('adTripleBtn').textContent='▶ WATCH AD FOR 3X REWARD';
+  document.getElementById('winModal').classList.remove('hidden');
 }
-let joy={on:false,bx:72,by:485,dx:0,dy:0},skillCd=0,shieldCd=0,shieldOn=0,novaRing=0,brawlTarget=6,safeR=250;
-function initBrawl(l){
-  px=180;py=290;joy={on:false,bx:72,by:485,dx:0,dy:0};skillCd=0;shieldCd=0;shieldOn=0;novaRing=0;
-  brawlTarget=4+Math.min(18,Math.floor(l/2));safeR=260;
+function claimTripleAd(){
+  if(adClaimed)return alert('3X Ad Bonus already claimed for this stage!');
+  adClaimed=true;db.user.pts+=lastPts*2;db.user.coins+=lastCoins*2;saveDB();renderUI();
+  document.getElementById('adTripleBtn').textContent='✅ 3X REWARD CLAIMED!';
+  alert(`🎉 3X SPONSOR BONUS! Added +${lastPts*2} PTS & +${lastCoins*2} COINS!`);
 }
-function brawlAttack(){
-  beep(520,.04,'triangle',0.03);
-  let near=null,best=999;
-  enemies.forEach(e=>{const d=Math.hypot(e.x-px,e.y-py);if(d<best){best=d;near=e;}});
-  const ang=near?Math.atan2(near.y-py,near.x-px):(joy.dx||joy.dy?Math.atan2(joy.dy,joy.dx):-Math.PI/2);
-  bullets.push({x:px,y:py,vx:Math.cos(ang)*10,vy:Math.sin(ang)*10,dmg:2});
-}
-function brawlShield(){
-  if(shieldCd>0)return;shieldCd=140;shieldOn=90;beep(640,.12);
-}
-function castSkill(){
-  if(skillCd>0)return;skillCd=110;novaRing=135;beep(720,.2,'triangle');
-  for(let i=enemies.length-1;i>=0;i--){
-    if(Math.hypot(enemies[i].x-px,enemies[i].y-py)<140){
-      enemies[i].hp-=6;if(enemies[i].hp<=0){kills++;score+=180;boom(enemies[i].x,enemies[i].y,'#fbbf24',12);enemies.splice(i,1);}
-    }
-  }
-}
-function runBrawl(){
-  let vx=joy.dx*4.2,vy=joy.dy*4.2;
-  if(keys['ArrowLeft']||keys['a'])vx=-4.2;if(keys['ArrowRight']||keys['d'])vx=4.2;
-  if(keys['ArrowUp']||keys['w'])vy=-4.2;if(keys['ArrowDown']||keys['s'])vy=4.2;
-  if(keys[' '])castSkill();
-  px=Math.max(24,Math.min(336,px+vx));py=Math.max(44,Math.min(430,py+vy));
-  if(skillCd>0)skillCd--;if(shieldCd>0)shieldCd--;if(shieldOn>0)shieldOn--;if(novaRing>0)novaRing-=9;
-  if(safeR>115)safeR-=0.04;
-
-  ctx.fillStyle='#141830';ctx.fillRect(0,0,360,560);
-  ctx.strokeStyle='#242c54';for(let x=0;x<360;x+=40)for(let y=0;y<450;y+=40)ctx.strokeRect(x,y,40,40);
-  // Cherry Blossom Arena Corners & Tactical Pillars
-  ctx.fillStyle='rgba(244,114,182,0.22)';ctx.beginPath();ctx.arc(36,64,34,0,Math.PI*2);ctx.arc(324,64,34,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#334155';ctx.fillRect(85,155,42,36);ctx.fillRect(233,280,42,36);
-  ctx.strokeStyle='rgba(56,189,248,0.35)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(180,245,safeR,0,Math.PI*2);ctx.stroke();
-
-  if(kills+enemies.length<brawlTarget&&frame%55===0&&enemies.length<4){
-    const boss=(kills+enemies.length+1===brawlTarget),side=Math.floor(Math.random()*4);
-    const mhp=boss?(14+lv*3):(3+Math.floor(lv/4));
-    enemies.push({boss,x:side===0?20:side===1?340:60+Math.random()*240,y:side===2?45:side===3?420:60+Math.random()*340,hp:mhp,maxHp:mhp});
-  }
-  if(frame%18===0&&enemies.length>0)brawlAttack();
-  for(let i=bullets.length-1;i>=0;i--){
-    const b=bullets[i];b.x+=b.vx;b.y+=b.vy;
-    ctx.shadowBlur=8;ctx.shadowColor='#38bdf8';ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.arc(b.x,b.y,5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-    if(b.x<0||b.x>360||b.y<0||b.y>450)bullets.splice(i,1);
-  }
-  for(let i=enemies.length-1;i>=0;i--){
-    const e=enemies[i],ang=Math.atan2(py-e.y,px-e.x),spd=e.boss?1.05:1.25;
-    e.x+=Math.cos(ang)*spd;e.y+=Math.sin(ang)*spd;
-    const r=e.boss?20:14;
-    ctx.fillStyle='rgba(0,0,0,0.45)';ctx.beginPath();ctx.ellipse(e.x,e.y+r,r,6,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=e.boss?'#991b1b':'#be123c';ctx.beginPath();ctx.arc(e.x,e.y,r,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#fbbf24';ctx.fillRect(e.x-r*0.6,e.y-4,r*1.2,5);
-    ctx.fillStyle='#10b981';ctx.fillRect(e.x-r,e.y-r-8,(e.hp/e.maxHp)*(r*2),4);
-    for(let j=bullets.length-1;j>=0;j--){
-      if(Math.hypot(bullets[j].x-e.x,bullets[j].y-e.y)<r+5){
-        bullets.splice(j,1);e.hp-=(bullets[j]?.dmg||2);boom(e.x,e.y,'#f43f5e',5);
-        if(e.hp<=0){kills++;score+=(e.boss?600:140);beep(180,.1);boom(e.x,e.y,'#fbbf24',12);enemies.splice(i,1);}
-        break;
-      }
-    }
-    if(e&&Math.hypot(px-e.x,py-e.y)<r+14&&shieldOn<=0){
-      hp-=0.35;if(hp<=0){endStage(false,'Arena Defeat! Use Shield & Nova.');return;}
-    }
-  }
-  if(kills>=brawlTarget&&enemies.length===0&&stageState==='play'){endStage(true,`Arena Stage ${lv} Cleared! +${score} Pts`);return;}
-  if(novaRing>0){ctx.strokeStyle='#38bdf8';ctx.lineWidth=4;ctx.beginPath();ctx.arc(px,py,145-novaRing,0,Math.PI*2);ctx.stroke();}
-  // Cyber-Samurai Hero
-  ctx.fillStyle='rgba(0,0,0,0.45)';ctx.beginPath();ctx.ellipse(px,py+15,15,6,0,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#0284c7';ctx.beginPath();ctx.arc(px,py,15,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='#fbbf24';ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle='#38bdf8';ctx.fillRect(px-9,py-4,18,5);
-  ctx.fillStyle='#f8fafc';ctx.fillRect(px+12,py-16,4,24);
-  if(shieldOn>0){ctx.strokeStyle='#10b981';ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,py,24,0,Math.PI*2);ctx.stroke();}
-  // Bottom Control Deck (Joystick Left + 3 Skill Buttons Right)
-  ctx.fillStyle='rgba(7,11,20,0.92)';ctx.fillRect(0,446,360,114);
-  ctx.strokeStyle='rgba(56,189,248,0.4)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(72,498,38,0,Math.PI*2);ctx.stroke();
-  ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.arc(72+joy.dx*22,498+joy.dy*22,16,0,Math.PI*2);ctx.fill();
-  const btns=[{x:210,y:504,r:22,c:'#0284c7',t:'ATK'},{x:264,y:492,r:22,c:shieldCd===0?'#10b981':'#334155',t:'SHD'},{x:320,y:480,r:26,c:skillCd===0?'#f59e0b':'#334155',t:'NOVA'}];
-  btns.forEach(b=>{ctx.fillStyle=b.c;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 10px sans-serif';ctx.textAlign='center';ctx.fillText(b.t,b.x,b.y+4);});
-  ctx.textAlign='left';
-  document.getElementById('hudTitle').textContent=`ARENA • STAGE ${lv}/1000`;
-  document.getElementById('hudStat').textContent=`${kills}/${brawlTarget} | HP ${Math.ceil(hp)}%`;
-}
-const bCols=['#ef4444','#38bdf8','#fbbf24','#10b981','#a855f7'];
-let bubGrid=[],curBub=null,nextBub=null,shotBub=null,aimAng=-Math.PI/2,shotsLeft=25,fireballMode=false;
-
-function initBubble(l){
-  bubGrid=[];shotBub=null;fireballMode=false;
-  const rows=l===1?3:Math.min(7,3+Math.floor(l/15));
-  const cols=bCols.slice(0,l===1?3:Math.min(5,3+Math.floor(l/10)));
-  shotsLeft=24+rows*4;
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<8;c++){
-      const x=34+c*40+(r%2)*16,y=44+r*34;
-      if(x<335)bubGrid.push({x,y,c:cols[Math.floor(Math.random()*cols.length)]});
-    }
-  }
-  curBub={x:180,y:495,c:cols[Math.floor(Math.random()*cols.length)]};
-  nextBub={c:cols[Math.floor(Math.random()*cols.length)]};
-}
-function dropFloating(){
-  let anchored=bubGrid.filter(b=>b.y<=54),changed=true;
-  while(changed){
-    changed=false;
-    bubGrid.forEach(b=>{
-      if(!anchored.includes(b)&&anchored.some(a=>Math.hypot(a.x-b.x,a.y-b.y)<46)){anchored.push(b);changed=true;}
-    });
-  }
-  for(let i=bubGrid.length-1;i>=0;i--){
-    if(!anchored.includes(bubGrid[i])){
-      boom(bubGrid[i].x,bubGrid[i].y,bubGrid[i].c,9);score+=120;bubGrid.splice(i,1);
-    }
-  }
-}
-function popCluster(target){
-  let cluster=[target],changed=true;
-  while(changed){
-    changed=false;
-    bubGrid.forEach(b=>{
-      if(!cluster.includes(b)&&b.c===target.c&&cluster.some(m=>Math.hypot(m.x-b.x,m.y-b.y)<46)){cluster.push(b);changed=true;}
-    });
-  }
-  if(cluster.length>=3){
-    cluster.forEach(b=>{boom(b.x,b.y,b.c,6);bubGrid.splice(bubGrid.indexOf(b),1);});
-    score+=cluster.length*65;beep(760,.14);dropFloating();
-  }
-}
-function drawOrb(x,y,r,c,fire=false){
-  ctx.fillStyle=fire?'#f97316':c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle=fire?'#fde047':'rgba(255,255,255,0.4)';ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,0.55)';ctx.beginPath();ctx.arc(x-5,y-5,4,0,Math.PI*2);ctx.fill();
-}
-function runBubble(){
-  ctx.fillStyle='#091124';ctx.fillRect(0,0,360,560);
-  new Array(60,180,300).forEach(p=>{ctx.fillStyle='#1e293b';ctx.fillRect(p-26,532,52,22);ctx.fillStyle='#fbbf24';ctx.font='bold 9px sans-serif';ctx.fillText('+100 POT',p-21,546);});
-  ctx.fillStyle=fireballMode?'#f97316':'#334155';ctx.beginPath();ctx.arc(245,505,18,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#fff';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.fillText('FIRE',245,508);ctx.textAlign='left';
-  if(!shotBub&&curBub){
-    ctx.strokeStyle=fireballMode?'#f97316':'rgba(56,189,248,0.65)';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();
-    ctx.moveTo(180,495);ctx.lineTo(180+Math.cos(aimAng)*230,495+Math.sin(aimAng)*230);ctx.stroke();ctx.setLineDash([]);
-  }
-  bubGrid.forEach(b=>drawOrb(b.x,b.y,17,b.c));
-  if(curBub)drawOrb(180,495,17,curBub.c,fireballMode);
-  if(nextBub){drawOrb(122,505,11,nextBub.c);ctx.fillStyle='#94a3b8';ctx.font='9px sans-serif';ctx.fillText('NEXT',110,526);}
-  if(shotBub){
-    shotBub.x+=shotBub.vx;shotBub.y+=shotBub.vy;
-    if(shotBub.x<18||shotBub.x>342)shotBub.vx*=-1;
-    drawOrb(shotBub.x,shotBub.y,17,shotBub.c,shotBub.fire);
-    if(shotBub.fire){
-      for(let i=bubGrid.length-1;i>=0;i--){if(Math.hypot(bubGrid[i].x-shotBub.x,bubGrid[i].y-shotBub.y)<32){boom(bubGrid[i].x,bubGrid[i].y,'#f97316',8);score+=80;bubGrid.splice(i,1);}}
-      if(shotBub.y<36){shotBub=null;dropFloating();}
-    }else{
-      const hit=bubGrid.find(b=>Math.hypot(b.x-shotBub.x,b.y-shotBub.y)<33);
-      if(hit||shotBub.y<36){
-        const nb={x:shotBub.x,y:Math.max(40,shotBub.y),c:shotBub.c};
-        bubGrid.push(nb);shotBub=null;popCluster(nb);
-      }
-    }
-    if(!shotBub){
-      const pool=[...new Set(bubGrid.map(b=>b.c))];
-      const useCols=pool.length?pool:bCols.slice(0,3);
-      curBub={x:180,y:495,c:nextBub?nextBub.c:useCols[0]};
-      nextBub={c:useCols[Math.floor(Math.random()*useCols.length)]};
-      if(bubGrid.length===0){endStage(true,`⭐⭐⭐ Stage ${lv} Cleared! +${score} Pts`);return;}
-      if(shotsLeft<=0){endStage(false,'Out of Shots! Try Again.');return;}
-    }
-  }
-  document.getElementById('hudTitle').textContent=`BUBBLE • STAGE ${lv}/1000`;
-  document.getElementById('hudStat').textContent=`SHOTS ${shotsLeft} | ORBS ${bubGrid.length}`;
-}
-
-cv.addEventListener('pointermove',e=>{
-  const r=cv.getBoundingClientRect(),cx=(e.clientX-r.left)*(360/r.width),cy=(e.clientY-r.top)*(560/r.height);
-  if(gMode==='war')px=Math.max(28,Math.min(332,cx));
-  if(gMode==='brawl'&&joy.on){const dx=cx-joy.bx,dy=cy-joy.by,d=Math.hypot(dx,dy)||1,m=Math.min(1,d/34);joy.dx=(dx/d)*m;joy.dy=(dy/d)*m;}
-  if(gMode==='bubble')aimAng=Math.max(-2.85,Math.min(-0.28,Math.atan2(cy-495,cx-180)));
-});
-cv.addEventListener('pointerup',()=>{joy.on=false;joy.dx=0;joy.dy=0;});
-cv.addEventListener('pointerdown',e=>{
-  if(stageState!=='play'){loadLevel();return;}
-  const r=cv.getBoundingClientRect(),cx=(e.clientX-r.left)*(360/r.width),cy=(e.clientY-r.top)*(560/r.height);
-  if(gMode==='war')px=Math.max(28,Math.min(332,cx));
-  if(gMode==='brawl'){
-    if(Math.hypot(cx-72,cy-498)<46){joy.on=true;}
-    else if(Math.hypot(cx-210,cy-504)<26){brawlAttack();}
-    else if(Math.hypot(cx-264,cy-492)<26){brawlShield();}
-    else if(Math.hypot(cx-320,cy-480)<30){castSkill();}
-  }
-  if(gMode==='bubble'){
-    if(Math.hypot(cx-245,cy-505)<22){fireballMode=!fireballMode;beep(700,.08);return;}
-    if(!shotBub&&curBub&&shotsLeft>0){
-      aimAng=Math.max(-2.85,Math.min(-0.28,Math.atan2(cy-495,cx-180)));
-      shotBub={x:180,y:495,vx:Math.cos(aimAng)*11,vy:Math.sin(aimAng)*11,c:curBub.c,fire:fireballMode};
-      fireballMode=false;shotsLeft--;beep(480,.05);
-    }
-  }
-});
-
-function loop(){
-  frame++;ctx.clearRect(0,0,360,560);
-  if(gMode==='war')runWar();else if(gMode==='brawl')runBrawl();else if(gMode==='bubble')runBubble();
-  for(let i=parts.length-1;i>=0;i--){
-    const p=parts[i];p.x+=p.vx;p.y+=p.vy;p.l--;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,3,3);if(p.l<=0)parts.splice(i,1);
-  }
-  if(stageState!=='play'){
-    ctx.fillStyle='rgba(5,8,17,0.88)';ctx.fillRect(24,185,312,175);
-    ctx.strokeStyle=stageState==='win'?'#10b981':'#ef4444';ctx.lineWidth=2;ctx.strokeRect(24,185,312,175);
-    ctx.fillStyle=stageState==='win'?'#fbbf24':'#f43f5e';ctx.font='bold 20px sans-serif';ctx.textAlign='center';
-    ctx.fillText(stageState==='win'?'STAGE CLEAR!':'MISSION FAILED',180,228);
-    ctx.fillStyle='#e2e8f0';ctx.font='12px sans-serif';ctx.fillText(stageMsg,180,256);
-    ctx.fillStyle=stageState==='win'?'#10b981':'#0284c7';ctx.fillRect(75,284,210,42);
-    ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';
-    ctx.fillText(stageState==='win'?`PLAY LEVEL ${lv} ➔`:'RETRY STAGE ↻',180,310);ctx.textAlign='left';
-  }
-  raf=requestAnimationFrame(loop);
-}
-renderUI();
+function finishStageReturn(){document.getElementById('winModal').classList.add('hidden');openDragonMap();}
+if(db.user)openApp();
 </script>
 </body>
 </html>
-
-  
