@@ -214,45 +214,32 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
   </div>
 </div>
 
+
 <script>
 const CEO_EMAIL='cheryllcamporedondo121380@gmail.com';
-const defaultDB={user:null,users:{},lb:[{name:'Sagittarius13 (CEO)',pts:7285},{name:'AlphaPi',pts:5420},{name:'DragonSlayer',pts:4190},{name:'MindanaoAce',pts:3350}]};
-let db=JSON.parse(localStorage.getItem('wcb_v5')||'null')||defaultDB;
-function saveDB(){localStorage.setItem('wcb_v5',JSON.stringify(db));}
+let db;try{db=JSON.parse(localStorage.getItem('wcb_v6')||'null');}catch(e){}
+if(!db)db={user:null,users:{},lb:[{name:'Sagittarius13 (CEO)',pts:7285},{name:'AlphaPi',pts:5420}]};
+function saveDB(){try{localStorage.setItem('wcb_v6',JSON.stringify(db));}catch(e){}}
 try{if(window.Pi)Pi.init({version:"2.0",sandbox:false});}catch(e){}
-
 function toggleEye(id,el){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';el.textContent=i.type==='password'?'👁️':'🙈';}
 function switchAuth(m){
   document.getElementById('logBox').classList.toggle('hidden',m!=='log');
   document.getElementById('regBox').classList.toggle('hidden',m!=='reg');
-  document.getElementById('authTitle').textContent=m==='log'?'WELCOME BACK!':'CREATE WARRIOR ACCOUNT';
-  document.getElementById('authSub').innerHTML=m==='log'?'Not a User? <b>Click Register</b>':'Use <b>WARRIOR13</b> Referral Code';
+  document.getElementById('authTitle').textContent=m==='log'?'WELCOME BACK!':'CREATE ACCOUNT';
+  document.getElementById('authSub').innerHTML=m==='log'?'Not a User? <b>Click Register</b>':'Use <b>WARRIOR13</b> Code';
 }
-function enterAsCeo(){
-  const ceo={name:'Sagittarius13',email:CEO_EMAIL,pass:'ceo13',ref:'WARRIOR13',pts:7285,coins:2500,maxStage:4,valkLv:1,left:12,right:10,kyc:'@Sagittarius13 (VERIFIED)'};
-  db.users[CEO_EMAIL]=db.users[CEO_EMAIL]||ceo;db.user=db.users[CEO_EMAIL];saveDB();openApp();
-}
+function enterAsCeo(){db.users[CEO_EMAIL]={name:'Sagittarius13',email:CEO_EMAIL,pass:'ceo13',ref:'WARRIOR13',pts:7285,coins:2500,maxStage:4,valkLv:1,left:12,right:10,kyc:'VERIFIED'};db.user=db.users[CEO_EMAIL];saveDB();openApp();}
 function registerUser(){
   const n=document.getElementById('rName').value.trim(),em=document.getElementById('rEmail').value.trim().toLowerCase(),p1=document.getElementById('rPass').value,p2=document.getElementById('rPass2').value,rf=(document.getElementById('rRef').value.trim()||'WARRIOR13').toUpperCase();
-  if(!n||!em||!p1)return alert('Please fill Username, Gmail, and Password!');
-  if(p1!==p2)return alert('Passwords do not match! Check Write & Rewrite Password.');
+  if(!n||!em||!p1)return alert('Fill Username, Gmail, and Password!');
+  if(p1!==p2)return alert('Passwords do not match!');
   if(em===CEO_EMAIL)return enterAsCeo();
-  db.users[em]={name:n,email:em,pass:p1,ref:rf,pts:300,coins:500,maxStage:4,valkLv:1,left:1,right:0,kyc:'Pending'};
-  db.user=db.users[em];saveDB();openApp();
+  db.users[em]={name:n,email:em,pass:p1,ref:rf,pts:300,coins:500,maxStage:4,valkLv:1,left:1,right:0,kyc:'Pending'};db.user=db.users[em];saveDB();openApp();
 }
-function loginUser(){
-  const u=document.getElementById('lUser').value.trim().toLowerCase(),p=document.getElementById('lPass').value;
-  if(u===CEO_EMAIL||u==='sagittarius13'||u==='cheryll camporedondo')return enterAsCeo();
-  const found=Object.values(db.users).find(x=>x.email===u||x.name.toLowerCase()===u);
-  if(!found||found.pass!==p)return alert('Invalid login! Click Register or use CEO Gmail.');
-  db.user=found;saveDB();openApp();
-}
-function forgotPass(){const em=prompt('Enter your registered Gmail:');if(em&&db.users[em.toLowerCase()])alert('Password recovery: Your password is '+db.users[em.toLowerCase()].pass);else alert('Account not found. Please Click Register.');}
-function gmailLogin(){const em=prompt('Enter Gmail to Continue:',CEO_EMAIL);if(!em)return;if(em.trim().toLowerCase()===CEO_EMAIL)return enterAsCeo();document.getElementById('rEmail').value=em.trim();switchAuth('reg');}
-function piLogin(){
-  if(window.Pi){Pi.authenticate(['username','payments'],function(auth){const un=auth.user.username;db.user={name:un,email:un+'@pi.network',ref:'WARRIOR13',pts:500,coins:800,maxStage:4,valkLv:1,left:2,right:1,kyc:'@'+un+' (Pi SDK)'};saveDB();openApp();},function(){alert('Open inside Pi Browser for Pi SDK, or log in with Gmail!');});}
-  else alert('Please open inside Pi Browser to connect Pi Developer SDK!');
-}
+function loginUser(){const u=document.getElementById('lUser').value.trim().toLowerCase(),p=document.getElementById('lPass').value;if(u===CEO_EMAIL||u==='sagittarius13'||u==='cheryll camporedondo')return enterAsCeo();const f=Object.values(db.users).find(x=>x.email===u||x.name.toLowerCase()===u);if(!f||f.pass!==p)return alert('Invalid login!');db.user=f;saveDB();openApp();}
+function forgotPass(){const em=prompt('Enter Gmail:');if(em&&db.users[em.toLowerCase()])alert('Password: '+db.users[em.toLowerCase()].pass);else alert('Not found. Click Register.');}
+function gmailLogin(){const em=prompt('Enter Gmail:',CEO_EMAIL);if(!em)return;if(em.trim().toLowerCase()===CEO_EMAIL)return enterAsCeo();document.getElementById('rEmail').value=em.trim();switchAuth('reg');}
+function piLogin(){if(window.Pi)Pi.authenticate(['username','payments'],a=>{const un=a.user.username;db.user={name:un,email:un+'@pi.network',ref:'WARRIOR13',pts:500,coins:800,maxStage:4,valkLv:1,left:2,right:1,kyc:'@'+un};saveDB();openApp();},()=>alert('Open in Pi Browser!'));else alert('Open in Pi Browser!');}
 
 function openApp(){
   document.getElementById('authScreen').classList.add('hidden');
