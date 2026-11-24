@@ -6,7 +6,10 @@
 <meta name="theme-color" content="#0f172a">
 <title>World Country Battle — Play & Earn</title>
 <script>document.write('<scr'+'ipt src="https://sdk.minepi.'+'com/pi-sdk.js"></scr'+'ipt>');</script>
-<script>(function(s){s.dataset.zone='12339774',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+<!-- MONETAG IN-PAGE PUSH ONLY (MultiTag Removed - Replace Zone ID Below) -->
+<!-- <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',YOUR_IN_PAGE_PUSH_ZONE_ID,document.createElement('script'))</script> -->
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;user-select:none}
 body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:74px;overflow-x:hidden}
@@ -16,45 +19,61 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
 .pill{background:#1e293b;border:1px solid #334155;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#fbbf24}
 .card{background:#111827;border:1px solid #1f2937;border-radius:14px;padding:14px;margin:12px}
 .inp{width:100%;background:#0f172a;border:1px solid #334155;color:#fff;padding:11px;border-radius:10px;margin-bottom:9px;font-size:13px}
-.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:8px}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:8px;transition:opacity .15s}
+.btn:active{opacity:.85}
 .btn-gold{background:linear-gradient(90deg,#f59e0b,#eab308);color:#000}
 .btn-blue{background:#0284c7;color:#fff}
 .btn-pi{background:#7c3aed;color:#fff}
 .btn-green{background:#059669;color:#fff}
+.btn-red{background:#dc2626;color:#fff}
 .btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #334155}
 .nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#0f172a;border-top:1px solid #1e293b;display:flex;z-index:30}
-.nav button{flex:1;padding:10px 4px;background:none;border:none;color:#64748b;font-size:11px;font-weight:800;cursor:pointer}
+.nav button{flex:1;padding:10px 4px;background:none;border:none;color:#64748b;font-size:10px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.nav button span{font-size:15px}
 .nav button.active{color:#fbbf24;border-top:2px solid #fbbf24;background:rgba(251,191,36,0.06)}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:50;padding:14px}
-.modal-box{background:#0f172a;border:1px solid #334155;border-radius:16px;padding:14px;width:100%;max-width:410px;max-height:88vh;overflow-y:auto}
-#arena{position:fixed;inset:0;background:#060a14;z-index:60;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
-.rule-box{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;margin-top:8px;font-size:11px;line-height:1.6;color:#cbd5e1}
-.tree-item{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:8px 10px;margin-top:6px;font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,0.95);display:flex;flex-direction:column;z-index:50;max-width:480px;margin:0 auto}
+.modal-hdr{background:#0f172a;border-bottom:1px solid #1e293b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.rule-box{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;margin:8px 0;font-size:11px;line-height:1.6;color:#cbd5e1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:10px;text-align:center}
+.stat .v{font-size:16px;font-weight:900;color:#fbbf24}
+.stat .l{font-size:10px;color:#94a3b8;margin-top:2px}
+.tree-col{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:10px;font-size:11px}
 </style>
 </head>
 <body>
-<!-- AUTH FACE -->
+
+<!-- AUTH SCREEN (GUEST MODE REMOVED) -->
 <div id="authScreen">
-  <div class="hdr"><div class="logo">⚔️ WORLD COUNTRY BATTLE</div><div class="pill">PI SDK + WEB3</div></div>
+  <div class="hdr">
+    <div class="logo">⚔️ WORLD COUNTRY BATTLE</div>
+    <div class="pill">PI SDK + WEB3</div>
+  </div>
+
   <div class="card" style="text-align:center;background:linear-gradient(135deg,#1e1b4b,#0f172a)">
     <div style="font-size:32px;margin-bottom:4px">🐉⚔️🌍</div>
     <h2 id="authTitle" style="font-size:18px;color:#fbbf24">WELCOME BACK!</h2>
     <p id="authSub" style="font-size:12px;color:#38bdf8;margin-top:4px;cursor:pointer" onclick="switchAuth('reg')">Not a User? <b>Click Register</b></p>
   </div>
+
   <div class="card">
-    <button class="btn btn-green" onclick="guestEnter()">⚡ PLAY AS GUEST (NO LOGIN)</button>
+    <!-- LOGIN FORM -->
     <div id="logBox">
       <input id="lUser" class="inp" placeholder="Username or Gmail">
       <div style="position:relative">
         <input id="lPass" type="password" class="inp" placeholder="Password / Secret Code" style="padding-right:42px">
         <span onclick="toggleEye('lPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
       </div>
-      <div style="text-align:right;margin:-4px 0 10px"><span onclick="forgotPass()" style="font-size:11px;color:#38bdf8;cursor:pointer">Forgot Password?</span></div>
+      <div style="text-align:right;margin:-4px 0 10px">
+        <span onclick="forgotPass()" style="font-size:11px;color:#38bdf8;cursor:pointer">Forgot Password?</span>
+      </div>
       <button class="btn btn-blue" onclick="loginUser()">🔓 LOG IN</button>
     </div>
+
+    <!-- REGISTER FORM -->
     <div id="regBox" class="hidden">
       <input id="rName" class="inp" placeholder="Username (e.g. @Warrior13)">
-      <input id="rEmail" class="inp" placeholder="Gmail Address">
+      <input id="rEmail" type="email" class="inp" placeholder="Gmail Address">
       <div style="position:relative">
         <input id="rPass" type="password" class="inp" placeholder="Write Password" style="padding-right:42px">
         <span onclick="toggleEye('rPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
@@ -68,6 +87,8 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
       <button class="btn btn-gold" onclick="registerUser()">🚀 CONTINUE TO REGISTER</button>
       <p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:4px;cursor:pointer" onclick="switchAuth('log')">Already have an account? <b style="color:#38bdf8">Log In</b></p>
     </div>
+
+    <!-- SOCIAL / WEB3 LOGIN -->
     <div style="border-top:1px solid #1e293b;margin:10px 0;padding-top:10px">
       <button class="btn btn-dark" onclick="gmailLogin()">📧 CONTINUE WITH GMAIL</button>
       <button class="btn btn-pi" onclick="piLogin()">🥧 CONTINUE WITH PI NETWORK (PI BROWSER)</button>
@@ -79,15 +100,25 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
 <!-- MAIN APP -->
 <div id="appScreen" class="hidden">
   <div class="hdr">
-    <div><div class="logo">⚔️ WORLD COUNTRY BATTLE</div><div style="font-size:11px;color:#94a3b8" id="uTag">@User</div></div>
-    <div style="text-align:right"><div class="pill" id="ptsPill">0 PTS</div><div style="font-size:10px;color:#38bdf8;margin-top:2px" id="coinPill">🪙 500 COINS</div></div>
+    <div>
+      <div class="logo">⚔️ WORLD COUNTRY BATTLE</div>
+      <div style="font-size:11px;color:#94a3b8" id="uTag">@User</div>
+    </div>
+    <div style="text-align:right">
+      <div class="pill" id="ptsPill">0 PTS</div>
+      <div style="font-size:10px;color:#38bdf8;margin-top:2px" id="coinPill">🪙 500 COINS</div>
+    </div>
   </div>
 
   <!-- TAB 1: GAMES + FEATURED ADS -->
   <div id="tabGames">
-    <div class="card" style="background:linear-gradient(90deg,#1e1b4b,#312e81);border-color:#fbbf24;display:flex;justify-content:space-between;align-items:center">
-      <div><div style="font-size:10px;color:#fbbf24;font-weight:900">📢 FEATURED SPONSORED AD</div><div style="font-size:12px;font-weight:800">Watch Sponsor Ad for +150 PTS & 🪙 200</div></div>
-      <button class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px" onclick="watchFeaturedAd()">WATCH</button>
+    <div class="card" style="background:linear-gradient(90deg,#1e1b4b,#312e81);border-color:#fbbf24;display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div>
+        <div style="font-size:10px;color:#fbbf24;font-weight:900">📢 FEATURED SPONSORED AD</div>
+        <div style="font-size:12px;font-weight:800">Watch Sponsor Ad for +150 PTS & 🪙 200</div>
+        <div style="font-size:10px;color:#cbd5e1;margin-top:2px" id="adLimitTxt">Today: 0 / 20 ads</div>
+      </div>
+      <button class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px;flex-shrink:0" onclick="watchFeaturedAd()">WATCH</button>
     </div>
 
     <div class="card">
@@ -95,47 +126,46 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
       <div style="font-size:11px;color:#94a3b8;margin-bottom:10px">Earn PTS & Coins + qualify for weekly/monthly leaderboard pools.</div>
 
       <div class="card" style="margin:0 0 10px;background:#0f172a">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><b style="font-size:13px">🐉 Dragon Wings (Full Arena)</b><div style="font-size:11px;color:#94a3b8">Fly, dodge, collect coins & defeat waves</div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div>
+            <b style="font-size:13px">🐉 Dragon Wings (Full Arena)</b>
+            <div style="font-size:11px;color:#94a3b8">Tap to fly, dodge pillars & collect coins</div>
+          </div>
           <button class="btn btn-gold" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startDragonWings()">PLAY</button>
         </div>
       </div>
 
       <div class="card" style="margin:0 0 10px;background:#0f172a">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><b style="font-size:13px">⚔️ Arena Brawl Legends</b><div style="font-size:11px;color:#94a3b8">Battle rival flags & win match rewards</div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div>
+            <b style="font-size:13px">⚔️ Arena Brawl Legends</b>
+            <div style="font-size:11px;color:#94a3b8">Tap enemy flags fast before time runs out</div>
+          </div>
           <button class="btn btn-blue" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startArenaBrawl()">PLAY</button>
         </div>
       </div>
+
       <div class="card" style="margin:0;background:#0f172a">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><b style="font-size:13px">🫧 Bubble Epic Shooter</b><div style="font-size:11px;color:#94a3b8">Pop clusters, clear levels & earn bonus</div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div>
+            <b style="font-size:13px">🫧 Bubble Epic Shooter</b>
+            <div style="font-size:11px;color:#94a3b8">Tap & pop rising bubbles for combo points</div>
+          </div>
           <button class="btn btn-green" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startBubbleShooter()">PLAY</button>
         </div>
       </div>
     </div>
   </div>
+
   <!-- TAB 2: LEADERBOARD -->
   <div id="tabLb" class="hidden">
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <div><div style="font-size:14px;font-weight:900;color:#fbbf24">🏆 WEEKLY & MONTHLY POOLS</div><div style="font-size:11px;color:#94a3b8">Dynamic rewards from ad & pool engagement</div></div>
-        <button class="btn btn-dark" style="width:auto;padding:6px 10px;margin:0;font-size:10px" onclick="openLbRules()">RULES</button>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <button id="btnWeekly" class="btn btn-gold" style="margin:0" onclick="setLbMode('weekly')">WEEKLY POOL</button>
-        <button id="btnMonthly" class="btn btn-dark" style="margin:0" onclick="setLbMode('monthly')">MONTHLY POOL</button>
-      </div>
-      <div id="poolBanner" class="rule-box" style="border-color:#fbbf24;color:#fbbf24">Loading dynamic pool...</div>
-      <div id="lbList" style="margin-top:10px"></div>
-    </div>
-  </div>
-
-  <!-- TAB 3: REFERRAL & BINARY TREE -->
-  <div id="tabRef" class="hidden">
-    <div class="card">
-      <div style="font-size:14px;font-weight:900;color:#fbbf24">🌳 2x2 BINARY REFERRAL SYSTEM</div>
-      <div style="font-size:11px;color:#94a3b8;margin-top:4px">Share your link. Direct & spillover referrals build your Left & Right teams automatically!</div>
+        <div>
+          <div style="font-size:14px;font-weight:900;color:#fbbf24">🏆 WEEKLY & MONTHLY POOLS</div>
+          <div style="font-size:11px;color:#94a3b8">Dynamic rewards from ad & pool engagement</div>
+        </div>
+;color:#94a3b8;margin-top:4px">Share your link. Direct & spillover referrals build your Left & Right teams automatically!</div>
       <div class="rule-box" id="refLinkBox" style="word-break:break-all;color:#38bdf8">https://worldcountrybattle.app/?ref=WARRIOR13</div>
       <button class="btn btn-gold" onclick="copyRefLink()">📋 COPY REFERRAL LINK</button>
     </div>
