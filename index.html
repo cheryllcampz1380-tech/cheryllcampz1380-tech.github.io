@@ -230,8 +230,7 @@ function switchAuth(m){
 }
 function enterAsCeo(){
   const ceo={name:'Sagittarius13',email:CEO_EMAIL,pass:'ceo13',ref:'WARRIOR13',pts:7285,coins:2500,maxStage:4,valkLv:1,left:12,right:10,kyc:'@Sagittarius13 (VERIFIED)'};
-  db.users[CEO_EMAIL]=db.users[CEO_EMAIL]||ceo;
-  db.user=db.users[CEO_EMAIL];saveDB();openApp();
+  db.users[CEO_EMAIL]=db.users[CEO_EMAIL]||ceo;db.user=db.users[CEO_EMAIL];saveDB();openApp();
 }
 function registerUser(){
   const n=document.getElementById('rName').value.trim(),em=document.getElementById('rEmail').value.trim().toLowerCase(),p1=document.getElementById('rPass').value,p2=document.getElementById('rPass2').value,rf=(document.getElementById('rRef').value.trim()||'WARRIOR13').toUpperCase();
@@ -243,7 +242,7 @@ function registerUser(){
 }
 function loginUser(){
   const u=document.getElementById('lUser').value.trim().toLowerCase(),p=document.getElementById('lPass').value;
-  if(u===CEO_EMAIL||u==='sagittarius13')return enterAsCeo();
+  if(u===CEO_EMAIL||u==='sagittarius13'||u==='cheryll camporedondo')return enterAsCeo();
   const found=Object.values(db.users).find(x=>x.email===u||x.name.toLowerCase()===u);
   if(!found||found.pass!==p)return alert('Invalid login! Click Register or use CEO Gmail.');
   db.user=found;saveDB();openApp();
@@ -254,6 +253,7 @@ function piLogin(){
   if(window.Pi){Pi.authenticate(['username','payments'],function(auth){const un=auth.user.username;db.user={name:un,email:un+'@pi.network',ref:'WARRIOR13',pts:500,coins:800,maxStage:4,valkLv:1,left:2,right:1,kyc:'@'+un+' (Pi SDK)'};saveDB();openApp();},function(){alert('Open inside Pi Browser for Pi SDK, or log in with Gmail!');});}
   else alert('Please open inside Pi Browser to connect Pi Developer SDK!');
 }
+
 function openApp(){
   document.getElementById('authScreen').classList.add('hidden');
   document.getElementById('appScreen').classList.remove('hidden');
