@@ -1,1 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0f172a">
+<title>World Country Battle — Play & Earn</title>
+<script>document.write('<scr'+'ipt src="https://sdk.minepi.'+'com/pi-sdk.js"></scr'+'ipt>');</script>
+<script>(function(s){s.dataset.zone='12339774',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;user-select:none}
+body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:74px;overflow-x:hidden}
+.hidden{display:none!important}
+.hdr{background:linear-gradient(135deg,#0f172a,#1e1b4b);padding:12px 14px;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
+.logo{font-weight:900;font-size:15px;background:linear-gradient(90deg,#38bdf8,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pill{background:#1e293b;border:1px solid #334155;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#fbbf24}
+.card{background:#111827;border:1px solid #1f2937;border-radius:14px;padding:14px;margin:12px}
+.inp{width:100%;background:#0f172a;border:1px solid #334155;color:#fff;padding:11px;border-radius:10px;margin-bottom:9px;font-size:13px}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:8px}
+.btn-gold{background:linear-gradient(90deg,#f59e0b,#eab308);color:#000}
+.btn-blue{background:#0284c7;color:#fff}
+.btn-pi{background:#7c3aed;color:#fff}
+.btn-green{background:#059669;color:#fff}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #334155}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#0f172a;border-top:1px solid #1e293b;display:flex;z-index:30}
+.nav button{flex:1;padding:10px 4px;background:none;border:none;color:#64748b;font-size:11px;font-weight:800;cursor:pointer}
+.nav button.active{color:#fbbf24;border-top:2px solid #fbbf24;background:rgba(251,191,36,0.06)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:50;padding:14px}
+.modal-box{background:#0f172a;border:1px solid #334155;border-radius:16px;padding:14px;width:100%;max-width:410px;max-height:88vh;overflow-y:auto}
+#arena{position:fixed;inset:0;background:#060a14;z-index:60;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+.rule-box{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;margin-top:8px;font-size:11px;line-height:1.6;color:#cbd5e1}
+.tree-item{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:8px 10px;margin-top:6px;font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+</style>
+</head>
+<body>
+<!-- AUTH FACE -->
+<div id="authScreen">
+  <div class="hdr"><div class="logo">⚔️ WORLD COUNTRY BATTLE</div><div class="pill">PI SDK + WEB3</div></div>
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#1e1b4b,#0f172a)">
+    <div style="font-size:32px;margin-bottom:4px">🐉⚔️🌍</div>
+    <h2 id="authTitle" style="font-size:18px;color:#fbbf24">WELCOME BACK!</h2>
+    <p id="authSub" style="font-size:12px;color:#38bdf8;margin-top:4px;cursor:pointer" onclick="switchAuth('reg')">Not a User? <b>Click Register</b></p>
+  </div>
+  <div class="card">
+    <button class="btn btn-green" onclick="guestEnter()">⚡ PLAY AS GUEST (NO LOGIN)</button>
+    <div id="logBox">
+      <input id="lUser" class="inp" placeholder="Username or Gmail">
+      <div style="position:relative">
+        <input id="lPass" type="password" class="inp" placeholder="Password / Secret Code" style="padding-right:42px">
+        <span onclick="toggleEye('lPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
+      </div>
+      <div style="text-align:right;margin:-4px 0 10px"><span onclick="forgotPass()" style="font-size:11px;color:#38bdf8;cursor:pointer">Forgot Password?</span></div>
+      <button class="btn btn-blue" onclick="loginUser()">🔓 LOG IN</button>
+    </div>
+    <div id="regBox" class="hidden">
+      <input id="rName" class="inp" placeholder="Username (e.g. @Warrior13)">
+      <input id="rEmail" class="inp" placeholder="Gmail Address">
+      <div style="position:relative">
+        <input id="rPass" type="password" class="inp" placeholder="Write Password" style="padding-right:42px">
+        <span onclick="toggleEye('rPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
+      </div>
+      <div style="position:relative">
+        <input id="rPass2" type="password" class="inp" placeholder="Rewrite Password" style="padding-right:42px">
+        <span onclick="toggleEye('rPass2',this)" style="position:absolute;right:12px;top:10px;cursor:pointer">👁️</span>
+      </div>
+      <input id="rRef" class="inp" value="WARRIOR13" placeholder="Referral Code (Default: WARRIOR13)">
+      <p style="font-size:11px;color:#fbbf24;margin:-4px 0 9px">💡 Default Referral Code: <b>WARRIOR13</b></p>
+      <button class="btn btn-gold" onclick="registerUser()">🚀 CONTINUE TO REGISTER</button>
+      <p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:4px;cursor:pointer" onclick="switchAuth('log')">Already have an account? <b style="color:#38bdf8">Log In</b></p>
+    </div>
+    <div style="border-top:1px solid #1e293b;margin:10px 0;padding-top:10px">
+      <button class="btn btn-dark" onclick="gmailLogin()">📧 CONTINUE WITH GMAIL</button>
+      <button class="btn btn-pi" onclick="piLogin()">🥧 CONTINUE WITH PI NETWORK (PI BROWSER)</button>
+      <button class="btn btn-dark" style="margin-bottom:0" onclick="installApp()">📲 INSTALL / DOWNLOAD APP</button>
+    </div>
+  </div>
+</div>
 
+<!-- MAIN APP -->
+<div id="appScreen" class="hidden">
+  <div class="hdr">
+    <div><div class="logo">⚔️ WORLD COUNTRY BATTLE</div><div style="font-size:11px;color:#94a3b8" id="uTag">@User</div></div>
+    <div style="text-align:right"><div class="pill" id="ptsPill">0 PTS</div><div style="font-size:10px;color:#38bdf8;margin-top:2px" id="coinPill">🪙 500 COINS</div></div>
+  </div>
+
+  <!-- TAB 1: GAMES + FEATURED ADS -->
+  <div id="tabGames">
+    <div class="card" style="background:linear-gradient(90deg,#1e1b4b,#312e81);border-color:#fbbf24;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:10px;color:#fbbf24;font-weight:900">📢 FEATURED SPONSORED AD</div><div style="font-size:12px;font-weight:800">Watch Sponsor Ad for +150 PTS & 🪙 200</div></div>
+      <button class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px" onclick="watchFeaturedAd()">WATCH</button>
+    </div>
+
+    <div class="card">
+      <div style="font-size:14px;font-weight:900;color:#fbbf24;margin-bottom:4px">🎮 PLAY MINI-GAMES</div>
+      <div style="font-size:11px;color:#94a3b8;margin-bottom:10px">Earn PTS & Coins + qualify for weekly/monthly leaderboard pools.</div>
+
+      <div class="card" style="margin:0 0 10px;background:#0f172a">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><b style="font-size:13px">🐉 Dragon Wings (Full Arena)</b><div style="font-size:11px;color:#94a3b8">Fly, dodge, collect coins & defeat waves</div></div>
+          <button class="btn btn-gold" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startDragonWings()">PLAY</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin:0 0 10px;background:#0f172a">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><b style="font-size:13px">⚔️ Arena Brawl Legends</b><div style="font-size:11px;color:#94a3b8">Battle rival flags & win match rewards</div></div>
+          <button class="btn btn-blue" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startArenaBrawl()">PLAY</button>
+        </div>
+      </div>
+      <div class="card" style="margin:0;background:#0f172a">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><b style="font-size:13px">🫧 Bubble Epic Shooter</b><div style="font-size:11px;color:#94a3b8">Pop clusters, clear levels & earn bonus</div></div>
+          <button class="btn btn-green" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startBubbleShooter()">PLAY</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TAB 2: LEADERBOARD -->
+  <div id="tabLb" class="hidden">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-size:14px;font-weight:900;color:#fbbf24">🏆 WEEKLY & MONTHLY POOLS</div><div style="font-size:11px;color:#94a3b8">Dynamic rewards from ad & pool engagement</div></div>
+        <button class="btn btn-dark" style="width:auto;padding:6px 10px;margin:0;font-size:10px" onclick="openLbRules()">RULES</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button id="btnWeekly" class="btn btn-gold" style="margin:0" onclick="setLbMode('weekly')">WEEKLY POOL</button>
+        <button id="btnMonthly" class="btn btn-dark" style="margin:0" onclick="setLbMode('monthly')">MONTHLY POOL</button>
+      </div>
+      <div id="poolBanner" class="rule-box" style="border-color:#fbbf24;color:#fbbf24">Loading dynamic pool...</div>
+      <div id="lbList" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: REFERRAL & BINARY TREE -->
+  <div id="tabRef" class="hidden">
+    <div class="card">
+      <div style="font-size:14px;font-weight:900;color:#fbbf24">🌳 2x2 BINARY REFERRAL SYSTEM</div>
+      <div style="font-size:11px;color:#94a3b8;margin-top:4px">Share your link. Direct & spillover referrals build your Left & Right teams automatically!</div>
+      <div class="rule-box" id="refLinkBox" style="word-break:break-all;color:#38bdf8">https://worldcountrybattle.app/?ref=WARRIOR13</div>
+      <button class="btn btn-gold" onclick="copyRefLink()">📋 COPY REFERRAL LINK</button>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:8px">BINARY TREE STRUCTURE</div>
+      <div id="binaryTreeBox" style="overflow-x:auto;padding-bottom:6px"></div>
+    </div>
+  </div>
+
+  <!-- TAB 4: WALLET & WITHDRAW -->
+  <div id="tabWallet" class="hidden">
+    <div class="card">
+      <div style="font-size:14px;font-weight:900;color:#fbbf24">💰 REWARD WALLET & PAYOUTS</div>
+      <div class="grid2" style="margin-top:10px">
+        <div class="stat"><div class="v" id="wPts">0</div><div class="l">REWARD PTS</div></div>
+        <div class="stat"><div class="v" id="wCoins">500</div><div class="l">GAME COINS</div></div>
+      </div>
+      <div class="rule-box" id="wStatusBox">Status: Active Player • Min withdraw: 1,000 PTS</div>
+      <input id="wMethod" class="inp" placeholder="Payout Method (e.g. GCash, Maya, Pi Wallet, PayPal)">
+      <input id="wAccount" class="inp" placeholder="Wallet Address / Account Number">
+      <input id="wAmount" type="number" class="inp" placeholder="Points to Redeem (min 1000)">
+      <button class="btn btn-green" onclick="requestWithdraw()">💸 REQUEST PAYOUT</button>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px;font-weight:900;color:#fbbf24;margin-bottom:6px">PAYOUT HISTORY</div>
+      <div id="wHistory" style="font-size:11px;color:#94a3b8">No payout requests yet.</div>
+    </div>
+  </div>
+
+  <!-- TAB 5: PROFILE & SETTINGS -->
+  <div id="tabProfile" class="hidden">
+    <div class="card">
+      <div style="font-size:14px;font-weight:900;color:#fbbf24">👤 ACCOUNT & SETTINGS</div>
+      <div id="profInfo" class="rule-box">Loading profile...</div>
+      <button class="btn btn-blue" onclick="openAppStoreModal()">📲 APP STORE / APK & WEB PORTAL</button>
+      <button class="btn btn-dark" onclick="logoutUser()">🚪 LOG OUT</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+    <div class="nav">
+    <button id="navGames" class="active" onclick="switchTab('games')"><span>🎮</span>GAMES</button>
+    <button id="navLb" onclick="switchTab('lb')"><span>🏆</span>RANKS</button>
+    <button id="navRef" onclick="switchTab('ref')"><span>🌳</span>TREE</button>
+    <button id="navWallet" onclick="switchTab('wallet')"><span>💰</span>WALLET</button>
+    <button id="navProfile" onclick="switchTab('profile')"><span>👤</span>PROFILE</button>
+  </div>
+</div>
+
+<!-- FULLSCREEN GAME ARENA MODAL -->
+  <div id="gameModal" class="modal hidden">
+  <div class="modal-hdr">
+    <div style="font-weight:900;color:#fbbf24;font-size:13px" id="gameTitle">🎮 GAME ARENA</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <div class="pill" id="gameScorePill">SCORE: 0</div>
+      <button class="btn btn-red" style="width:auto;padding:6px 10px;margin:0;font-size:10px" onclick="closeGameModal()">EXIT</button>
+    </div>
+  </div>
+  <canvas id="gameCanvas" style="flex:1;width:100%;display:block;touch-action:none"></canvas>
+  </div>
+  <!-- RULES / APP STORE INFO MODAL -->
+<div id="infoModal" class="modal hidden" style="background:rgba(2,6,23,.95);padding:16px;overflow-y:auto">
+  <div class="card" style="max-width:460px;margin:20px auto;width:100%">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-size:14px;font-weight:900;color:#fbbf24" id="infoTitle">INFO</div>
+      <button class="btn btn-red" style="width:auto;padding:5px 10px;margin:0;font-size:10px" onclick="closeInfoModal()">CLOSE</button>
+    </div>
+    <div id="infoBody" style="font-size:12px;color:#cbd5e1;line-height:1.5"></div>
+  </div>
+</div>
+  <script>
+const DB_KEY = 'wcb_v1_user';
+const SYS_KEY = 'wcb_v1_sys';
+let user = null;
+let lbMode = 'weekly';
+let activeGame = null;
+let animId = null;
+
+function defaultUser(name, email, method, refBy) {
+  return {
+        name: name || 'Warrior',
+    email: email || 'player@worldcountrybattle.app',
+    method: method || 'Guest',
+    pts: 100,
+    coins: 500,
+    refCode: (name || 'WARRIOR').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7) + Math.floor(10 + Math.random() * 89),
+    refBy: refBy || 'GLOBAL_ADMIN',
+    tree: { left: ['Alex_PH', 'Mina_KR'], right: ['Leo_US', 'Sara_AE'] },
+    payouts: []
+  };
+  }
+
+function getSys() {
+  let s = JSON.parse(localStorage.getItem(SYS_KEY) || 'null');
+  if (!s) {
+    s = { adPool: 12450, lastAdDate: '', adsToday: 0, lastBonusDate: '' };
+    localStorage.setItem(SYS_KEY, JSON.stringify(s));
+  }
+  return s;
+}
+    function saveSys(s) { localStorage.setItem(SYS_KEY, JSON.stringify(s)); }
+function saveUser() { if (user) localStorage.setItem(DB_KEY, JSON.stringify(user)); }
+
+function init() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+  if (ref) document.getElementById('authRef').value = ref;
+
+  const saved = JSON.parse(localStorage.getItem(DB_KEY) || 'null');
+  if (saved) {
+        user = saved;
+    showApp();
+  }
+}
+
+function handleAuth(method) {
+  const name = document.getElementById('authName').value.trim();
+  const email = document.getElementById('authEmail').value.trim();
+  const ref = document.getElementById('authRef').value.trim();
+  if (!name && method === 'Email') return alert('Please enter your Player Name.');
+      const displayName = name || (method === 'Guest' ? 'GuestWarrior' : method + '_Player');
+  user = defaultUser(displayName, email, method, ref);
+  saveUser();
+  showApp();
+}
+
+function logoutUser() {
+  localStorage.removeItem(DB_KEY);
+  location.reload();
+}
+    function showApp() {
+  document.getElementById('authScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('hidden');
+  updateUI();
+}
+
+function updateUI() {
+  if (!user) return;
+  const sys = getSys();
+  const today = new Date().toDateString();
+      if (sys.lastAdDate !== today) { sys.lastAdDate = today; sys.adsToday = 0; saveSys(sys); }
+
+  document.getElementById('hdrUser').textContent = `${user.name} (${user.method}) • ID: ${user.refCode}`;
+  document.getElementById('hdrPts').textContent = `${user.pts.toLocaleString()} PTS`;
+  document.getElementById('hdrCoins').textContent = `${user.coins.toLocaleString()} COINS`;
+  document.getElementById('adPoolVal').textContent = sys.adPool.toLocaleString();
+  document.getElementById('adCountVal').textContent = `${sys.adsToday} / 20`;
+  document.getElementById('wPts').textContent = user.pts.toLocaleString();
+  document.getElementById('wCoins').textContent = user.coins.toLocaleString();
+  document.getElementById('refCodeBox').textContent = user.refCode;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?ref=${user.refCode}`;
+  document.getElementById('refLinkBox').textContent = shareUrl;
+  document.getElementById('profInfo').innerHTML = `
+    <b>Player:</b> ${user.name}<br>
+    <b>Login Method:</b> ${user.method}<br>
+    <b>Referral Code:</b> ${user.refCode}<br>
+    <b>Sponsor ID:</b> ${user.refBy}<br>
+    <b>Status:</b> Active Global Member
+  `;
+  renderLeaderboard();
+      renderTree();
+  renderPayouts();
+}
+
+function switchTab(tab) {
+  ['games', 'lb', 'ref', 'wallet', 'profile'].forEach(t => {
+    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
+    document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1)).classList.remove('active');
+  });
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+    document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+function claimDailyBonus() {
+  const sys = getSys();
+  const today = new Date().toDateString();
+  if (sys.lastBonusDate === today) return alert('Daily bonus already claimed today! Come back tomorrow.');
+  sys.lastBonusDate = today;
+  saveSys(sys);
+  user.pts += 50;
+    user.coins += 200;
+  saveUser();
+  updateUI();
+  alert('🎁 Claimed +50 PTS & +200 COINS!');
+}
+
+function watchRewardAd() {
+  const sys = getSys();
+  if (sys.adsToday >= 20) return alert('Daily ad limit (20/20) reached! Come back tomorrow.');
+  sys.adsToday += 1;
+    sys.adPool += 250;
+  saveSys(sys);
+  user.pts += 25;
+  user.coins += 100;
+  saveUser();
+  updateUI();
+  alert('📺 Ad Completed! +25 PTS & +100 COINS added! Global Pool increased by +250 PTS.');
+}
+
+function setLbMode(mode) {
+    lbMode = mode;
+  document.getElementById('lbBtnWeekly').className = mode === 'weekly' ? 'btn btn-blue' : 'btn btn-dark';
+  document.getElementById('lbBtnCountry').className = mode === 'country' ? 'btn btn-blue' : 'btn btn-dark';
+  renderLeaderboard();
+}
+
+function renderLeaderboard() {
+  const base = [
+    { name: '🇵🇭 Manila_Titan', pts: 14820 },
+        { name: '🇰🇷 Seoul_Striker', pts: 13410 },
+    { name: '🇺🇸 NY_Vanguard', pts: 12190 },
+    { name: '🇦🇪 Dubai_Apex', pts: 11050 },
+    { name: '🇯🇵 Tokyo_Ronin', pts: 9840 },
+    { name: '🇧🇷 SaoPaulo_Ace', pts: 8720 }
+  ];
+  const me = { name: `${user.name} (You)`, pts: user.pts || 0 };
+  const list = [...base, me].sort((a, b) => b.pts - a.pts);
+      const medal = i => i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`;
+  document.getElementById('lbList').innerHTML = list.map((x, i) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid #1e293b;font-size:12px">
+      <div><b>${medal(i)}</b> ${x.name}</div>
+      <div style="font-weight:900;color:#38bdf8">${x.pts.toLocaleString()} PTS</div>
+    </div>
+  `).join('');
+}
+
+function addRefMember(side) {
+    const names = ['Kai_SG', 'Zara_UK', 'Mateo_ES', 'Nadia_AE', 'Liam_CA', 'Hana_JP', 'Noah_DE', 'Maya_IN'];
+  const pick = names[Math.floor(Math.random() * names.length)] + '_' + Math.floor(10 + Math.random() * 89);
+  user.tree[side].push(pick);
+  user.pts += 30;
+  user.coins += 100;
+  saveUser();
+  updateUI();
+  alert(`🤝 Added ${pick} to ${side.toUpperCase()} leg! +30 PTS & +100 COINS bonus.`);
+    }
+    function renderTree() {
+  const L = user.tree.left || [];
+  const R = user.tree.right || [];
+  document.getElementById('leftCount').textContent = L.length;
+  document.getElementById('rightCount').textContent = R.length;
+  document.getElementById('leftList').innerHTML = L.length
+    ? L.map(m => `<div style="padding:4px 0;border-bottom:1px dashed #1e293b">• ${m}</div>`).join('')
+    : '<div class="muted">No left members yet</div>';
+  document.getElementById('rightList').innerHTML = R.length
+        ? R.map(m => `<div style="padding:4px 0;border-bottom:1px dashed #1e293b">• ${m}</div>`).join('')
+    : '<div class="muted">No right members yet</div>';
+}
+
+function copyRef() {
+  const txt = document.getElementById('refLinkBox').textContent;
+  navigator.clipboard?.writeText(txt);
+  alert('Referral link copied!');
+}
+
+function convertCoins() {
+      const amt = parseInt(document.getElementById('convertAmt').value, 10);
+  if (!amt || amt < 100) return alert('Minimum conversion is 100 COINS.');
+  if (user.coins < amt) return alert('Insufficient COINS.');
+  const gainedPts = Math.floor(amt / 10);
+  user.coins -= amt;
+  user.pts += gainedPts;
+  saveUser();
+  updateUI();
+  alert(`🔄 Converted ${amt} COINS into +${gainedPts} PTS!`);
+    }
+      function requestPayout() {
+  const method = document.getElementById('payMethod').value;
+  const addr = document.getElementById('payAddr').value.trim();
+  const amt = parseInt(document.getElementById('payAmt').value, 10);
+  if (!addr) return alert('Please enter your payout account / wallet address.');
+  if (!amt || amt < 500) return alert('Minimum payout request is 500 PTS.');
+  if (user.pts < amt) return alert('Insufficient PTS balance.');
+  user.pts -= amt;
+      user.payouts.unshift({
+    id: 'PAY-' + Math.floor(100000 + Math.random() * 900000),
+    method,
+    addr,
+    pts: amt,
+    usd: (amt * 0.01).toFixed(2),
+    status: 'Pending Review',
+    date: new Date().toLocaleDateString()
+  });
+  saveUser();
+     updateUI();
+  document.getElementById('payAmt').value = '';
+  alert('✅ Payout request submitted! Status: Pending Review.');
+}
+
+function renderPayouts() {
+  const list = user.payouts || [];
+  document.getElementById('payoutList').innerHTML = list.length
+    ? list.map(p => `
+          <div style="padding:8px 10px;border-bottom:1px solid #1e293b;font-size:12px">
+        <div style="display:flex;justify-content:space-between">
+          <b>${p.id} • ${p.method}</b>
+          <span style="color:#facc15;font-weight:700">${p.status}</span>
+        </div>
+        <div class="muted">${p.pts.toLocaleString()} PTS ($${p.usd}) → ${p.addr} • ${p.date}</div>
+      </div>
+    `).join('')
+    : '<div class="muted">No payout requests yet.</div>';
+    }
+    function logout() {
+  localStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+
+/* =========================================================
+   ARCADE GAME 1: NEON DART STRIKE (AIM + POWER)
+   ========================================================= */
+let dartState = { running: false, aimX: 0, aimDir: 1, power: 0, powerDir: 1, phase: 'idle', score: 0 };
+    let dartAnim = null;
+
+function startDartGame() {
+  dartState = { running: true, aimX: 0, aimDir: 1, power: 0, powerDir: 1, phase: 'aim', score: 0 };
+  document.getElementById('dartActionBtn').textContent = '🎯 LOCK AIM';
+  document.getElementById('dartStatus').textContent = 'Aim moving... Click LOCK AIM!';
+  cancelAnimationFrame(dartAnim);
+  loopDart();
+    }
+    function dartAction() {
+  if (!dartState.running) return startDartGame();
+  if (dartState.phase === 'aim') {
+    dartState.phase = 'power';
+    document.getElementById('dartActionBtn').textContent = '⚡ THROW DART';
+    document.getElementById('dartStatus').textContent = 'Power bar charging... Click THROW DART!';
+  } else if (dartState.phase === 'power') {
+    throwDart();
+  }
+    }
+    function loopDart() {
+  if (!dartState.running) return;
+  if (dartState.phase === 'aim') {
+    dartState.aimX += dartState.aimDir * 4;
+    if (dartState.aimX > 110 || dartState.aimX < -110) dartState.aimDir *= -1;
+  } else if (dartState.phase === 'power') {
+    dartState.power += dartState.powerDir * 3;
+    if (dartState.power >= 100 || dartState.power <= 0) dartState.powerDir *= -1;
+    }
+     drawDartBoard();
+  dartAnim = requestAnimationFrame(loopDart);
+}
+
+function throwDart() {
+  dartState.running = false;
+  cancelAnimationFrame(dartAnim);
+  const acc = Math.max(0, 1 - (Math.abs(dartState.aimX) / 115 + Math.abs(dartState.power - 75) / 120));
+  const pts = Math.round(10 + acc * 90);
+  dartState.score = pts;
+      const coins = Math.round(20 + acc * 80);
+  awardGameReward('Neon Dart Strike', pts, coins, `Accuracy ${Math.round(acc * 100)}%`);
+  document.getElementById('dartStatus').textContent = `Hit! +${pts} PTS & +${coins} COINS (${Math.round(acc * 100)}% acc)`;
+  document.getElementById('dartActionBtn').textContent = '▶ PLAY AGAIN';
+  drawDartBoard(true);
+}
+
+function drawDartBoard(showHit = false) {
+        const c = document.getElementById('dartCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const w = c.width, h = c.height, cx = w / 2, cy = h / 2 - 10;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#070c18';
+  ctx.fillRect(0, 0, w, h);
+
+  [72, 50, 28, 12].forEach((r, idx) => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = idx % 2 === 0 ? 'rgba(56,189,248,0.16)' : 'rgba(168,85,247,0.22)';
+    ctx.fill();
+        ctx.strokeStyle = '#38bdf8';
+    ctx.stroke();
+  });
+
+  if (dartState.running) {
+    const px = cx + dartState.aimX;
+    ctx.strokeStyle = '#facc15';
+    ctx.beginPath();
+    ctx.moveTo(px, cy - 82);
+    ctx.lineTo(px, cy + 82);
+    ctx.stroke();
+
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(40, h - 22, w - 80, 10);
+    ctx.fillStyle = '#22c55e';
+        ctx.fillRect(40, h - 22, (w - 80) * (dartState.power / 100), 10);
+  }
+
+  if (showHit) {
+    const hx = cx + dartState.aimX;
+    const hy = cy + (75 - dartState.power) * 0.65;
+    ctx.fillStyle = '#f43f5e';
+    ctx.beginPath();
+    ctx.arc(hx, hy, 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+/* =========================================================
+
+   ARCADE GAME 2: CYBER REACTION GRID
+   ========================================================= */
+let gridTimer = null, gridActiveIdx = -1, gridStartTime = 0, gridHits = 0, gridTotalPts = 0, gridTotalCoins = 0;
+
+function initReactionGrid() {
+  const box = document.getElementById('reactionGrid');
+  if (!box) return;
+  box.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'r-tile';
+    btn.textContent = `#${i + 1}`;
+    btn.onclick = () => hitReactionTile(i);
+    box.appendChild(btn);
+  }
+}
+ function startReactionGame() {
+  initReactionGrid();
+  gridHits = 0; gridTotalPts = 0; gridTotalCoins = 0;
+  document.getElementById('reactionStatus').textContent = 'Round started! Tap glowing tiles fast (6 rounds).';
+  nextReactionRound(6);
+}
+
+function nextReactionRound(roundsLeft) {
+  clearTimeout(gridTimer);
+  clearActiveTile();
+  if (roundsLeft <= 0) {
+    document.getElementById('reactionStatus').textContent = `Finished! Total: +${gridTotalPts} PTS & +${gridTotalCoins} COINS`;
+    return;
+  }
+  const tiles = document.querySelectorAll('.r-tile');
+      const idx = Math.floor(Math.random() * tiles.length);
+  gridActiveIdx = idx;
+  gridStartTime = performance.now();
+  tiles[idx].classList.add('active');
+  gridTimer = setTimeout(() => {
+    clearActiveTile();
+    nextReactionRound(roundsLeft - 1);
+  }, 1150);
+}
+
+function clearActiveTile() {
+  document.querySelectorAll('.r-tile').forEach(t => t.classList.remove('active'));
+  gridActiveIdx = -1;
+    }
+    function hitReactionTile(idx) {
+  if (idx !== gridActiveIdx) return;
+  const ms = Math.max(120, Math.round(performance.now() - gridStartTime));
+  const pts = Math.max(10, Math.round(45 - ms / 30));
+  const coins = pts * 2;
+  gridHits++;
+  gridTotalPts += pts;
+  gridTotalCoins += coins;
+  awardGameReward('Cyber Reaction Grid', pts, coins, `${ms}ms reflex`);
+  document.getElementById('reactionStatus').textContent = `Hit ${gridHits}/6 (${ms}ms) → +${pts} PTS, +${coins} COINS`;
+  clearTimeout(gridTimer);
+  clearActiveTile();
+  setTimeout(() => nextReactionRound(6 - gridHits), 220);
+}
+
+/* =========================================================
+   ARCADE GAME 3: QUANTUM WHEEL SPIN
+   ========================================================= */
+  const wheelPrizes = [
+  { label: '25 PTS', pts: 25, coins: 40, color: '#0ea5e9' },
+  { label: '2X BOOST', pts: 60, coins: 100, color: '#8b5cf6' },
+  { label: '15 PTS', pts: 15, coins: 25, color: '#334155' },
+  { label: '5X JACKPOT', pts: 250, coins: 500, color: '#f59e0b' },
+  { label: '40 PTS', pts: 40, coins: 75, color: '#10b981' },
+  { label: 'BUST (5 PTS)', pts: 5, coins: 10, color: '#e11d48' },
+  { label: '3X VIP', pts: 120, coins: 240, color: '#ec4899' },
+  { label: '30 PTS', pts: 30, coins: 50, color: '#0284c7' }
+];
+let wheelAngle = 0, wheelSpinning = false;
+
+function drawWheel(angle = 0) {
+  const c = document.getElementById('wheelCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const cx = c.width / 2, cy = c.height / 2, r = 95;
+  ctx.clearRect(0, 0, c.width, c.height);
+      const slice = (Math.PI * 2) / wheelPrizes.length;
+  wheelPrizes.forEach((p, i) => {
+    const start = angle + i * slice;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start + slice);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + slice / 2);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText(p.label, 24, 4);
+    ctx.restore();
+  });
+  ctx.fillStyle = '#facc15';
+  ctx.beginPath(); ctx.moveTo(cx - 8, 6); ctx.lineTo(cx + 8, 6); ctx.lineTo(cx, 20); ctx.fill();
+    }
+
+function spinWheel() {
+  if (wheelSpinning) return;
+  wheelSpinning = true;
+  document.getElementById('wheelStatus').textContent = 'Spinning high-stakes wheel...';
+  const extraSpin = Math.PI * 6 + Math.random() * Math.PI * 4;
+  const startAngle = wheelAngle;
+  const targetAngle = wheelAngle + extraSpin;
+  const startTime = performance.now();
+  const duration = 2400;
+
+  function step(now) {
+    const t = Math.min(1, (now - startTime) / duration);
+    const ease = 1 - Math.pow(1 - t, 3);
+    wheelAngle = startAngle + (targetAngle - startAngle) * ease;
+    drawWheel(wheelAngle);
+    if (t < 1) {
+          requestAnimationFrame(step);
+    } else {
+      wheelSpinning = false;
+      const slice = (Math.PI * 2) / wheelPrizes.length;
+      const norm = ((Math.PI * 1.5 - wheelAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+      const idx = Math.floor(norm / slice) % wheelPrizes.length;
+      const prize = wheelPrizes[idx];
+      awardGameReward('Quantum Wheel Spin', prize.pts, prize.coins, `Landed on ${prize.label}`);
+      document.getElementById('wheelStatus').textContent = `Result: ${prize.label} → +${prize.pts} PTS, +${prize.coins} COINS`;
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+/* =========================================================
+   UI NAVIGATION & INITIALIZATION
+   ========================================================= */
+   function switchTab(tabName) {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tabName);
+  });
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    panel.classList.toggle('active', panel.id === `tab-${tabName}`);
+  });
+  if (tabName === 'leaderboard') renderLeaderboard();
+  if (tabName === 'referrals') renderReferrals();
+  if (tabName === 'payouts') renderPayouts();
+}
+
+function initApp() {
+  const session = ensureSession();
+  updateHeaderStats(session);
+  initReactionGrid();
+    drawDartBoard(false);
+  drawWheel(0);
+  renderLeaderboard();
+  renderReferrals();
+  renderPayouts();
+}
+
+window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
