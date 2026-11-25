@@ -72,6 +72,9 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
     </div>
         <div id="regBox" class="hidden">
       <input id="rName" class="inp" placeholder="Username (e.g. @Warrior13)">
+                <input id="rFullName" class="inp" placeholder="Full Real Name (1-Account Policy • No Dummies)">
+      <div style="font-size:10px;color:#fbbf24;margin:-4px 0 8px">⚠️ Strict 1 Account per Device/Real Name (Anti-Fraud Policy)</div>
+          
       <input id="rEmail" type="email" class="inp" placeholder="Gmail Address">
       <select id="rCountry" class="inp">
         <option value="🇵🇭 Philippines">🇵🇭 Philippines</option>
@@ -197,6 +200,11 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
     <!-- TAB 3: RANKINGS -->
   <div id="tabRank" class="hidden">
     <div class="card">
+            <div class="rule-box" style="border-color:#fbbf24;text-align:center;margin-top:0">
+        <b style="color:#fbbf24">⏳ SEASON 1 PRIZE POOL COUNTDOWN</b>
+        <div id="seasonTimer" style="font-size:14px;font-weight:900;color:#38bdf8;margin-top:2px">Ends in 29d 14h 30m • Top 10 Share Pi Pool!</div>
+            </div>
+      
       <div style="font-size:15px;font-weight:900;color:#fbbf24;margin-bottom:8px">🏆 WORLD COUNTRY RANKINGS</div>
       <div id="countryRankList" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px"></div>
       <div style="font-size:14px;font-weight:900;color:#38bdf8;margin-bottom:8px">👑 TOP WARRIORS</div>
@@ -214,7 +222,13 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
       <input id="wPiAddr" class="inp" placeholder="Enter Pi Wallet Address or @PiUsername">
       <button type="button" id="btnWithdraw" class="btn btn-gold">💸 REQUEST PI PAYOUT (MIN 10,000 PTS)</button>
       <div class="rule-box" id="refBoxTxt">🤝 Your Referral Code: <b>WARRIOR13</b> • Invite friends for +300 PTS each!</div>
-    </div>
+    </div>      <div class="grid2" style="margin-top:8px">
+        <div class="stat"><div class="v" id="binLeft">0</div><div class="l">⬅️ LEFT LEG INVITES</div></div>
+        <div class="stat"><div class="v" id="binRight">0</div><div class="l">➡️ RIGHT LEG INVITES</div></div>
+      </div>
+      <div class="rule-box" id="binStatusBox" style="margin-top:8px">✅ 30-Day Qualified Invites: <b>0</b> • Binary Pair Bonus: <b>0 PTS</b></div>
+      <button type="button" id="btnCopyRef" class="btn btn-blue" style="margin-top:6px">📋 COPY MY PERSONAL INVITE LINK</button>
+    
   </div>
     <!-- BOTTOM NAVIGATION & FLOATING CHAT -->
   <div class="nav">
@@ -465,6 +479,23 @@ $('btnDailyClaim').onclick = () => {
   user.pts += 1000; user.coins += 500; saveUser();
   toast('🎁 OfferWall Opened! Complete 1 offer to claim +1,000 PTS & 🪙 500!');
 };
+  const oldReg = $('btnRegister').onclick;
+$('btnRegister').onclick = () => {
+  if(localStorage.getItem('wcb_device_locked')) return toast('⚠️ 1-Account Policy: This device already registered an account!');
+  let fn = $('rFullName').value.trim();
+  if(fn.split(' ').length < 2) return toast('Enter your Full Real Name (First & Last Name)!');
+  oldReg();
+  if(user){ user.fullName = fn; user.refCode = user.name.replace('@','').toUpperCase(); user.left=0; user.right=0; user.qual=0; localStorage.setItem('wcb_device_locked','1'); saveUser(); }
+};
+const u2 = updateUI;
+updateUI = function(){
+  u2(); let rc = user.refCode || user.name.replace('@','').toUpperCase();
+  $('refBoxTxt').innerHTML = '🤝 Your Code: <b>'+rc+'</b> • Invite real users (+300 PTS after 30-day streak)';
+  $('binLeft').textContent = user.left||0; $('binRight').textContent = user.right||0;
+  let pairs = Math.min(user.left||0, user.right||0);
+  $('binStatusBox').innerHTML = '✅ 30-Day Qualified: <b>'+(user.qual||0)+'</b> • Binary Pair Bonus: <b>'+(pairs*500)+' PTS</b>';
+};
+$('btnCopyRef').onclick = () => { let rc=user.refCode||user.name.replace('@','').toUpperCase(); navigator.clipboard?.writeText('https://github.io); toast('📋 Invite Link Copied: ?ref='+rc); };
   
 if(user) enterApp();
 </script>
