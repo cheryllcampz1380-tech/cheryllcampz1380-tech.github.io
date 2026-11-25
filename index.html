@@ -479,24 +479,7 @@ $('btnDailyClaim').onclick = () => {
   user.pts += 1000; user.coins += 500; saveUser();
   toast('🎁 OfferWall Opened! Complete 1 offer to claim +1,000 PTS & 🪙 500!');
 };
-  const oldReg = $('btnRegister').onclick;
-$('btnRegister').onclick = () => {
-  if(localStorage.getItem('wcb_device_locked')) return toast('⚠️ 1-Account Policy: This device already registered an account!');
-  let fn = $('rFullName').value.trim();
-  if(fn.split(' ').length < 2) return toast('Enter your Full Real Name (First & Last Name)!');
-  oldReg();
-  if(user){ user.fullName = fn; user.refCode = user.name.replace('@','').toUpperCase(); user.left=0; user.right=0; user.qual=0; localStorage.setItem('wcb_device_locked','1'); saveUser(); }
-};
-const u2 = updateUI;
-updateUI = function(){
-  u2(); let rc = user.refCode || user.name.replace('@','').toUpperCase();
-  $('refBoxTxt').innerHTML = '🤝 Your Code: <b>'+rc+'</b> • Invite real users (+300 PTS after 30-day streak)';
-  $('binLeft').textContent = user.left||0; $('binRight').textContent = user.right||0;
-  let pairs = Math.min(user.left||0, user.right||0);
-  $('binStatusBox').innerHTML = '✅ 30-Day Qualified: <b>'+(user.qual||0)+'</b> • Binary Pair Bonus: <b>'+(pairs*500)+' PTS</b>';
-};
-if($('btnCopyRef'))$('btnCopyRef').onclick=()=>{let rc=user.refCode||user.name||'WARRIOR13';navigator.clipboard?.writeText(location.origin+location.pathname+'?ref='+rc);toast('📋 Referral Link Copied: '+rc);};
-
+  
   
 if(user) enterApp();
 </script>
