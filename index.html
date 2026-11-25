@@ -178,4 +178,257 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
       <div id="communityFeed" style="display:flex;flex-direction:column;gap:8px"></div>
     </div>
   </div>
+    <!-- TAB 3: RANKINGS -->
+  <div id="tabRank" class="hidden">
+    <div class="card">
+      <div style="font-size:15px;font-weight:900;color:#fbbf24;margin-bottom:8px">🏆 WORLD COUNTRY RANKINGS</div>
+      <div id="countryRankList" style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px"></div>
+      <div style="font-size:14px;font-weight:900;color:#38bdf8;margin-bottom:8px">👑 TOP WARRIORS</div>
+      <div id="playerRankList" style="display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+  </div>
+    <!-- TAB 4: WALLET & TEAM -->
+  <div id="tabWallet" class="hidden">
+    <div class="card">
+      <div style="font-size:15px;font-weight:900;color:#fbbf24;margin-bottom:8px">💰 WALLET & PRIZE POOL</div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="stat"><div class="v" id="wPts">0</div><div class="l">TOTAL PTS</div></div>
+        <div class="stat"><div class="v" id="wPi">0.00 π</div><div class="l">EST. PI REWARD</div></div>
+      </div>
+      <input id="wPiAddr" class="inp" placeholder="Enter Pi Wallet Address or @PiUsername">
+      <button type="button" id="btnWithdraw" class="btn btn-gold">💸 REQUEST PI PAYOUT (MIN 10,000 PTS)</button>
+      <div class="rule-box" id="refBoxTxt">🤝 Your Referral Code: <b>WARRIOR13</b> • Invite friends for +300 PTS each!</div>
+    </div>
+  </div>
+    <!-- BOTTOM NAVIGATION & FLOATING CHAT -->
+  <div class="nav">
+    <button type="button" id="navGames" class="active" onclick="switchTab('Games')"><span>🎮</span>GAMES</button>
+    <button type="button" id="navCommunity" onclick="switchTab('Community')"><span>🌍</span>COMMUNITY</button>
+    <button type="button" id="navRank" onclick="switchTab('Rank')"><span>🏆</span>RANKINGS</button>
+    <button type="button" id="navWallet" onclick="switchTab('Wallet')"><span>💰</span>WALLET</button>
+  </div>
+  <button type="button" id="btnOpenChat" class="chat-fab" title="Global & Country Chat">💬</button>
+</div>
+  <!-- GLOBAL & COUNTRY CHAT MODAL -->
+<div id="chatModal" class="modal hidden">
+  <div class="card" style="width:100%;max-width:440px;margin:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <b style="color:#fbbf24;font-size:14px">💬 LIVE WAR ROOM CHAT</b>
+      <button type="button" id="btnCloseChat" style="background:none;border:none;color:#94a3b8;font-size:18px;cursor:pointer">✕</button>
+    </div>
+    <div class="grid2" style="margin-bottom:8px">
+      <button type="button" id="chatRoomGlobal" class="btn btn-gold" style="margin:0;padding:6px;font-size:11px">🌍 GLOBAL CHAT</button>
+      <button type="button" id="chatRoomCountry" class="btn btn-dark" style="margin:0;padding:6px;font-size:11px">🏳️ COUNTRY ONLY</button>
+    </div>
+    <div id="chatMessages" style="height:200px;overflow-y:auto;background:#090d16;border:1px solid #1e293b;border-radius:10px;padding:8px;margin-bottom:8px;font-size:12px;display:flex;flex-direction:column;gap:6px"></div>
+    <div style="display:flex;gap:6px">
+      <input id="chatInput" class="inp" style="margin:0" placeholder="Type message to players...">
+      <button type="button" id="btnSendChat" class="btn btn-blue" style="width:auto;margin:0;padding:0 14px">SEND</button>
+    </div>
+  </div>
+</div>
+  <!-- FULL SCREEN GAME ARENA MODAL -->
+<div id="gameModal" class="modal modal-full hidden">
+  <div class="modal-hdr">
+    <div><b id="gTitle" style="color:#fbbf24;font-size:14px">🎮 MINI-GAME</b><div id="gSub" style="font-size:10px;color:#38bdf8">Score: 0</div></div>
+    <button type="button" id="btnCloseGame" class="btn btn-red" style="width:auto;padding:6px 12px;margin:0;font-size:11px">EXIT</button>
+  </div>
+  <div id="gameArea" style="flex:1;position:relative;overflow:hidden;background:#090d16;display:flex;flex-direction:column;align-items:center;justify-content:center"></div>
+</div>
+
+<!-- SIDE MENU INFO MODAL -->
+<div id="infoModal" class="modal hidden">
+  <div class="card" style="width:100%;max-width:440px;margin:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <b id="infoTitle" style="color:#fbbf24;font-size:15px">INFO</b>
+      <button type="button" onclick="document.getElementById('infoModal').classList.add('hidden')" style="background:none;border:none;color:#94a3b8;font-size:18px;cursor:pointer">✕</button>
+    </div>
+    <div id="infoBody" class="rule-box" style="margin:0"></div>
+  </div>
+</div>
   
+<script>
+const DIRECT_LINK = "https://uplcm.com/4/12345252";
+const $ = id => document.getElementById(id);
+let user = JSON.parse(localStorage.getItem('wcb_user') || 'null');
+let mode = 'country', chatRoom = 'global';
+let posts = JSON.parse(localStorage.getItem('wcb_posts') || '[{"user":"@Warrior13","country":"🇵🇭 Philippines","text":"Welcome to World Country Battle! Fight for your flag & earn Pi!","likes":12,"followed":false}]');
+let chats = JSON.parse(localStorage.getItem('wcb_chats') || '[{"room":"global","user":"@Warrior13","country":"🇵🇭","msg":"Good luck warriors!"},{"room":"🇵🇭 Philippines","user":"@PinoyAce","country":"🇵🇭","msg":"Laban Pilipinas!"}]');
+
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.remove('hidden'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.add('hidden'),2800); }
+try{ if(window.Pi) Pi.init({version:"2.0",sandbox:false}); }catch(e){}
+
+$('btnSwitchToReg').onclick=()=>{ $('logBox').classList.add('hidden'); $('regBox').classList.remove('hidden'); $('authTitle').textContent='CREATE ACCOUNT'; };
+$('btnSwitchToLog').onclick=()=>{ $('regBox').classList.add('hidden'); $('logBox').classList.remove('hidden'); $('authTitle').textContent='WELCOME BACK!'; };
+$('eyeLPass').onclick=()=>{ $('lPass').type = $('lPass').type==='password'?'text':'password'; };
+$('eyeRPass').onclick=()=>{ $('rPass').type = $('rPass').type==='password'?'text':'password'; };
+$('btnForgot').onclick=()=>toast('Enter your Gmail & click Log In, or use Pi Network login.');
+  function saveUser(){ localStorage.setItem('wcb_user', JSON.stringify(user)); updateUI(); }
+function enterApp(){ $('authScreen').classList.add('hidden'); $('appScreen').classList.remove('hidden'); updateUI(); renderCommunity(); renderRanks(); renderChat(); }
+
+$('btnRegister').onclick=()=>{
+  let n=$('rName').value.trim(), e=$('rEmail').value.trim(), p=$('rPass').value.trim(), c=$('rCountry').value;
+  if(!n||!e||!p) return toast('Please fill all fields!');
+  if(!n.startsWith('@')) n='@'+n;
+  user={name:n,email:e,pass:p,country:c,pts:250,coins:500,ads:0,adDate:new Date().toDateString(),following:['@Warrior13'],followers:1};
+  saveUser(); enterApp(); toast('Welcome '+n+'! +250 PTS Bonus!');
+};
+
+$('btnLogin').onclick=()=>{
+  let u=$('lUser').value.trim(), p=$('lPass').value.trim();
+  if(!u||!p) return toast('Enter username/Gmail and password!');
+  let saved=JSON.parse(localStorage.getItem('wcb_user')||'null');
+  if(saved && (saved.name===u||saved.name==='@'+u||saved.email===u) && saved.pass===p){ user=saved; }
+  else { user={name:u.startsWith('@')?u:'@'+u.split('@')[0],email:u,pass:p,country:'🇵🇭 Philippines',pts:100,coins:500,ads:0,adDate:new Date().toDateString(),following:['@Warrior13'],followers:1}; }
+  saveUser(); enterApp(); toast('Logged in successfully!');
+};
+  $('btnGmail').onclick=()=>{
+  let g=prompt('Enter your Gmail address:');
+  if(!g||!g.includes('@')) return toast('Valid Gmail required!');
+  user={name:'@'+g.split('@'),email:g,pass:'gmail',country:'🇵🇭 Philippines',pts:250,coins:500,ads:0,adDate:new Date().toDateString(),following:['@Warrior13'],followers:1};
+  saveUser(); enterApp(); toast('Signed in with Gmail!');
+};
+
+$('btnPi').onclick=async()=>{
+  if(!window.Pi) return toast('Open this app inside Pi Browser to use Pi Login!');
+  try{
+    const auth = await Pi.authenticate(['username'], p=>{});
+    let pn='@'+auth.user.username;
+    user={name:pn,email:pn+'@pi.network',pass:'pi',country:'🇵🇭 Philippines',pts:500,coins:1000,ads:0,adDate:new Date().toDateString(),following:['@Warrior13'],followers:1};
+    saveUser(); enterApp(); toast('Pi Network Connected: '+pn);
+  }catch(e){ toast('Pi Login cancelled or open in Pi Browser.'); }
+};
+$('btnInstall').onclick=()=>toast('Tap browser menu (⋮) -> "Add to Home screen" to install!');
+  function updateUI(){
+  if(!user) return;
+  if(user.adDate!==new Date().toDateString()){ user.ads=0; user.adDate=new Date().toDateString(); }
+  $('uTag').textContent=user.name+' • '+user.country;
+  $('sideName').textContent=user.name;
+  $('sideCountry').textContent=user.country+' • Following: '+(user.following?user.following.length:0);
+  $('ptsPill').textContent=user.pts.toLocaleString()+' PTS';
+  $('coinPill').textContent='🪙 '+user.coins.toLocaleString()+' COINS';
+  $('adLimitTxt').textContent='Today: '+user.ads+' / 20 ads';
+  $('wPts').textContent=user.pts.toLocaleString();
+  $('wPi').textContent=(user.pts/10000).toFixed(2)+' π';
+}
+function closeDrawer(){ $('sideDrawer').classList.add('hidden'); }
+$('btnOpenDrawer').onclick=()=>$('sideDrawer').classList.remove('hidden');
+$('btnCloseDrawer').onclick=closeDrawer;
+$('btnLogout').onclick=()=>{ localStorage.removeItem('wcb_user'); location.reload(); };
+function switchTab(t){
+  ['Games','Community','Rank','Wallet'].forEach(x=>{ $('tab'+x).classList.add('hidden'); $('nav'+x).classList.remove('active'); });
+  $('tab'+t).classList.remove('hidden'); $('nav'+t).classList.add('active');
+                                     }
+  $('btnWatchAd').onclick=()=>{
+  if(user.ads>=20) return toast('Daily 20/20 ad limit reached! Come back tomorrow.');
+  window.open(DIRECT_LINK, '_blank');
+  user.ads++; user.pts+=150; user.coins+=200; saveUser();
+  toast('Sponsor Ad Watched! +150 PTS & 🪙 200 Coins!');
+};
+
+$('modeCountry').onclick=()=>{ mode='country'; $('modeCountry').className='btn btn-gold'; $('modeCivil').className='btn btn-dark'; $('battleMatchTxt').textContent='Matching: '+user.country+' vs 🇯🇵 Japan (2x PTS)'; };
+$('modeCivil').onclick=()=>{ mode='civil'; $('modeCivil').className='btn btn-gold'; $('modeCountry').className='btn btn-dark'; $('battleMatchTxt').textContent='Civil War Duel: '+user.country+' vs '+user.country+' (1.5x PTS)'; };
+
+$('btnWithdraw').onclick=()=>{
+  let addr=$('wPiAddr').value.trim();
+  if(user.pts<10000) return toast('Minimum 10,000 PTS (1.00 π) required to withdraw!');
+  if(!addr) return toast('Enter your Pi Wallet or @PiUsername!');
+  toast('Payout request of '+(user.pts/10000).toFixed(2)+' π sent for '+addr+'!');
+};
+  function openSideInfo(k){
+  closeDrawer(); $('infoModal').classList.remove('hidden');
+  const map={
+    inbox:['📩 INBOX','Welcome to World Country Battle! Top weekly countries & warriors share the Pi Prize Pool!'],
+    profile:['👤 PLAYER PROFILE','User: '+user.name+'<br>Country: '+user.country+'<br>Following: '+(user.following?user.following.length:0)+' Warriors'],
+    stats:['📊 BATTLE STATS','Total Points: '+user.pts+' PTS<br>Coins: '+user.coins+'<br>Ads Watched Today: '+user.ads+'/20'],
+    rules:['📜 RULES & PI CHECKLIST','1. Fair play only.<br>2. Country vs Country gives 2x PTS.<br>3. Same-Country Duel gives 1.5x PTS.<br>4. Min payout: 10,000 PTS (1.00 π).']
+  };
+  $('infoTitle').textContent=map[k][0]; $('infoBody').innerHTML=map[k][1];
+}
+
+$('btnNewPost').onclick=()=>$('postBox').classList.toggle('hidden');
+$('btnSubmitPost').onclick=()=>{
+  let txt=$('postInput').value.trim(); if(!txt) return;
+  posts.unshift({user:user.name,country:user.country,text:txt,likes:1});
+  localStorage.setItem('wcb_posts',JSON.stringify(posts)); $('postInput').value=''; $('postBox').classList.add('hidden'); renderCommunity(); toast('Posted to Community!');
+};
+  function toggleFollow(target){
+  if(!user.following) user.following=[];
+  let idx=user.following.indexOf(target);
+  if(idx>-1){ user.following.splice(idx,1); toast('Unfollowed '+target); }
+  else { user.following.push(target); toast('Following '+target+'!'); }
+  saveUser(); renderCommunity();
+}
+
+function renderCommunity(){
+  $('communityFeed').innerHTML=posts.map((p,i)=>{
+    let isF=(user.following||[]).includes(p.user);
+    return `<div style="background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:12px;font-weight:800;color:#38bdf8">${p.user} <small style="color:#94a3b8">(${p.country})</small></span>
+        ${p.user!==user.name?`<button type="button" onclick="toggleFollow('${p.user}')" style="background:${isF?'#1e293b':'#0284c7'};color:#fff;border:none;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:800">${isF?'✓ Following':'+ Follow'}</button>`:''}
+      </div>
+      <div style="font-size:12px;color:#e2e8f0;margin-bottom:6px">${p.text}</div>
+      <button type="button" onclick="posts[${i}].likes++;localStorage.setItem('wcb_posts',JSON.stringify(posts));renderCommunity()" style="background:none;border:none;color:#fbbf24;font-size:11px;font-weight:700;cursor:pointer">❤️ ${p.likes} Likes</button>
+    </div>`;
+  }).join('');
+}
+  function renderRanks(){
+  const cList=[{c:'🇵🇭 Philippines',p:148500},{c:'🇴🇲 Oman',p:132400},{c:'🇯🇵 Japan',p:129100},{c:'🇺🇸 USA',p:118900}];
+  if(user && !cList.some(x=>x.c===user.country)) cList.push({c:user.country,p:user.pts});
+  cList.forEach(x=>{ if(user && x.c===user.country) x.p+=user.pts; });
+  cList.sort((a,b)=>b.p-a.p);
+  $('countryRankList').innerHTML=cList.map((x,i)=>`<div style="display:flex;justify-content:space-between;background:#0f172a;padding:8px 10px;border-radius:8px;font-size:12px"><b>#${i+1} ${x.c}</b><span style="color:#fbbf24;font-weight:800">${x.p.toLocaleString()} PTS</span></div>`).join('');
+  const pList=[{n:'@Warrior13',p:45200},{n:'@cheroy13',p:39800},{n:'@SultanOman',p:31400}];
+  if(user) pList.push({n:user.name,p:user.pts});
+  pList.sort((a,b)=>b.p-a.p);
+  $('playerRankList').innerHTML=pList.map((x,i)=>`<div style="display:flex;justify-content:space-between;background:#0f172a;padding:8px 10px;border-radius:8px;font-size:12px"><b>#${i+1} ${x.n}</b><span style="color:#38bdf8;font-weight:800">${x.p.toLocaleString()} PTS</span></div>`).join('');
+  }
+  $('btnOpenChat').onclick=()=>{ $('chatModal').classList.remove('hidden'); renderChat(); };
+$('btnCloseChat').onclick=()=>$('chatModal').classList.add('hidden');
+$('chatRoomGlobal').onclick=()=>{ chatRoom='global'; $('chatRoomGlobal').className='btn btn-gold'; $('chatRoomCountry').className='btn btn-dark'; renderChat(); };
+$('chatRoomCountry').onclick=()=>{ chatRoom=user.country; $('chatRoomCountry').className='btn btn-gold'; $('chatRoomGlobal').className='btn btn-dark'; renderChat(); };
+
+function renderChat(){
+  let list=chats.filter(c=>chatRoom==='global'?c.room==='global':c.room===user.country);
+  $('chatMessages').innerHTML=list.length?list.map(c=>`<div><b style="color:#38bdf8">${c.user} (${c.country}):</b> <span style="color:#f8fafc">${c.msg}</span></div>`).join(''):'<div style="color:#64748b">No messages yet in this room. Say hi!</div>';
+  $('chatMessages').scrollTop=$('chatMessages').scrollHeight;
+}
+
+$('btnSendChat').onclick=()=>{
+  let m=$('chatInput').value.trim(); if(!m) return;
+  chats.push({room:chatRoom==='global'?'global':user.country,user:user.name,country:user.country.split(' '),msg:m});
+  localStorage.setItem('wcb_chats',JSON.stringify(chats)); $('chatInput').value=''; renderChat();
+};
+  let gTimer=null, gScore=0;
+function endGame(){
+  clearInterval(gTimer); $('gameModal').classList.add('hidden');
+  let mult=mode==='country'?2:1.5, earned=Math.round(gScore*10*mult);
+  user.pts+=earned; user.coins+=Math.round(earned/2); saveUser(); renderRanks();
+  toast('Battle Over! +'+earned+' PTS ('+mult+'x '+mode.toUpperCase()+' Bonus)!');
+}
+$('btnCloseGame').onclick=endGame;
+
+$('btnPlayDragon').onclick=()=>{
+  gScore=0; $('gTitle').textContent='🐉 DRAGON WINGS'; $('gSub').textContent='Score: 0 • Tap Dragon to Fly!';
+  $('gameModal').classList.remove('hidden');
+  $('gameArea').innerHTML='<button id="flyBtn" style="font-size:64px;background:none;border:none;cursor:pointer;transition:transform .1s">🐉</button><p style="color:#94a3b8;font-size:12px;margin-top:12px">Tap the Dragon rapidly for 15 seconds!</p>';
+  let t=15; $('flyBtn').onclick=()=>{ gScore++; $('gSub').textContent='Score: '+gScore+' • Time: '+t+'s'; $('flyBtn').style.transform='scale(1.25)'; setTimeout(()=>$('flyBtn').style.transform='scale(1)',90); };
+  gTimer=setInterval(()=>{ t--; $('gSub').textContent='Score: '+gScore+' • Time: '+t+'s'; if(t<=0) endGame(); },1000);
+};
+  function startTargetGame(title, icon){
+  gScore=0; $('gTitle').textContent=title; $('gSub').textContent='Score: 0 • Time: 15s';
+  $('gameModal').classList.remove('hidden');
+  $('gameArea').innerHTML='<button id="tBtn" style="position:absolute;font-size:48px;background:none;border:none;cursor:pointer">'+icon+'</button>';
+  const move=()=>{ $('tBtn').style.left=(15+Math.random()*65)+'%'; $('tBtn').style.top=(15+Math.random()*65)+'%'; };
+  move(); let t=15;
+  $('tBtn').onclick=()=>{ gScore+=2; $('gSub').textContent='Score: '+gScore+' • Time: '+t+'s'; move(); };
+  gTimer=setInterval(()=>{ t--; $('gSub').textContent='Score: '+gScore+' • Time: '+t+'s'; if(t<=0) endGame(); },1000);
+}
+$('btnPlayArena').onclick=()=>startTargetGame('⚔️ ARENA BRAWL LEGENDS','🚩');
+$('btnPlayBubble').onclick=()=>startTargetGame('🫧 BUBBLE EPIC SHOOTER','🫧');
+
+if(user) enterApp();
+</script>
+</body>
+</html>
