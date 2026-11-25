@@ -130,7 +130,15 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
   </div>
 
   <!-- TAB 1: GAMES + FEATURED ADS -->
-  <div id="tabGames">
+  <div id="tabGames">    <div class="card" style="background:linear-gradient(90deg,#064e3b,#065f46);border-color:#10b981;display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div>
+        <div style="font-size:10px;color:#6ee7b7;font-weight:900">📅 30-DAY QUALIFYING STREAK</div>
+        <div style="font-size:12px;font-weight:800" id="streakTitle">Day 1 / 30 • +100 PTS</div>
+        <div style="font-size:10px;color:#d1fae5;margin-top:2px" id="streakSub">Login 30 days to qualify invite reward!</div>
+      </div>
+      <button type="button" id="btnDailyClaim" class="btn btn-green" style="width:auto;padding:8px 12px;margin:0;font-size:11px;flex-shrink:0">CLAIM</button>
+  </div>
+    
     <div class="card" style="background:linear-gradient(90deg,#1e1b4b,#312e81);border-color:#fbbf24;display:flex;justify-content:space-between;align-items:center;gap:10px">
       <div>
         <div style="font-size:10px;color:#fbbf24;font-weight:900">📢 FEATURED SPONSORED AD</div>
@@ -427,7 +435,24 @@ $('btnPlayDragon').onclick=()=>{
 }
 $('btnPlayArena').onclick=()=>startTargetGame('⚔️ ARENA BRAWL LEGENDS','🚩');
 $('btnPlayBubble').onclick=()=>startTargetGame('🫧 BUBBLE EPIC SHOOTER','🫧');
-
+const origUpdateUI = updateUI;
+updateUI = function(){
+  origUpdateUI();
+  let st = user.streak || 0, today = new Date().toDateString(), claimed = (user.lastClaim === today);
+  $('streakTitle').textContent = 'Day ' + Math.min(st + (claimed?0:1), 30) + ' / 30 • ' + (st>=30?'QUALIFIED!':'+100 PTS');
+  $('streakSub').textContent = st>=30 ? '✅ 30-Day Invite Qualification Complete!' : (claimed ? 'Claimed today! Streak: '+st+'/30 days' : 'Claim daily for 30 days to qualify invite!');
+  $('btnDailyClaim').textContent = claimed ? 'DONE ✓' : 'CLAIM';
+  $('btnDailyClaim').style.opacity = claimed ? '0.6' : '1';
+};
+$('btnDailyClaim').onclick = () => {
+  let today = new Date().toDateString();
+  if(user.lastClaim === today) return toast('Already claimed today! Come back tomorrow.');
+  user.streak = (user.streak || 0) + 1; user.lastClaim = today;
+  let bonus = user.streak === 30 ? 1000 : 100;
+  user.pts += bonus; user.coins += 50; saveUser();
+  toast(user.streak===30 ? '🎉 30 DAYS QUALIFIED! +1,000 PTS Bonus!' : '📅 Day '+user.streak+'/30 Claimed! +100 PTS & 🪙 50');
+};
+  
 if(user) enterApp();
 </script>
 </body>
