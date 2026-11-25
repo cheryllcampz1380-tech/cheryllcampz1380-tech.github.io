@@ -495,7 +495,8 @@ updateUI = function(){
   let pairs = Math.min(user.left||0, user.right||0);
   $('binStatusBox').innerHTML = '✅ 30-Day Qualified: <b>'+(user.qual||0)+'</b> • Binary Pair Bonus: <b>'+(pairs*500)+' PTS</b>';
 };
-$('btnCopyRef').onclick = () => { let rc=user.refCode||user.name.replace('@','').toUpperCase(); navigator.clipboard?.writeText('https://github.io); toast('📋 Invite Link Copied: ?ref='+rc); };
+if($('btnCopyRef'))$('btnCopyRef').onclick=()=>{let rc=user.refCode||user.name||'WARRIOR13';navigator.clipboard?.writeText(location.origin+location.pathname+'?ref='+rc);toast('📋 Referral Link Copied: '+rc);};
+
   
 if(user) enterApp();
 </script>
