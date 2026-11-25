@@ -147,6 +147,14 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
       </div>
       <button type="button" id="btnWatchAd" class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px;flex-shrink:0">WATCH</button>
     </div>
+        <div class="card" style="background:linear-gradient(90deg,#3b0764,#581c87);border-color:#c084fc;display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div>
+        <div style="font-size:10px;color:#e9d5ff;font-weight:900">🎁 SUPER BONUS OFFERWALL</div>
+        <div style="font-size:12px;font-weight:800">Complete 1 Quick Task for +1,000 PTS & 🪙 500</div>
+      </div>
+      <button type="button" id="btnOfferWall" class="btn btn-pi" style="width:auto;padding:8px 12px;margin:0;font-size:11px;flex-shrink:0">OFFERS</button>
+        </div>
+    
         <div class="card">
       <div style="font-size:14px;font-weight:900;color:#fbbf24;margin-bottom:6px">⚔️ SELECT BATTLE MODE</div>
       <div class="grid2" style="margin-bottom:8px">
@@ -451,6 +459,11 @@ $('btnDailyClaim').onclick = () => {
   let bonus = user.streak === 30 ? 1000 : 100;
   user.pts += bonus; user.coins += 50; saveUser();
   toast(user.streak===30 ? '🎉 30 DAYS QUALIFIED! +1,000 PTS Bonus!' : '📅 Day '+user.streak+'/30 Claimed! +100 PTS & 🪙 50');
+};
+  $('btnOfferWall').onclick = () => {
+  window.open('https://trianglerockers.com', '_blank');
+  user.pts += 1000; user.coins += 500; saveUser();
+  toast('🎁 OfferWall Opened! Complete 1 offer to claim +1,000 PTS & 🪙 500!');
 };
   
 if(user) enterApp();
