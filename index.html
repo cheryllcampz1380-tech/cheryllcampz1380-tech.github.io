@@ -5,22 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0f172a">
 <title>World Country Battle — Play & Earn</title>
-
-<!-- MONETAG IN-PAGE PUSH ONLY (MultiTag Removed - Replace Zone ID Below) -->
-<!-- <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',YOUR_IN_PAGE_PUSH_ZONE_ID,document.createElement('script'))</script> -->
-
+<script src="https://minepi.com"></script>
+<script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',12339774,document.createElement('script'))</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:76px;overflow-x:hidden}
 .hidden{display:none!important}
 .hdr{background:linear-gradient(135deg,#0f172a,#1e1b4b);padding:12px 14px;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
-.logo{font-weight:900;font-size:15px;background:linear-gradient(90deg,#38bdf8,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.pill{background:#1e293b;border:1px solid #334155;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#fbbf24}
+.logo{font-weight:900;font-size:14px;background:linear-gradient(90deg,#38bdf8,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .pill{background:#1e293b;border:1px solid #334155;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:800;color:#fbbf24}
 .card{background:#111827;border:1px solid #1f2937;border-radius:14px;padding:14px;margin:12px}
 .inp{width:100%;background:#0f172a;border:1px solid #334155;color:#fff;padding:11px;border-radius:10px;margin-bottom:9px;font-size:13px;outline:none}
 .inp:focus{border-color:#38bdf8}
-.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:8px;transition:transform .1s,opacity .15s}
-.btn:active{transform:scale(.98);opacity:.85}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:8px;display:block;text-align:center}
+.btn:active{opacity:.8}
 .btn-gold{background:linear-gradient(90deg,#f59e0b,#eab308);color:#000}
 .btn-blue{background:#0284c7;color:#fff}
 .btn-pi{background:#7c3aed;color:#fff}
@@ -30,7 +28,7 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
 .nav{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#0f172a;border-top:1px solid #1e293b;display:flex;z-index:30}
 .nav button{flex:1;padding:10px 4px;background:none;border:none;color:#64748b;font-size:10px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 .nav button span{font-size:15px}
-.nav button.active{color:#fbbf24;border-top:2px solid #fbbf24;background:rgba(251,191,36,0.06)}
+  .nav button.active{color:#fbbf24;border-top:2px solid #fbbf24;background:rgba(251,191,36,0.06)}
 .modal{position:fixed;inset:0;background:rgba(2,6,23,0.92);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:60;padding:16px}
 .modal-full{padding:0;justify-content:flex-start;align-items:stretch}
 .modal-hdr{background:#0f172a;border-bottom:1px solid #1e293b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
@@ -39,78 +37,93 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
 .stat{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:10px;text-align:center}
 .stat .v{font-size:16px;font-weight:900;color:#fbbf24}
 .stat .l{font-size:10px;color:#94a3b8;margin-top:2px}
-.tree-col{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:10px;font-size:11px}
+.drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:70;display:flex}
+.drawer{width:270px;background:#0f172a;height:100%;border-right:1px solid #1e293b;padding:16px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.drawer-item{padding:11px 12px;border-radius:10px;background:#111827;border:1px solid #1f2937;color:#f8fafc;font-size:13px;font-weight:700;text-align:left;cursor:pointer}
+.chat-fab{position:fixed;right:14px;bottom:84px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#0284c7,#7c3aed);color:#fff;border:2px solid #fbbf24;font-size:20px;display:flex;align-items:center;justify-content:center;z-index:40;box-shadow:0 4px 15px rgba(0,0,0,.6);cursor:pointer}
 #toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #fbbf24;color:#fff;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:700;z-index:100;max-width:90%;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,.6)}
 </style>
 </head>
 <body>
-
 <div id="toast" class="hidden"></div>
 
-<!-- AUTH SCREEN (NO GUEST MODE) -->
 <div id="authScreen">
   <div class="hdr">
     <div class="logo">⚔️ WORLD COUNTRY BATTLE</div>
-    <div class="pill">PI SDK + WEB3</div>
+    <div class="pill" id="jsStatusPill">PI SDK + WEB3</div>
   </div>
-
   <div class="card" style="text-align:center;background:linear-gradient(135deg,#1e1b4b,#0f172a)">
     <div style="font-size:32px;margin-bottom:4px">🐉⚔️🌍</div>
     <h2 id="authTitle" style="font-size:18px;color:#fbbf24">WELCOME BACK!</h2>
-    <p id="authSub" style="font-size:12px;color:#38bdf8;margin-top:6px;cursor:pointer;padding:4px" onclick="switchAuth('reg')">Not a User? <u><b>Click Register</b></u></p>
+    <p id="btnSwitchToReg" style="font-size:13px;color:#38bdf8;margin-top:8px;cursor:pointer;padding:6px">Not a User? <u><b>Click Register</b></u></p>
   </div>
-
   <div class="card">
-    <div id="authMsg" class="rule-box hidden" style="border-color:#f59e0b;color:#fbbf24;margin-top:0"></div>
-
-    <!-- LOGIN FORM -->
+        <div id="authMsg" class="rule-box hidden" style="border-color:#f59e0b;color:#fbbf24;margin-top:0"></div>
     <div id="logBox">
       <input id="lUser" class="inp" placeholder="Username or Gmail">
       <div style="position:relative">
         <input id="lPass" type="password" class="inp" placeholder="Password / Secret Code" style="padding-right:42px">
-        <span onclick="toggleEye('lPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer;font-size:16px">👁️</span>
+        <span id="eyeLPass" style="position:absolute;right:12px;top:10px;cursor:pointer;font-size:16px">👁️</span>
       </div>
       <div style="text-align:right;margin:-4px 0 10px">
-        <span onclick="openForgotModal()" style="font-size:11px;color:#38bdf8;cursor:pointer;padding:4px">Forgot Password?</span>
+        <span id="btnForgot" style="font-size:12px;color:#38bdf8;cursor:pointer;padding:4px">Forgot Password?</span>
       </div>
-      <button type="button" class="btn btn-blue" onclick="loginUser()">🔓 LOG IN</button>
+      <button type="button" id="btnLogin" class="btn btn-blue">🔓 LOG IN</button>
     </div>
-
-    <!-- REGISTER FORM -->
-    <div id="regBox" class="hidden">
+        <div id="regBox" class="hidden">
       <input id="rName" class="inp" placeholder="Username (e.g. @Warrior13)">
       <input id="rEmail" type="email" class="inp" placeholder="Gmail Address">
+      <select id="rCountry" class="inp">
+        <option value="🇵🇭 Philippines">🇵🇭 Philippines</option>
+        <option value="🇴🇲 Oman">🇴🇲 Oman</option>
+        <option value="🇺🇸 USA">🇺🇸 USA</option>
+        <option value="🇯🇵 Japan">🇯🇵 Japan</option>
+        <option value="🇸🇦 Saudi Arabia">🇸🇦 Saudi Arabia</option>
+        <option value="🇦🇪 UAE">🇦🇪 UAE</option>
+        <option value="🇮🇳 India">🇮🇳 India</option>
+        <option value="🇮🇩 Indonesia">🇮🇩 Indonesia</option>
+        <option value="🌍 Global / Other">🌍 Global / Other</option>
+      </select>
       <div style="position:relative">
         <input id="rPass" type="password" class="inp" placeholder="Write Password" style="padding-right:42px">
-        <span onclick="toggleEye('rPass',this)" style="position:absolute;right:12px;top:10px;cursor:pointer;font-size:16px">👁️</span>
-      </div>
-      <div style="position:relative">
-        <input id="rPass2" type="password" class="inp" placeholder="Rewrite Password" style="padding-right:42px">
-        <span onclick="toggleEye('rPass2',this)" style="position:absolute;right:12px;top:10px;cursor:pointer;font-size:16px">👁️</span>
+        <span id="eyeRPass" style="position:absolute;right:12px;top:10px;cursor:pointer;font-size:16px">👁️</span>
       </div>
       <input id="rRef" class="inp" value="WARRIOR13" placeholder="Referral Code (Default: WARRIOR13)">
-      <p style="font-size:11px;color:#fbbf24;margin:-4px 0 9px">💡 Default Referral Code: <b>WARRIOR13</b></p>
-      <button type="button" class="btn btn-gold" onclick="registerUser()">🚀 CONTINUE TO REGISTER</button>
-      <p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:6px;cursor:pointer;padding:4px" onclick="switchAuth('log')">Already have an account? <u style="color:#38bdf8"><b>Log In</b></u></p>
+      <button type="button" id="btnRegister" class="btn btn-gold">🚀 CONTINUE TO REGISTER</button>
+      <p id="btnSwitchToLog" style="text-align:center;font-size:12px;color:#94a3b8;margin-top:6px;cursor:pointer;padding:6px">Already have an account? <u style="color:#38bdf8"><b>Log In</b></u></p>
+        </div>
+            <div style="border-top:1px solid #1e293b;margin:10px 0;padding-top:10px">
+      <button type="button" id="btnGmail" class="btn btn-dark">📧 CONTINUE WITH GMAIL</button>
+      <button type="button" id="btnPi" class="btn btn-pi">🥧 CONTINUE WITH PI NETWORK (PI BROWSER)</button>
+      <button type="button" id="btnInstall" class="btn btn-dark" style="margin-bottom:0">📲 INSTALL / DOWNLOAD APP</button>
     </div>
+  </div>
+</div>
 
-    <!-- SOCIAL / WEB3 LOGIN -->
-    <div style="border-top:1px solid #1e293b;margin:10px 0;padding-top:10px">
-      <button type="button" class="btn btn-dark" onclick="openGmailModal()">📧 CONTINUE WITH GMAIL</button>
-      <button type="button" class="btn btn-pi" onclick="piLogin()">🥧 CONTINUE WITH PI NETWORK (PI BROWSER)</button>
-      <button type="button" class="btn btn-dark" style="margin-bottom:0" onclick="installApp()">📲 INSTALL / DOWNLOAD APP</button>
+<!-- SIDE MENU DRAWER -->
+<div id="sideDrawer" class="drawer-bg hidden">
+  <div class="drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e293b;padding-bottom:10px">
+      <div><b id="sideName" style="color:#fbbf24;font-size:15px">@Player</b><div id="sideCountry" style="font-size:11px;color:#38bdf8">🇵🇭 Philippines</div></div>
+      <button type="button" id="btnCloseDrawer" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer">✕</button>
     </div>
+        <button type="button" class="drawer-item" onclick="openSideInfo('inbox')">📩 Inbox & Announcements</button>
+    <button type="button" class="drawer-item" onclick="openSideInfo('profile')">👤 Profile & Country Flag</button>
+    <button type="button" class="drawer-item" onclick="openSideInfo('stats')">📊 Battle Statistics</button>
+    <button type="button" class="drawer-item" onclick="switchTab('Wallet');closeDrawer()">💰 Wallet & Prize Pool</button>
+    <button type="button" class="drawer-item" onclick="openSideInfo('rules')">📜 Battle Rules & FAQ</button>
+    <button type="button" id="btnLogout" class="drawer-item" style="color:#f87171;border-color:#7f1d1d;margin-top:auto">🚪 Log Out</button>
   </div>
 </div>
 
 <!-- MAIN APP -->
 <div id="appScreen" class="hidden">
   <div class="hdr">
-    <div>
-      <div class="logo">⚔️ WORLD COUNTRY BATTLE</div>
-      <div style="font-size:11px;color:#94a3b8" id="uTag">@User</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button type="button" id="btnOpenDrawer" style="background:#1e293b;border:1px solid #334155;color:#fbbf24;font-size:18px;padding:4px 9px;border-radius:8px;cursor:pointer">☰</button>
+      <div><div class="logo">⚔️ WORLD BATTLE</div><div style="font-size:11px;color:#94a3b8" id="uTag">@User • 🇵🇭</div></div>
     </div>
-    <div style="text-align:right">
+        <div style="text-align:right">
       <div class="pill" id="ptsPill">0 PTS</div>
       <div style="font-size:10px;color:#38bdf8;margin-top:2px" id="coinPill">🪙 500 COINS</div>
     </div>
@@ -124,34 +137,45 @@ body{background:#090d16;color:#f8fafc;max-width:480px;margin:0 auto;min-height:1
         <div style="font-size:12px;font-weight:800">Watch Sponsor Ad for +150 PTS & 🪙 200</div>
         <div style="font-size:10px;color:#cbd5e1;margin-top:2px" id="adLimitTxt">Today: 0 / 20 ads</div>
       </div>
-      <button type="button" class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px;flex-shrink:0" onclick="watchFeaturedAd()">WATCH</button>
+      <button type="button" id="btnWatchAd" class="btn btn-gold" style="width:auto;padding:8px 12px;margin:0;font-size:11px;flex-shrink:0">WATCH</button>
+    </div>
+        <div class="card">
+      <div style="font-size:14px;font-weight:900;color:#fbbf24;margin-bottom:6px">⚔️ SELECT BATTLE MODE</div>
+      <div class="grid2" style="margin-bottom:8px">
+        <button type="button" id="modeCountry" class="btn btn-gold" style="margin:0;font-size:11px;padding:9px">🌍 COUNTRY VS COUNTRY</button>
+        <button type="button" id="modeCivil" class="btn btn-dark" style="margin:0;font-size:11px;padding:9px">🏳️ SAME COUNTRY DUEL</button>
+      </div>
+      <div id="battleMatchTxt" style="font-size:11px;color:#38bdf8;text-align:center">Matching: 🇵🇭 Philippines vs 🇯🇵 Japan (2x PTS)</div>
     </div>
 
     <div class="card">
-      <div style="font-size:14px;font-weight:900;color:#fbbf24;margin-bottom:4px">🎮 PLAY MINI-GAMES</div>
-      <div style="font-size:11px;color:#94a3b8;margin-bottom:10px">Earn PTS & Coins + qualify for weekly/monthly leaderboard pools.</div>
-
-      <div class="card" style="margin:0 0 10px;background:#0f172a">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-          <div>
-            <b style="font-size:13px">🐉 Dragon Wings (Full Arena)</b>
-            <div style="font-size:11px;color:#94a3b8">Tap to fly, dodge pillars & collect coins</div>
-          </div>
-          <button type="button" class="btn btn-gold" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startDragonWings()">PLAY</button>
-        </div>
+      <div style="font-size:14px;font-weight:900;color:#fbbf24;margin-bottom:8px">🎮 PLAY MINI-GAMES</div>
+      <div class="card" style="margin:0 0 8px;background:#0f172a;display:flex;justify-content:space-between;align-items:center">
+        <div><b style="font-size:13px">🐉 Dragon Wings</b><div style="font-size:11px;color:#94a3b8">Tap to fly & dodge pillars</div></div>
+        <button type="button" id="btnPlayDragon" class="btn btn-gold" style="width:auto;padding:8px 14px;margin:0;font-size:11px">PLAY</button>
       </div>
-
-      <div class="card" style="margin:0 0 10px;background:#0f172a">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-          <div>
-            <b style="font-size:13px">⚔️ Arena Brawl Legends</b>
-            <div style="font-size:11px;color:#94a3b8">Tap enemy flags fast before time runs out</div>
-          </div>
-          <button type="button" class="btn btn-blue" style="width:auto;padding:8px 14px;margin:0;font-size:11px" onclick="startArenaBrawl()">PLAY</button>
-        </div>
+            <div class="card" style="margin:0 0 8px;background:#0f172a;display:flex;justify-content:space-between;align-items:center">
+        <div><b style="font-size:13px">⚔️ Arena Brawl Legends</b><div style="font-size:11px;color:#94a3b8">Tap enemy flags fast</div></div>
+        <button type="button" id="btnPlayArena" class="btn btn-blue" style="width:auto;padding:8px 14px;margin:0;font-size:11px">PLAY</button>
       </div>
-
-      <div class="card" style="margin:0;background:#0f172a">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-          <div>
-            <b style="font-size:13px">🫧 Bubble Epic Shooter</b>
+      <div class="card" style="margin:0;background:#0f172a;display:flex;justify-content:space-between;align-items:center">
+        <div><b style="font-size:13px">🫧 Bubble Epic Shooter</b><div style="font-size:11px;color:#94a3b8">Pop rising bubbles for combos</div></div>
+        <button type="button" id="btnPlayBubble" class="btn btn-green" style="width:auto;padding:8px 14px;margin:0;font-size:11px">PLAY</button>
+      </div>
+    </div>
+  </div>
+    <!-- TAB 2: COMMUNITY -->
+  <div id="tabCommunity" class="hidden">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <b style="font-size:15px;color:#fbbf24">🌍 BATTLE COMMUNITY</b>
+        <button type="button" id="btnNewPost" class="btn btn-gold" style="width:auto;padding:6px 12px;margin:0;font-size:11px">+ NEW POST</button>
+      </div>
+      <div id="postBox" class="hidden" style="margin-bottom:10px">
+        <textarea id="postInput" class="inp" rows="2" placeholder="Share battle strategy or challenge a country..."></textarea>
+        <button type="button" id="btnSubmitPost" class="btn btn-blue" style="margin:0;padding:8px">PUBLISH POST</button>
+      </div>
+      <div id="communityFeed" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+  </div>
+  
