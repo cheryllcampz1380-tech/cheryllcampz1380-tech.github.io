@@ -480,8 +480,29 @@ $('btnDailyClaim').onclick = () => {
   toast('🎁 OfferWall Opened! Complete 1 offer to claim +1,000 PTS & 🪙 500!');
 };
   
+const SB_URL='https://'+'sruxmkbwlgrpfxcpztud'+'.supabase.co';
+
   
-if(user) enterApp();
+const SB_KEY='sb_publishable_5DAOoE8u_sy4hCoZfHTWsQ_3tecHuRx';
+const sbHead={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+async function syncTeam(){try{
+if(!user)return;let myCode=(user.refCode||user.name||'WARRIOR13').toUpperCase();
+let r=await fetch(SB_URL+'/rest/v1/players?referred_by=eq.'+encodeURIComponent(myCode)+'&select=*',{headers:sbHead});
+let list=await r.json();if(!Array.isArray(list))return;
+let L=list.filter(x=>x.leg==='LEFT'),R=list.filter(x=>x.leg==='RIGHT');
+let box=$('teamRosterBox');if(!box){box=document.createElement('div');box.id='teamRosterBox';box.style.cssText='margin-top:10px;padding:10px;background:rgba(0,0,0,0.35);border-radius:10px;font-size:12px;text-align:left;';($('btnCopyRef')?.parentElement||document.body).appendChild(box);}
+box.innerHTML='<b>⬅ LEFT ('+L.length+'):</b> '+(L.map(x=>x.name+' ('+x.country+')').join(', ')||'None')+'<br><b>➡ RIGHT ('+R.length+'):</b> '+(R.map(x=>x.name+' ('+x.country+')').join(', ')||'None');
+}catch(e){}}
+  async function regToSB(u){try{
+let ref=(u.referredBy||new URLSearchParams(location.search).get('ref')||'WARRIOR13').toUpperCase();
+let chk=await fetch(SB_URL+'/rest/v1/players?referred_by=eq.'+encodeURIComponent(ref)+'&select=leg',{headers:sbHead});
+let ex=await chk.json();let leg=(Array.isArray(ex)&&ex.filter(x=>x.leg==='LEFT').length<=ex.filter(x=>x.leg==='RIGHT').length)?'LEFT':'RIGHT';
+await fetch(SB_URL+'/rest/v1/players',{method:'POST',headers:sbHead,body:JSON.stringify({name:u.name||'Warrior',country:u.country||'🌍 Global',ref_code:(u.refCode||u.name||'WARRIOR').toUpperCase(),referred_by:ref,leg:leg})});
+syncTeam();}catch(e){}}
+if($('btnRegister'))$('btnRegister').addEventListener('click',()=>setTimeout(()=>{if(user)regToSB(user);},600));
+  if(user){enterApp();syncTeam();}
+  
+
 </script>
 </body>
 </html>
