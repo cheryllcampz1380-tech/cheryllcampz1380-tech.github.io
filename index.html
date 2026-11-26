@@ -502,7 +502,15 @@ syncTeam();}catch(e){}}
 if($('btnRegister'))$('btnRegister').addEventListener('click',()=>setTimeout(()=>{if(user)regToSB(user);},600));
   if(user){enterApp();syncTeam();}
   
-
+try{
+  const _p=parseInt(localStorage.getItem('wcb_pts')||'0'),_c=parseInt(localStorage.getItem('wcb_coins')||'0');
+  if((_p>0||_c>0)&&typeof user!=='undefined'&&user){localStorage.removeItem('wcb_pts');localStorage.removeItem('wcb_coins');
+  user.pts=(user.pts||0)+_p;user.coins=(user.coins||0)+_c;if(typeof save==='function')save();if(typeof enterApp==='function')enterApp();}
+  document.addEventListener('click',e=>{const t=e.target.closest('button,div,a');
+  if(t&&/dragon/i.test(t.innerText)&&/play|start|dragon/i.test(t.innerText)&&!t.closest('#lvlModal')){
+  e.preventDefault();e.stopImmediatePropagation();location.href='dragon-wings.html';}},true);
+}catch(e){}
+  
 </script>
 </body>
 </html>
