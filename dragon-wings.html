@@ -144,4 +144,13 @@ function spawnWave(){
 function winLvl(){run=false;sfx(880,'triangle',0.3);if(curLvl===unl&&unl<1000){unl++;localStorage.setItem('dw_unl',unl);}
   const pts=curLvl*50+kills*10;localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')+pts);localStorage.setItem('wcb_coins',parseInt(localStorage.getItem('wcb_coins')||'0')+coins);
   window.open('https://uplcm.com');alert('🔶 VICTORY! ⭐⭐⭐\nEliminated: '+kills+' Enemies\n+'+pts+' PTS & +'+coins+' Coins Added!');renderGrid();document.getElementById('lvlModal').style.display='block';}
-renderGrid();}catch(e){console.error(e);}</script></body></html>
+function resize(){cv.width=document.documentElement.clientWidth;cv.height=document.documentElement.clientHeight;}resize();
+cv.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches;p.x=Math.max(28,Math.min(cv.width-28,t.clientX));p.y=Math.max(90,Math.min(cv.height*0.8,t.clientY-45));},{passive:false});
+const _st2=startLvl;startLvl=function(l){let pt=parseInt(localStorage.getItem('wcb_pts')||'0');
+if(l===1&&pt<0){if(!confirm('⚠️ Not enough PTS! Watch Sponsored Ad to unlock Free Play?'))return;window.open('https://uplcm.com');localStorage.setItem('wcb_pts','0');}
+_st2(l);p.y=cv.height*0.62;p.inv=15;};
+setInterval(()=>{if(run){ebul.forEach(b=>{b.y+=1.5;});foes.forEach(f=>{if(Math.hypot(f.x-p.x,f.y-p.y)<26&&p.inv<=0){p.lives--;p.inv=40;sfx(100,'sawtooth',0.25);}});
+if(p.lives<=0&&run){run=false;localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')-100);
+window.open('https://uplcm.com/4/12345252');alert('💀 DEFEATED! You got hit!\n-100 PTS Penalty & Back to Level 1!\nWatch Ad to continue playing.');
+document.getElementById('lvlModal').style.display='block';}}},100);
+  renderGrid();}catch(e){console.error(e);}</script></body></html>
