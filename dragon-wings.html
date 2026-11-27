@@ -153,4 +153,8 @@ setInterval(()=>{if(run){ebul.forEach(b=>{b.y+=1.5;});foes.forEach(f=>{if(Math.h
 if(p.lives<=0&&run){run=false;localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')-100);
 window.open('https://uplcm.com/4/12345252');alert('💀 DEFEATED! You got hit!\n-100 PTS Penalty & Back to Level 1!\nWatch Ad to continue playing.');
 document.getElementById('lvlModal').style.display='block';}}},100);
+  cv.style.cssText='display:block;margin:65px auto 0;width:94%;max-width:410px;height:78vh;border:2px solid #22c55e;border-radius:14px';
+function resize(){cv.width=cv.clientWidth;cv.height=cv.clientHeight;}resize();
+cv.addEventListener('touchmove',e=>{e.preventDefault();const r=cv.getBoundingClientRect(),t=e.touches;
+p.x=Math.max(25,Math.min(cv.width-25,t.clientX-r.left));p.y=Math.max(40,Math.min(cv.height-35,t.clientY-r.top));},{passive:false});
   renderGrid();}catch(e){console.error(e);}</script></body></html>
