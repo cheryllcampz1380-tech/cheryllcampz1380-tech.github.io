@@ -512,6 +512,13 @@ try{
 }catch(e){}
     document.addEventListener('click',e=>{const t=e.target.closest('button,div,a');
   if(t&&/arena|brawl/i.test(t.innerText)&&/play|start|arena|brawl/i.test(t.innerText)){e.preventDefault();e.stopImmediatePropagation();location.href='arena-brawl.html';}},true);
+    const sBox=document.createElement('div');sBox.style.cssText='background:linear-gradient(90deg,#1e1b4b,#312e81);border:1px solid #fbbf24;border-radius:12px;padding:10px;margin:10px auto;max-width:440px;text-align:center;font-size:12px;color:#fff';
+  sBox.innerHTML='🏆 <b>SEASON 1: 1,000 USERS MILESTONE</b> (Top 10 Prize Pool!)<br><span style="color:#fde047">🔥 Prize Pool grows bigger as players join! Season 2 Unlocks at 5,000 Users!</span>';
+  document.body.prepend(sBox);let taps=0;
+  sBox.onclick=()=>{if(++taps>=5){taps=0;if(prompt('👑 CEO PIN:')!=='7474')return;
+  const u=Object.keys(localStorage).filter(k=>k.includes('user')).length+1,rev=parseFloat(prompt('👑 CEO DASHBOARD\nLive Session Users: '+u+'\nEnter Total Ad Income ($):','100')||'0');
+  const pool=(rev*0.20).toFixed(2),ceo=(rev*0.80).toFixed(2);
+  alert('📊 CEO REPORT (80/20 SPLIT)\n• CEO Share (80%): $'+ceo+'\n• Top 10 Prize Pool (20%): $'+pool+'\n• Rank 1 (30%): $'+(pool*0.3).toFixed(2)+' | Rank 2 (20%): $'+(pool*0.2).toFixed(2)+' | Rank 3 (15%): $'+(pool*0.15).toFixed(2)+'\n• Rank 4-10 (5% each): $'+(pool*0.05).toFixed(2));}};
   
 </script>
 </body>
