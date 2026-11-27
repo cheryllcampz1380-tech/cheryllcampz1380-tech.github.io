@@ -2,135 +2,145 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Dragon Wings 14+ | World Country Battle</title>
+<title>Dragon Wings | World Country Battle</title>
+<script>(function(s){s.dataset.zone='12339774',s.src='https://nap5k.com'})([document.documentElement,document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;user-select:none}
-body{background:#040814;color:#fff;font-family:sans-serif;overflow:hidden;text-align:center}
-canvas{display:block;margin:0 auto;background:linear-gradient(#06122b,#0b2559);border-x:3px solid #00f0ff;box-shadow:0 0 25px #00f0ff}
-.ui{position:fixed;top:0;left:0;width:100%;padding:8px;display:flex;justify-content:space-between;background:rgba(4,8,20,0.85);border-bottom:1px solid #00f0ff;z-index:10}
-  .modal{position:fixed;inset:0;background:rgba(4,8,20,0.96);z-index:20;overflow-y:auto;padding:15px}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:420px;margin:15px auto}
-.lvl{padding:12px 4px;border-radius:8px;font-weight:bold;border:1px solid #00f0ff;background:#0b2559;color:#fff;cursor:pointer}
-.lvl.lock{background:#111827;border-color:#374151;color:#6b7280;cursor:not-allowed}
-.lvl.boss{border-color:#f59e0b;box-shadow:0 0 10px rgba(245,158,11,0.4)}
-.skills{position:fixed;bottom:15px;left:0;width:100%;display:flex;justify-content:center;gap:10px;z-index:10}
-.sbtn{padding:10px 14px;border-radius:50px;border:2px solid #00f0ff;background:#06122b;color:#fff;font-weight:bold;font-size:12px}
-.sbtn:disabled{opacity:0.4;border-color:#555}
-.btn{padding:10px 18px;border-radius:8px;border:none;background:#00f0ff;color:#040814;font-weight:bold;cursor:pointer}
+html,body{width:100%;height:100%;background:#040c08;color:#fff;font-family:sans-serif;overflow:hidden}
+canvas{display:block;width:100vw;height:100vh}
+.hud{position:fixed;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none;z-index:10;text-shadow:0 2px 4px #000}
+.hud-l{display:flex;flex-direction:column;gap:6px;text-align:left;font-weight:bold;font-size:15px}
+.w-badge{width:44px;height:44px;border-radius:50%;border:2px solid #22c55e;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;font-size:20px}
+.hud-r{display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:auto}
+.pill{background:rgba(0,0,0,0.65);border:1px solid #22c55e;color:#fff;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:12px;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(4,12,8,0.95);z-index:20;overflow-y:auto;padding:15px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:420px;margin:12px auto}
+.lvl{padding:12px 4px;border-radius:10px;font-weight:bold;border:1px solid #22c55e;background:#0a2618;color:#fff;cursor:pointer}
+.lvl.lock{background:#111827;border-color:#374151;color:#6b7280}
+.skin-card{display:inline-block;width:45%;margin:5px;padding:10px;border-radius:12px;border:2px solid #374151;background:#091c12;cursor:pointer}
+.skin-card.act{border-color:#22c55e;box-shadow:0 0 12px rgba(34,197,94,0.5)}
 </style></head><body>
-  <div class="ui">
-  <button class="btn" onclick="location.href='index.html'">⬅ LOBBY</button>
-  <div>LVL <b id="hudLvl">1</b> | ❤️ <b id="hudHp">100</b></div>
-  <div>PTS: <b id="hudPts">0</b></div>
+<div class="hud">
+  <div class="hud-l">
+    <div>Wave: <span id="hWave">1</span>/6 | LVL <span id="hLvl">1</span></div>
+    <div>❤️ x<span id="hLives">4</span></div>
+    <div class="w-badge">🟢</div>
+    <div>Lv. <span id="hWlv">1</span></div>
+  </div>
+  <div class="hud-r">
+        <div style="font-size:18px;font-weight:bold;color:#fbbf24">🪙 <span id="hCoins">0</span></div>
+    <button class="pill" id="sndBtn" onclick="toggleSnd()">🔊 SOUND: ON</button>
+    <button class="pill" onclick="openSkins()">🎨 SKINS (AD)</button>
+    <button class="pill" style="border-color:#f59e0b;color:#fbbf24" onclick="window.open('https://trianglerockers.com');localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')+1000);alert('🎁 +1,000 PTS Offerwall Bonus!')">🎁 +1K PTS</button>
+  </div>
 </div>
 <canvas id="cv"></canvas>
-<div class="skills">
-  <button class="sbtn" id="skFire" onclick="useSkill('fire')">🔥 FIRE</button>
-  <button class="sbtn" id="skIce" onclick="useSkill('ice')">❄️ ICE</button>
-  <button class="sbtn" id="skBomb" onclick="useSkill('bomb')">💥 SPIRIT</button>
-    <button class="sbtn" id="skDash" onclick="useSkill('dash')">💨 DASH</button>
-</div>
 <div class="modal" id="lvlModal">
-  <h2 style="color:#00f0ff;margin-top:10px">🐉 DRAGON WINGS (14+)</h2>
-  <p style="font-size:13px;color:#9ca3af;margin:6px 0">Unlocked: 1–<span id="maxUnl">4</span> | Boss Every 5 Levels</p>
-  <div style="margin:10px 0"><button class="btn" onclick="changePage(-1)">◀ PREV 50</button> <b id="pgLbl">1 - 50</b> <button class="btn" onclick="changePage(1)">NEXT 50 ▶</button></div>
+  <div style="display:flex;justify-content:space-between;align-items:center"><button class="pill" onclick="location.href='index.html'">⬅ LOBBY</button><button class="pill" onclick="openSkins()">🎨 DRAGON & MAP SKINS</button></div>
+  <h2 style="color:#22c55e;margin:10px 0 4px">🐉 DRAGON WINGS ARCADE</h2>
+    <p style="font-size:12px;color:#9ca3af">Unlocked: 1–<span id="maxUnl">4</span> | High-Altitude Forest Flight</p>
+  <div style="margin:8px 0"><button class="pill" onclick="changePage(-1)">◀ PREV 50</button> <b id="pgLbl">1 - 50</b> <button class="pill" onclick="changePage(1)">NEXT 50 ▶</button></div>
   <div class="grid" id="lvlGrid"></div>
+</div>
+<div class="modal" id="skinModal" style="display:none">
+  <h2 style="color:#fbbf24;margin-bottom:4px">🎨 DRAGON & FOREST SKINS</h2>
+  <p style="font-size:12px;color:#9ca3af;margin-bottom:10px">Watch a quick Sponsored Ad to equip any Skin!</p>
+  <div id="skinList"></div>
+  <button class="pill" style="margin-top:14px;padding:10px 24px;background:#22c55e;color:#000" onclick="document.getElementById('skinModal').style.display='none'">✔ DONE</button>
 </div>
 <script>
 try{
-  const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-cv.width=Math.min(window.innerWidth,420);cv.height=window.innerHeight;
-let unl=Math.max(4,parseInt(localStorage.getItem('dw_unl')||'4')),pg=0,curLvl=1;
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}resize();window.onresize=resize;
+let snd=localStorage.getItem('dw_snd')!=='0',actx=null;
+function toggleSnd(){snd=!snd;localStorage.setItem('dw_snd',snd?'1':'0');document.getElementById('sndBtn').innerText=snd?'🔊 SOUND: ON':'🔇 SOUND: OFF';}
+function sfx(f,t='sine',d=0.08){if(!snd)return;try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(0.08,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+d);o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d);}catch(e){}}
+const dSkins=[{id:0,n:'🐉 Emerald Viper',c:'#22c55e',b:'#4ade80'},{id:1,n:'🔥 Crimson Blaze',c:'#ef4444',b:'#fb923c'},{id:2,n:'⚡ Cyber Storm',c:'#06b6d4',b:'#38bdf8'},{id:3,n:'👑 Golden Emperor',c:'#eab308',b:'#fde047'}];
+const bSkins=[{id:0,n:'🌲 Deep Emerald Forest',g:'#082012',t:'#0d331d',r:'#1e293b'},{id:1,n:'🍂 Autumn Canyon Woods',g:'#271508',t:'#45220c',r:'#33261d'},{id:2,n:'🌌 Mystic Night Forest',g:'#071324',t:'#0f2647',r:'#1e293b'}];
+let curDS=parseInt(localStorage.getItem('dw_ds')||'0'),curBS=parseInt(localStorage.getItem('dw_bs')||'0');
+  function openSkins(){
+  const box=document.getElementById('skinList');box.innerHTML='<h4 style="color:#4ade80;margin:6px 0">Dragon Skins</h4>';
+  dSkins.forEach(s=>{box.innerHTML+=`<div class="skin-card ${curDS===s.id?'act':''}" onclick="pickSkin('d',${s.id})">${s.n}<br><small>${curDS===s.id?'EQUIPPED':'🎬 AD TO EQUIP'}</small></div>`;});
+  box.innerHTML+='<h4 style="color:#4ade80;margin:10px 0 6px">High-Altitude Forest Maps</h4>';
+  bSkins.forEach(s=>{box.innerHTML+=`<div class="skin-card ${curBS===s.id?'act':''}" onclick="pickSkin('b',${s.id})">${s.n}<br><small>${curBS===s.id?'EQUIPPED':'🎬 AD TO EQUIP'}</small></div>`;});
+  document.getElementById('skinModal').style.display='block';
+}
+function pickSkin(t,id){
+  window.open('https://uplcm.com');sfx(600,'triangle',0.15);
+  if(t==='d'){curDS=id;localStorage.setItem('dw_ds',id);}else{curBS=id;localStorage.setItem('dw_bs',id);}openSkins();
+}
+  let unl=Math.max(4,parseInt(localStorage.getItem('dw_unl')||'4')),pg=0,curLvl=1;
 function renderGrid(){
   document.getElementById('maxUnl').innerText=unl;
   const s=pg*50+1,e=Math.min(1000,s+49),g=document.getElementById('lvlGrid');
   document.getElementById('pgLbl').innerText=s+' - '+e;g.innerHTML='';
   for(let i=s;i<=e;i++){
-    const b=document.createElement('button');
-    b.className='lvl'+(i>unl?' lock':'')+(i%5===0?' boss':'');
-        b.innerHTML=i>unl?'🔒<br>'+i:(i%5===0?'👹<br>'+i:'🐉<br>'+i);
-    b.onclick=()=>{if(i<=unl)startLvl(i);else alert('Clear Level '+(i-1)+' first!');};
-    g.appendChild(b);
+    const b=document.createElement('button');b.className='lvl'+(i>unl?' lock':'');
+    b.innerHTML=i>unl?'🔒<br>'+i:(i%5===0?'👹<br>'+i:'🐉<br>'+i);
+    b.onclick=()=>{if(i<=unl)startLvl(i);else alert('Clear Level '+(i-1)+' first!');};g.appendChild(b);
   }
 }
-function changePage(d){pg=Math.max(0,Math.min(19,pg+d));renderGrid();}
-let p={x:200,y:500,hp:100,w:1,inv:0,ice:0},pts=0,run=false,fr=0;
-let shots=[],ebul=[],foes=[],pups=[],boss=null;
-cv.addEventListener('touchmove',e=>{e.preventDefault();const r=cv.getBoundingClientRect();p.x=Math.max(20,Math.min(cv.width-20,e.touches[0].clientX-r.left));p.y=Math.max(80,Math.min(cv.height-80,e.touches[0].clientY-r.top));},{passive:false});
-cv.addEventListener('mousemove',e=>{if(e.buttons){const r=cv.getBoundingClientRect();p.x=Math.max(20,Math.min(cv.width-20,e.clientX-r.left));}});
-  let joy={on:false,bx:75,by:cv.height-95,dx:0,dy:0};
-cv.addEventListener('touchstart',e=>{const t=e.touches,r=cv.getBoundingClientRect();if(Math.hypot(t.clientX-r.left-joy.bx,t.clientY-r.top-joy.by)<65)joy.on=true;});
-cv.addEventListener('touchend',()=>{joy.on=false;joy.dx=0;joy.dy=0;});
+  function changePage(d){pg=Math.max(0,Math.min(19,pg+d));renderGrid();}
+let p={x:200,y:500,lives:4,wlv:1,inv:0},wave=1,kills=0,coins=0,run=false,fr=0,bossWarn=0;
+let shots=[],ebul=[],foes=[],drops=[],boss=null;
+cv.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches;p.x=Math.max(25,Math.min(cv.width-25,t.clientX));p.y=Math.max(80,Math.min(cv.height-60,t.clientY-35));},{passive:false});
+cv.addEventListener('mousemove',e=>{if(e.buttons){p.x=Math.max(25,Math.min(cv.width-25,e.clientX));p.y=Math.max(80,Math.min(cv.height-60,e.clientY-35));}});
 function startLvl(l){
-  curLvl=l;p={x:cv.width/2,y:cv.height-110,hp:100,w:1,inv:0,ice:0};pts=0;shots=[];ebul=[];foes=[];pups=[];
-  document.getElementById('lvlModal').style.display='none';document.getElementById('hudLvl').innerText=l;
-  const bNames=['🐝 BEE HIVE QUEEN','👹 VOID DEMON','🔥 INFERNO PHOENIX'];
-  boss=l%5===0?{name:bNames[(l/5)%3|0],x:cv.width/2,y:95,hp:250+l*40,max:250+l*40,dir:2}:null;
+  curLvl=l;p={x:cv.width/2,y:cv.height-120,lives:4,wlv:1,inv:60};wave=1;kills=0;coins=0;fr=0;bossWarn=0;
+  shots=[];ebul=[];foes=[];drops=[];boss=null;document.getElementById('lvlModal').style.display='none';
+  document.getElementById('hLvl').innerText=l;document.getElementById('sndBtn').innerText=snd?'🔊 SOUND: ON':'🔇 SOUND: OFF';
   run=true;loop();
-  }
-  cv.addEventListener('touchmove',e=>{if(joy.on){const t=e.touches,r=cv.getBoundingClientRect(),dx=t.clientX-r.left-joy.bx,dy=t.clientY-r.top-joy.by,d=Math.hypot(dx,dy)||1;joy.dx=dx/Math.max(d,45);joy.dy=dy/Math.max(d,45);}},{passive:false});
-function useSkill(s){
-  if(!run)return;
-  if(s==='fire')for(let a=-2;a<=2;a++)shots.push({x:p.x,y:p.y-20,vx:a*2.5,vy:-11,dmg:35,c:'#ff4500',r:7});
-  if(s==='ice'){p.ice=180;ebul=[];}
-  if(s==='bomb'){foes=[];ebul=[];if(boss)boss.hp-=120;pts+=50;}
-  if(s==='dash'){p.inv=90;p.y=Math.max(120,p.y-70);}
+}
+  function drawForest(){
+  const bs=bSkins[curBS],sp=(fr*1.4)%120;ctx.fillStyle=bs.g;ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.strokeStyle=bs.r;ctx.lineWidth=34;ctx.beginPath();
+  for(let y=-120;y<cv.height+120;y+=20){const wy=y+sp,wx=cv.width/2+Math.sin((wy+fr*1.4)*0.008)*95;y===-120?ctx.moveTo(wx,wy):ctx.lineTo(wx,wy);}
+  ctx.stroke();ctx.fillStyle=bs.t;
+  for(let y=-120;y<cv.height+120;y+=60){for(let x=15;x<cv.width;x+=55){
+    const rx=cv.width/2+Math.sin((y+sp+fr*1.4)*0.008)*95;if(Math.abs(x-rx)>42){ctx.beginPath();ctx.arc(x,y+sp,24,0,6.28);ctx.fill();}
+  }}
+}
+function drawDragon(){
+    const ds=dSkins[curDS],fl=Math.sin(fr*0.2)*8;ctx.save();ctx.translate(p.x,p.y);
+  ctx.fillStyle=ds.c;ctx.beginPath();ctx.moveTo(0,-18);ctx.lineTo(-34,-2+fl);ctx.lineTo(-16,12);ctx.lineTo(0,28);ctx.lineTo(16,12);ctx.lineTo(34,-2+fl);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=ds.b;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,22,0,6.28);ctx.stroke();ctx.restore();
 }
 function spawnWave(){
-  if(!boss&&fr%45===0)foes.push({x:35+Math.random()*(cv.width-70),y:-20,hp:20+curLvl*4,vy:2+Math.min(4,curLvl*0.05)});
-  
-  if(fr%10===0)for(let i=0;i<p.w;i++)shots.push({x:p.x+(i-(p.w-1)/2)*12,y:p.y-22,vx:0,vy:-12,dmg:15+p.w*5,c:'#00f0ff',r:4});
-  if(boss&&fr%55===0)for(let a=0;a<6.28;a+=0.6)ebul.push({x:boss.x,y:boss.y,vx:Math.cos(a)*3.2,vy:Math.sin(a)*3.2});
+  if(fr%16===0){sfx(520,'triangle',0.05);const n=Math.min(7,p.wlv+1);
+  for(let i=0;i<n;i++){const off=(i-(n-1)/2);shots.push({x:p.x+off*11,y:p.y-20-Math.abs(off)*4,vx:off*0.5,vy:-9,c:dSkins[curDS].b});}}
+  if(wave<6&&fr%75===0)foes.push({x:40+Math.random()*(cv.width-80),y:-25,hp:22+curLvl*4,max:22+curLvl*4,vy:1.4+Math.min(2,curLvl*0.02)});
+  if(wave===6&&!boss&&bossWarn===0){bossWarn=120;sfx(180,'sawtooth',0.4);}
 }
-function drawBg(){
-  ctx.clearRect(0,0,cv.width,cv.height);ctx.strokeStyle='rgba(0,240,255,0.25)';ctx.lineWidth=2;
-  for(let y=(fr*4)%40;y<cv.height;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
-  ctx.beginPath();ctx.arc(joy.bx,joy.by,45,0,6.28);ctx.strokeStyle='rgba(0,240,255,0.4)';ctx.stroke();
-  ctx.beginPath();ctx.arc(joy.bx+joy.dx*45,joy.by+joy.dy*45,20,0,6.28);ctx.fillStyle='rgba(0,240,255,0.6)';ctx.fill();
-}
-function loop(){
-    if(!run)return;fr++;if(p.inv>0)p.inv--;if(p.ice>0)p.ice--;
-  p.x=Math.max(25,Math.min(cv.width-25,p.x+joy.dx*6));p.y=Math.max(80,Math.min(cv.height-85,p.y+joy.dy*6));
-  spawnWave();drawBg();ctx.font='34px serif';ctx.textAlign='center';ctx.fillText('🐉',p.x,p.y);
-  shots.forEach((s,i)=>{s.x+=s.vx;s.y+=s.vy;ctx.fillStyle=s.c;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();if(s.y<0)shots.splice(i,1);});
-  if(boss){
-    boss.x+=boss.dir;if(boss.x<45||boss.x>cv.width-45)boss.dir*=-1;
-    ctx.fillStyle='#ef4444';ctx.fillRect(40,52,(cv.width-80)*(boss.hp/boss.max),8);
-    ctx.font='46px serif';ctx.fillText(boss.name.split(' '),boss.x,boss.y);
-    shots.forEach((s,si)=>{if(Math.hypot(s.x-boss.x,s.y-boss.y)<35){boss.hp-=s.dmg;shots.splice(si,1);}});
-      if(boss.hp<=0){pts+=300+curLvl*20;winLvl();}
+  function loop(){
+  if(!run)return;fr++;if(p.inv>0)p.inv--;drawForest();spawnWave();drawDragon();
+  if(bossWarn>0){
+    bossWarn--;ctx.fillStyle='rgba(220,38,38,0.35)';ctx.fillRect(0,0,22,cv.height);ctx.fillRect(cv.width-22,0,22,cv.height);
+    ctx.fillStyle='#fbbf24';ctx.font='bold 22px sans-serif';ctx.textAlign='center';ctx.fillText('⚠️ BOSS INCOMING ⚠️',cv.width/2,160);
+    if(bossWarn===0)boss={name:'GOAT O\' WAR',x:cv.width/2,y:110,hp:280+curLvl*45,max:280+curLvl*45,dir:1.5};
   }
+  shots.forEach((s,i)=>{s.x+=s.vx;s.y+=s.vy;ctx.fillStyle=s.c;ctx.beginPath();ctx.arc(s.x,s.y,4,0,6.28);ctx.fill();if(s.y<0)shots.splice(i,1);});
   foes.forEach((f,fi)=>{
-    f.y+=p.ice>0?f.vy*0.3:f.vy;ctx.font='28px serif';ctx.fillText('🦇',f.x,f.y);
-    if(fr%70===0)ebul.push({x:f.x,y:f.y,vx:0,vy:4});
-    shots.forEach((s,si)=>{if(Math.hypot(s.x-f.x,s.y-f.y)<24){f.hp-=s.dmg;shots.splice(si,1);}});
-    if(f.hp<=0){pts+=20+curLvl;if(Math.random()<0.25)pups.push({x:f.x,y:f.y});foes.splice(fi,1);}
-    if(Math.hypot(f.x-p.x,f.y-p.y)<24&&p.inv<=0){p.hp-=20;foes.splice(fi,1);}
+    f.y+=f.vy;ctx.font='30px serif';ctx.textAlign='center';ctx.fillText('🦇',f.x,f.y);
+        ctx.fillStyle='#22c55e';ctx.fillRect(f.x-15,f.y+10,30*(f.hp/f.max),4);
+    if(fr%110===0)ebul.push({x:f.x,y:f.y,vx:0,vy:2.6});
+    shots.forEach((s,si)=>{if(Math.hypot(s.x-f.x,s.y-f.y)<24){f.hp-=12+p.wlv*4;shots.splice(si,1);}});
+    if(f.hp<=0){sfx(240,'square',0.08);kills++;coins+=5;if(kills%6===0&&wave<6)wave++;
+      if(Math.random()<0.35)drops.push({x:f.x,y:f.y,t:Math.random()<0.3?'w':'c'});foes.splice(fi,1);}
+    if(Math.hypot(f.x-p.x,f.y-p.y)<24&&p.inv<=0){p.lives--;p.inv=80;sfx(120,'sawtooth',0.2);foes.splice(fi,1);}
   });
-  pups.forEach((u,ui)=>{u.y+=2.5;ctx.font='24px serif';ctx.fillText('⚡',u.x,u.y);if(Math.hypot(u.x-p.x,u.y-p.y)<26){p.w=Math.min(4,p.w+1);pts+=50;pups.splice(ui,1);}});
-  ebul.forEach((b,bi)=>{b.x+=b.vx;b.y+=b.vy;ctx.fillStyle='#ff2a6d';ctx.beginPath();ctx.arc(b.x,b.y,6,0,6.28);ctx.fill();if(Math.hypot(b.x-p.x,b.y-p.y)<18&&p.inv<=0){p.hp-=15;ebul.splice(bi,1);}});
-  document.getElementById('hudHp').innerText=Math.max(0,p.hp);document.getElementById('hudPts').innerText=pts;
-  if(!boss&&pts>=(curLvl*150))winLvl();
-  if(p.hp<=0){run=false;alert('💀 DRAGON DOWN! Score: '+pts);document.getElementById('lvlModal').style.display='block';}
+  drops.forEach((d,di)=>{d.y+=1.8;ctx.font='22px serif';ctx.fillText(d.t==='w'?'🟢':'🪙',d.x,d.y);
+    if(Math.hypot(d.x-p.x,d.y-p.y)<26){sfx(780,'sine',0.1);if(d.t==='w')p.wlv=Math.min(5,p.wlv+1);else coins+=10;drops.splice(di,1);}});
+  if(boss){boss.x+=boss.dir;if(boss.x<50||boss.x>cv.width-50)boss.dir*=-1;ctx.fillStyle='#ef4444';ctx.fillRect(40,65,(cv.width-80)*(boss.hp/boss.max),8);
+          ctx.font='48px serif';ctx.fillText('👹',boss.x,boss.y);if(fr%75===0)for(let a=0;a<6.28;a+=0.78)ebul.push({x:boss.x,y:boss.y,vx:Math.cos(a)*2.3,vy:Math.sin(a)*2.3});
+    shots.forEach((s,si)=>{if(Math.hypot(s.x-boss.x,s.y-boss.y)<36){boss.hp-=12+p.wlv*4;shots.splice(si,1);}});if(boss.hp<=0){coins+=50;winLvl();}
+  }
+  ebul.forEach((b,bi)=>{b.x+=b.vx;b.y+=b.vy;ctx.fillStyle='#e879f9';ctx.beginPath();ctx.arc(b.x,b.y,6,0,6.28);ctx.fill();
+    if(Math.hypot(b.x-p.x,b.y-p.y)<18&&p.inv<=0){p.lives--;p.inv=80;sfx(120,'sawtooth',0.2);ebul.splice(bi,1);}});
+  document.getElementById('hWave').innerText=wave;document.getElementById('hLives').innerText=Math.max(0,p.lives);document.getElementById('hWlv').innerText=p.wlv;document.getElementById('hCoins').innerText=coins;
+  if(p.lives<=0){run=false;window.open('https://uplcm.com');alert('💀 GAME OVER! Coins: '+coins);document.getElementById('lvlModal').style.display='block';}
   else if(run)requestAnimationFrame(loop);
 }
-function winLvl(){
-  run=false;if(curLvl===unl&&unl<1000){unl++;localStorage.setItem('dw_unl',unl);}
-  const earnPts=pts+(curLvl*25),earnCoins=10+Math.floor(curLvl/2);
-  localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')+earnPts);
-  localStorage.setItem('wcb_coins',parseInt(localStorage.getItem('wcb_coins')||'0')+earnCoins);
-  alert('🏆 LEVEL '+curLvl+' CLEARED!\n+'+earnPts+' PTS & +'+earnCoins+' Coins added to Wallet!');
-  renderGrid();document.getElementById('lvlModal').style.display='block';
-}
-  (function(s){s.dataset.zone='12339774',s.src='https://nap5k.com'})([document.documentElement,document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
-document.querySelector('.skills').insertAdjacentHTML('afterbegin','<button class="sbtn" onclick="if(run){foes.forEach(f=>f.y-=90);ebul=[];}">🌪️ WIND</button>');
-document.querySelector('.ui').insertAdjacentHTML('beforeend','<button class="btn" style="background:#f59e0b" onclick="window.open(\'https://trianglerockers.com\',\'_blank\');localStorage.setItem(\'wcb_pts\',parseInt(localStorage.getItem(\'wcb_pts\')||\'0\')+1000);alert(\'🎁 +1,000 PTS Offerwall Bonus!\')">🎁 +1K</button>');
-const _st=startLvl;startLvl=function(l){window.open('https://uplcm.com');_st(l);};
-const _ow=winLvl;winLvl=function(){_ow();window.open('https://uplcm.com');
-if(curLvl%5===0){const drop=curLvl%10===0?'🌟 LEGENDARY DROP (+500 Coins)':'💎 RARE DROP (+200 Coins)';
-localStorage.setItem('wcb_coins',parseInt(localStorage.getItem('wcb_coins')||'0')+(curLvl%10===0?500:200));
-alert('🏆 TROPHY ROAD MILESTONE!\nUnlocked: '+drop+' & +50 Power Points!');}};
-  
-renderGrid();
-}catch(e){console.error(e);}
-</script></body></html>
+function winLvl(){run=false;sfx(880,'triangle',0.3);if(curLvl===unl&&unl<1000){unl++;localStorage.setItem('dw_unl',unl);}
+  const pts=curLvl*50+kills*10;localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')+pts);localStorage.setItem('wcb_coins',parseInt(localStorage.getItem('wcb_coins')||'0')+coins);
+  window.open('https://uplcm.com');alert('🔶 VICTORY! ⭐⭐⭐\nEliminated: '+kills+' Enemies\n+'+pts+' PTS & +'+coins+' Coins Added!');renderGrid();document.getElementById('lvlModal').style.display='block';}
+renderGrid();}catch(e){console.error(e);}</script></body></html>
