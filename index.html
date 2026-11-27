@@ -510,6 +510,8 @@ try{
   if(t&&/dragon/i.test(t.innerText)&&/play|start|dragon/i.test(t.innerText)&&!t.closest('#lvlModal')){
   e.preventDefault();e.stopImmediatePropagation();location.href='dragon-wings.html';}},true);
 }catch(e){}
+    document.addEventListener('click',e=>{const t=e.target.closest('button,div,a');
+  if(t&&/arena|brawl/i.test(t.innerText)&&/play|start|arena|brawl/i.test(t.innerText)){e.preventDefault();e.stopImmediatePropagation();location.href='arena-brawl.html';}},true);
   
 </script>
 </body>
