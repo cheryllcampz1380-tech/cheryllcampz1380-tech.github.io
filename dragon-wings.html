@@ -138,12 +138,12 @@ function spawnWave(){
   ebul.forEach((b,bi)=>{b.x+=b.vx;b.y+=b.vy;ctx.fillStyle='#e879f9';ctx.beginPath();ctx.arc(b.x,b.y,6,0,6.28);ctx.fill();
     if(Math.hypot(b.x-p.x,b.y-p.y)<18&&p.inv<=0){p.lives--;p.inv=80;sfx(120,'sawtooth',0.2);ebul.splice(bi,1);}});
   document.getElementById('hWave').innerText=wave;document.getElementById('hLives').innerText=Math.max(0,p.lives);document.getElementById('hWlv').innerText=p.wlv;document.getElementById('hCoins').innerText=coins;
-  if(p.lives<=0){run=false;window.open('https://uplcm.com');alert('💀 GAME OVER! Coins: '+coins);document.getElementById('lvlModal').style.display='block';}
+  if(p.lives<=0){run=false;window.open('https://uplcm.com/4/12345252');alert('💀 GAME OVER! Coins: '+coins);document.getElementById('lvlModal').style.display='block';}
   else if(run)requestAnimationFrame(loop);
 }
 function winLvl(){run=false;sfx(880,'triangle',0.3);if(curLvl===unl&&unl<1000){unl++;localStorage.setItem('dw_unl',unl);}
   const pts=curLvl*50+kills*10;localStorage.setItem('wcb_pts',parseInt(localStorage.getItem('wcb_pts')||'0')+pts);localStorage.setItem('wcb_coins',parseInt(localStorage.getItem('wcb_coins')||'0')+coins);
-  window.open('https://uplcm.com');alert('🔶 VICTORY! ⭐⭐⭐\nEliminated: '+kills+' Enemies\n+'+pts+' PTS & +'+coins+' Coins Added!');renderGrid();document.getElementById('lvlModal').style.display='block';}
+  window.open('https://uplcm.com/4/12345252');alert('🔶 VICTORY! ⭐⭐⭐\nEliminated: '+kills+' Enemies\n+'+pts+' PTS & +'+coins+' Coins Added!');renderGrid();document.getElementById('lvlModal').style.display='block';}
 function resize(){cv.width=document.documentElement.clientWidth;cv.height=document.documentElement.clientHeight;}resize();
 cv.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches;p.x=Math.max(28,Math.min(cv.width-28,t.clientX));p.y=Math.max(90,Math.min(cv.height*0.8,t.clientY-45));},{passive:false});
 const _st2=startLvl;startLvl=function(l){let pt=parseInt(localStorage.getItem('wcb_pts')||'0');
@@ -157,4 +157,7 @@ document.getElementById('lvlModal').style.display='block';}}},100);
 function resize(){cv.width=cv.clientWidth;cv.height=cv.clientHeight;}resize();
 cv.addEventListener('touchmove',e=>{e.preventDefault();const r=cv.getBoundingClientRect(),t=e.touches;
 p.x=Math.max(25,Math.min(cv.width-25,t.clientX-r.left));p.y=Math.max(40,Math.min(cv.height-35,t.clientY-r.top));},{passive:false});
+  setInterval(()=>{if(isNaN(p.x)||isNaN(p.y)){p.x=cv.width/2;p.y=cv.height*0.72;}},30);
+cv.ontouchstart=cv.ontouchmove=e=>{e.preventDefault();const r=cv.getBoundingClientRect(),t=e.touches[0];
+p.x=Math.max(25,Math.min(cv.width-25,t.clientX-r.left));p.y=Math.max(40,Math.min(cv.height-35,t.clientY-r.top));};
   renderGrid();}catch(e){console.error(e);}</script></body></html>
