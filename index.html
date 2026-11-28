@@ -519,6 +519,15 @@ try{
   const u=Object.keys(localStorage).filter(k=>k.includes('user')).length+1,rev=parseFloat(prompt('👑 CEO DASHBOARD\nLive Session Users: '+u+'\nEnter Total Ad Income ($):','100')||'0');
   const pool=(rev*0.20).toFixed(2),ceo=(rev*0.80).toFixed(2);
   alert('📊 CEO REPORT (80/20 SPLIT)\n• CEO Share (80%): $'+ceo+'\n• Top 10 Prize Pool (20%): $'+pool+'\n• Rank 1 (30%): $'+(pool*0.3).toFixed(2)+' | Rank 2 (20%): $'+(pool*0.2).toFixed(2)+' | Rank 3 (15%): $'+(pool*0.15).toFixed(2)+'\n• Rank 4-10 (5% each): $'+(pool*0.05).toFixed(2));}};
+    document.addEventListener('click',e=>{const b=e.target.closest('button'),c=b&&b.closest('div');
+  if(b&&/play/i.test(b.innerText)&&c&&/arena|brawl/i.test(c.innerText)){e.preventDefault();e.stopImmediatePropagation();location.href='arena-brawl.html';}
+  if(b&&/copy my personal invite/i.test(b.innerText)){e.preventDefault();e.stopImmediatePropagation();
+    const lnk=location.origin+location.pathname+'?ref='+(user?.refCode||'WARRIOR13');const ta=document.createElement('textarea');
+    ta.value=lnk;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();prompt('✅ Invite Link Copied! Share this link:',lnk);}},true);
+  const wSel=document.createElement('div');wSel.style.cssText='margin:8px 0;padding:8px;background:#0f172a;border:1px solid #38bdf8;border-radius:10px;font-size:12px';
+  const isPi=localStorage.getItem('wcb_door')==='pi';
+  wSel.innerHTML='<b>🚪 DOOR: '+(isPi?'🟣 PI NETWORK HOLDER':'🔵 NON-PI GAMER')+'</b> <button onclick="localStorage.setItem(\'wcb_door\',\''+(isPi?'std':'pi')+'\');location.reload()" style="margin-left:6px;padding:3px 8px;border-radius:6px;background:#38bdf8;color:#000;font-weight:bold;border:0">SWITCH DOOR</button><br><select id="payM" style="margin-top:6px;width:100%;padding:6px;border-radius:6px;background:#1e293b;color:#fff">'+(isPi?'<option>🟣 Pi Network Wallet (@Username)</option>':'')+'<option>💳 PayPal (Email)</option><option>📱 GCash (Mobile Number)</option></select>';
+  const pInp=document.querySelector('input[placeholder*="Pi"]');if(pInp){pInp.placeholder='Enter '+(isPi?'Pi Username, ':'')+'PayPal Email, or GCash Number';pInp.parentNode.insertBefore(wSel,pInp);}
   
 </script>
 </body>
