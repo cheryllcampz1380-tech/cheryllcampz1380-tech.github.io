@@ -1,1 +1,89 @@
 
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Bubble Epic - World Country Battle</title><script src="https://nap5k.com" data-zone="12339774" async></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;user-select:none}body{background:#090d16;color:#fff;font-family:sans-serif;display:flex;justify-content:center}
+#app{width:100%;max-width:410px;min-height:100vh;background:linear-gradient(180deg,#1e1b4b,#0f172a);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(0,0,0,.45);font-size:12px;font-weight:700}
+.btn{background:#f59e0b;color:#000;border:none;border-radius:8px;padding:6px 9px;font-weight:800;cursor:pointer;font-size:11px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px 10px;max-height:46vh;overflow-y:auto}
+.lvl{background:#1e293b;border:2px solid #38bdf8;border-radius:8px;padding:10px 0;text-align:center;font-weight:800;font-size:12px;cursor:pointer}
+.lvl.lk{opacity:.4;border-color:#475569;cursor:not-allowed}.card{margin:6px 10px;padding:8px 10px;background:rgba(255,255,255,.08);border-radius:10px;font-size:11px;line-height:1.4}
+#game{display:none;flex-direction:column;height:100vh;background:#c7d2fe}canvas{width:100%;flex:1;touch-action:none}
+</style></head><body><div id="app">
+  <div id="lobby"><div class="top"><span>🫧 BUBBLE EPIC</span><span>🏆 <b id="pts">0</b> | 🪙 <b id="cns">0</b></span>
+<div><button class="btn" onclick="openOffer()">+1K</button> <button class="btn" id="sndB" onclick="togSnd()">🔊</button></div></div>
+<div class="card" style="display:flex;justify-content:space-between;align-items:center">
+<span>Mode: <b id="modeTxt">CLASSIC</b></span><div><button class="btn" onclick="setMode('CLASSIC')">Classic</button>
+<button class="btn" onclick="setMode('ARCADE')">Arcade</button> <button class="btn" onclick="openSkins()">🎨 Skins</button></div></div>
+<div class="card" style="display:flex;justify-content:space-between;align-items:center">
+<button class="btn" onclick="chgPage(-1)">◀ Prev</button><span id="pgLbl">Levels 1 - 50</span><button class="btn" onclick="chgPage(1)">Next ▶</button></div>
+<div class="grid" id="lvlGrid"></div>
+<div class="card"><b style="color:#fbbf24">📖 HOW TO PLAY & POWER-UPS:</b><br>• Aim & release to match <b>3+ same colors</b>; hanging colors drop for bonus!<br>• 🔥 <b>Fireball:</b> Pop 7 in a row | 💣 <b>Bomb:</b> Drop 10+ bubbles at once.</div></div>
+<div id="game"><div class="top"><span>LVL <b id="gLvl">1</b> (<b id="gMod">CLASSIC</b>)</span><span>SCORE: <b id="gSc">0</b></span>
+<button class="btn" style="background:#ef4444;color:#fff" onclick="exitGame()">✖</button></div>
+<canvas id="cv"></canvas></div></div>
+<div id="skinM" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:50;align-items:center;justify-content:center">
+<div class="card" style="width:90%;max-width:360px;background:#1e293b;border:2px solid #f59e0b"><h3 style="margin-bottom:8px">🎨 BUBBLE THEMES (Watch Ad to Equip)</h3>
+<div id="skinList"></div><button class="btn" style="margin-top:8px;width:100%" onclick="document.getElementById('skinM').style.display='none'">Close</button></div></div>
+<script>
+const AD_URL='https://uplcm.com',OFFER_URL='https://trianglerockers.com';
+let pts=+localStorage.getItem('wcb_pts')||0,cns=+localStorage.getItem('wcb_coins')||0,unl=+localStorage.getItem('wcb_bub_unl')||5;
+let mode='CLASSIC',pg=0,snd=1,curTheme=0,themes=[{n:'Classic Gloss',bg:'#c7d2fe'},{n:'Neon Night',bg:'#0f172a'},{n:'Sunset Gold',bg:'#fef3c7'}];
+function syncW(){localStorage.setItem('wcb_pts',pts);localStorage.setItem('wcb_coins',cns);localStorage.setItem('wcb_bub_unl',unl);document.getElementById('pts').innerText=pts;document.getElementById('cns').innerText=cns;}
+function trigAd(){try{window.open(AD_URL,'_blank');}catch(e){}}
+function openOffer(){window.open(OFFER_URL,'_blank');pts+=1000;syncW();alert('+1,000 PTS Offerwall Bonus Added!');}
+setInterval(()=>{if(document.visibilityState==='visible')trigAd();},120000);
+  const AC=window.AudioContext||window.webkitAudioContext,actx=AC?new AC():null;
+function sfx(f,t='sine',d=0.08){if(!snd||!actx)return;if(actx.state==='suspended')actx.resume();const o=actx.createOscillator(),g=actx.createGain();o.type=t;o.frequency.value=f;g.gain.value=0.1;o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d);}
+function togSnd(){snd=snd?0:1;document.getElementById('sndB').innerText=snd?'🔊':'🔇';}
+function setMode(m){mode=m;document.getElementById('modeTxt').innerText=m;}
+function openSkins(){const l=document.getElementById('skinList');l.innerHTML=themes.map((t,i)=>`<button class="btn" style="width:100%;margin:4px 0" onclick="eqSkin(${i})">${t.n} ${curTheme===i?'✅':'(Ad)'}</button>`).join('');document.getElementById('skinM').style.display='flex';}
+function eqSkin(i){if(i!==curTheme)trigAd();curTheme=i;document.getElementById('skinM').style.display='none';}
+function chgPage(d){pg=Math.max(0,Math.min(59,pg+d));renderLvls();}
+function renderLvls(){const s=pg*50+1,e=s+49;document.getElementById('pgLbl').innerText=`Levels ${s} - ${e}`;
+let h='';for(let i=s;i<=e;i++){const lk=i>unl;h+=`<div class="lvl ${lk?'lk':''}" onclick="${lk?'':`startLvl(${i})`}">${lk?'🔒':i}</div>`;}
+document.getElementById('lvlGrid').innerHTML=h;}
+syncW();renderLvls();
+  const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const COLS=['#ef4444','#facc15','#22c55e','#3b82f6','#06b6d4','#d946ef'];
+let grid=[],R=18,ROWS=14,COLS_N=10,curLvl=1,score=0,run=0,shot=null,curB=0,nxtB=1,aimA=-1.57,aiming=0,streak=0,pwr='';
+function bPos(r,c){return{x:R+c*R*2+(r%2?R:0),y:R+r*R*1.74};}
+function startLvl(l){curLvl=l;score=0;streak=0;pwr='';run=1;document.getElementById('lobby').style.display='none';
+document.getElementById('game').style.display='flex';cv.style.background=themes[curTheme].bg;
+cv.width=cv.clientWidth||380;cv.height=cv.clientHeight||540;R=cv.width/(COLS_N*2+1);
+document.getElementById('gLvl').innerText=l;document.getElementById('gMod').innerText=mode;document.getElementById('gSc').innerText=0;
+grid=Array.from({length:ROWS},(_,r)=>Array.from({length:COLS_N-(r%2)},(_,c)=>r<Math.min(8,4+Math.floor(l/40))?Math.floor(Math.random()*Math.min(6,4+Math.floor(l/150))):-1));
+curB=Math.floor(Math.random()*4);nxtB=Math.floor(Math.random()*4);shot=null;requestAnimationFrame(loop);}
+function exitGame(){run=0;document.getElementById('game').style.display='none';document.getElementById('lobby').style.display='block';renderLvls();}
+  function setAim(e){const r=cv.getBoundingClientRect(),t=e.touches?e.touches[0]:e;
+const dx=(t.clientX-r.left)-cv.width/2,dy=(t.clientY-r.top)-(cv.height-45);
+if(dy<-15)aimA=Math.max(-2.85,Math.min(-0.29,Math.atan2(dy,dx)));}
+cv.addEventListener('pointerdown',e=>{if(!run||shot)return;const r=cv.getBoundingClientRect();
+if(e.clientY-r.top>cv.height-85&&Math.abs(e.clientX-r.left-cv.width/2)<55){[curB,nxtB]=[nxtB,curB];sfx(520);return;}
+aiming=1;setAim(e);});
+cv.addEventListener('pointermove',e=>{if(aiming)setAim(e);});
+cv.addEventListener('pointerup',()=>{if(!aiming||shot||!run)return;aiming=0;sfx(420);
+shot={x:cv.width/2,y:cv.height-45,vx:Math.cos(aimA)*13,vy:Math.sin(aimA)*13,c:curB,pw:pwr};pwr='';curB=nxtB;nxtB=Math.floor(Math.random()*Math.min(6,4+Math.floor(curLvl/150)));});
+function drawBall(x,y,c,pw){ctx.save();ctx.beginPath();ctx.arc(x,y,R-1,0,6.28);
+ctx.fillStyle=pw==='FIRE'?'#f97316':pw==='BOMB'?'#111827':COLS[c];ctx.fill();ctx.lineWidth=1.5;ctx.strokeStyle='#fff6';ctx.stroke();
+ctx.beginPath();ctx.arc(x-R*.3,y-R*.3,R*.28,0,6.28);ctx.fillStyle='#fff9';ctx.fill();if(pw)ctx.fillText(pw==='FIRE'?'🔥':'💣',x-7,y+4);ctx.restore();}
+  function nbrs(r,c){const o=r%2?0:-1,res=[];[[r,c-1],[r,c+1],[r-1,c+o],[r-1,c+o+1],[r+1,c+o],[r+1,c+o+1]].forEach(([nr,nc])=>{if(grid[nr]&&grid[nr][nc]!==undefined)res.push([nr,nc]);});return res;}
+function dropFloat(){const vis=new Set(),q=[];for(let c=0;c<grid.length;c++)if(grid[c]>=0){vis.add('0,'+c);q.push([0,c]);}
+while(q.length){const[r,c]=q.shift();nbrs(r,c).forEach(([nr,nc])=>{const k=nr+','+nc;if(grid[nr][nc]>=0&&!vis.has(k)){vis.add(k);q.push([nr,nc]);}});}
+let dr=0;for(let r=0;r<ROWS;r++)for(let c=0;c<grid[r].length;c++)if(grid[r][c]>=0&&!vis.has(r+','+c)){grid[r][c]=-1;dr++;}
+if(dr>0){score+=dr*25;sfx(680,'triangle',0.15);if(dr>=10)pwr='BOMB';}}
+function resolveHit(r,c,col,pw){if(pw==='BOMB'){sfx(140,'sawtooth',0.25);for(let i=0;i<ROWS;i++)for(let j=0;j<grid[i].length;j++){const p1=bPos(r,c),p2=bPos(i,j);if(grid[i][j]>=0&&Math.hypot(p1.x-p2.x,p1.y-p2.y)<R*3.4){grid[i][j]=-1;score+=15;}}dropFloat();return;}
+const seen=new Set([r+','+c]),q=[[r,c]],grp=[[r,c]];while(q.length){const[cr,cc]=q.shift();nbrs(cr,cc).forEach(([nr,nc])=>{const k=nr+','+nc;if(grid[nr][nc]===col&&!seen.has(k)){seen.add(k);q.push([nr,nc]);grp.push([nr,nc]);}});}
+if(grp.length>=3){grp.forEach(([gr,gc])=>grid[gr][gc]=-1);score+=grp.length*10;streak++;sfx(580);if(streak>=7){pwr='FIRE';streak=0;}dropFloat();}else streak=0;}
+function snapShot(x,y,col,pw){let br=0,bc=0,bd=9e9;for(let r=0;r<ROWS;r++)for(let c=0;c<grid[r].length;c++)if(grid[r][c]<0){const p=bPos(r,c),d=Math.hypot(x-p.x,y-p.y);if(d<bd){bd=d;br=r;bc=c;}}
+grid[br][bc]=col;resolveHit(br,bc,col,pw);shot=null;document.getElementById('gSc').innerText=score;}
+  function endLvl(win){run=0;trigAd();if(win){pts+=100+curLvl*5;cns+=10;if(curLvl>=unl&&unl<3000)unl=curLvl+1;syncW();alert(`🎉 LEVEL ${curLvl} CLEARED!\n+PTS & +10 Coins!`);}
+else{pts=Math.max(0,pts-100);syncW();alert(`💀 GAME OVER! -100 PTS Penalty`);}exitGame();}
+function loop(){if(!run)return;ctx.clearRect(0,0,cv.width,cv.height);
+if(aiming){let ax=cv.width/2,ay=cv.height-45,vx=Math.cos(aimA)*9,vy=Math.sin(aimA)*9;ctx.fillStyle=COLS[curB];for(let i=0;i<45;i++){ax+=vx;ay+=vy;if(ax<R||ax>cv.width-R)vx*=-1;if(ay<R)break;ctx.beginPath();ctx.arc(ax,ay,3,0,6.28);ctx.fill();}}
+if(shot){shot.x+=shot.vx;shot.y+=shot.vy;if(shot.x<R||shot.x>cv.width-R)shot.vx*=-1;let hit=shot.y<=R;
+for(let r=0;r<ROWS;r++)for(let c=0;c<grid[r].length;c++)if(grid[r][c]>=0){const p=bPos(r,c);if(Math.hypot(shot.x-p.x,shot.y-p.y)<R*1.8){if(shot.pw==='FIRE'){grid[r][c]=-1;score+=20;}else hit=1;}}
+if(hit)snapShot(shot.x,shot.y,shot.c,shot.pw);else drawBall(shot.x,shot.y,shot.c,shot.pw);}
+let left=0,low=0;for(let r=0;r<ROWS;r++)for(let c=0;c<grid[r].length;c++)if(grid[r][c]>=0){left++;const p=bPos(r,c);if(p.y>cv.height-95)low=1;drawBall(p.x,p.y,grid[r][c]);}
+drawBall(cv.width/2,cv.height-45,curB,pwr);drawBall(cv.width/2+38,cv.height-38,nxtB);
+if(!left)return endLvl(1);if(low)return endLvl(0);requestAnimationFrame(loop);}</script></body></html>
